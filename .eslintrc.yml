@@ -10,4 +10,8 @@ parserOptions:
   sourceType: module
 plugins:
   - react
-rules: {}
+rules: {
+  no-console: 0,
+  linebreak-style: 0,
+  import/extensions: 0
+}
