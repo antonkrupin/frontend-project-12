@@ -1,6 +1,9 @@
 {
   "name": "frontend-project-12",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.x"
+  },
   "description": "[![Actions Status](https://github.com/antonkrupin/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/antonkrupin/frontend-project-12/actions)",
   "main": "index.js",
   "scripts": {
