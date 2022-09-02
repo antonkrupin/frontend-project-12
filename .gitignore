@@ -1,0 +1,6 @@
+/frontend/node_modules
+/.vscode
+/test-data
+*.log
+dist
+assets
