@@ -1,11 +1,14 @@
-install:
-	npm ci
+start-frontend:
+	make -C frontend start
+
+start-backend:
+	npx start-server
 
 start:
-	npm start
+	make start-backend & make start-frontend
 
-build:
-	npm build
+deploy:
+	git push heroku main
 
-lint:
-	npx eslint .
+lint-frontend:
+	make -C frontend lint
