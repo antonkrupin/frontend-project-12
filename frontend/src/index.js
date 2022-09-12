@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
-import Main from './routes/main';
 import Login from './routes/login';
 import Page404 from './routes/page404';
 import 'bootstrap/dist/css/bootstrap.css';
