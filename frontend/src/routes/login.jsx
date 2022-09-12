@@ -1,45 +1,49 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import '../styles/login.css'
 
 const Login = () => {
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
+      userName: '',
+      password: '',
     },
     onSubmit: values => {
       alert(JSON.stringify(values, null, 2));
     },
   });
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <label htmlFor="firstName">First Name</label>
-      <input
-        id="firstName"
-        name="firstName"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.firstName}
-      />
-      <label htmlFor="lastName">Last Name</label>
-      <input
-        id="lastName"
-        name="lastName"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.lastName}
-      />
-      <label htmlFor="email">Email Address</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        onChange={formik.handleChange}
-        value={formik.values.email}
-      />
-      <button type="submit">Submit</button>
-    </form>
+    <div className="main">
+      <div className="wrapper">
+        <div className="image">
+          image
+        </div>
+        <div className="form">
+          <h1 class="text-center mb-5">Войти</h1>
+          <form id="userForm" onSubmit={formik.handleSubmit}>
+            <input
+              className="form-control mb-3"
+              id="userName"
+              name="userName"
+              type="text"
+              placeholder="Имя пользователя"
+              onChange={formik.handleChange}
+              value={formik.values.userName}
+            />
+            <input
+              className="form-control mb-3"
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Пароль"
+              onChange={formik.handleChange}
+              value={formik.values.password}
+            />
+            <button className="btn btn-outline-primary w-100" type="submit">Войти</button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }
 
