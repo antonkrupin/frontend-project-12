@@ -1,35 +1,44 @@
-//import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 
 const Login = () => {
   const formik = useFormik({
     initialValues: {
-      userName: '',
-      password: '',
+      firstName: '',
+      lastName: '',
+      email: '',
     },
     onSubmit: values => {
       alert(JSON.stringify(values, null, 2));
     },
   });
   return (
-    <form onSubmit={formik.onSubmit}>
-      <label htmlFor="userName">Имя пользователя</label>
+    <form onSubmit={formik.handleSubmit}>
+      <label htmlFor="firstName">First Name</label>
       <input
-        id="userName"
-        name="userName"
+        id="firstName"
+        name="firstName"
         type="text"
         onChange={formik.handleChange}
-        value={formik.values.userName} 
+        value={formik.values.firstName}
       />
-      <label htmlFor="password">Пароль</label>
+      <label htmlFor="lastName">Last Name</label>
       <input
-        id="password"
-        name="password"
-        type="password"
+        id="lastName"
+        name="lastName"
+        type="text"
         onChange={formik.handleChange}
-        value={formik.values.password}
+        value={formik.values.lastName}
       />
-      <button type="submit">Войти</button>
+      <label htmlFor="email">Email Address</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        onChange={formik.handleChange}
+        value={formik.values.email}
+      />
+      <button type="submit">Submit</button>
     </form>
   );
 }
