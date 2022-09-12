@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import './App.css';
 
 export default function App() {
@@ -12,9 +12,9 @@ export default function App() {
           paddingBottom: "1rem",
         }}
       >
-        <Link to="/invoices">Invoices</Link> |{" "}
-        <Link to="/expenses">Expenses</Link>
+        <Link to="/login">Login</Link> |{" "}
       </nav>
+      <Outlet />
     </div>
   );
 }
