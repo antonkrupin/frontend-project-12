@@ -23,8 +23,7 @@
   },
   "homepage": "https://github.com/antonkrupin/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^1.1.6",
-    "yup": "^0.32.11"
+    "@hexlet/chat-server": "^1.1.6"
   },
   "devDependencies": {
     "eslint": "^8.23.0",
