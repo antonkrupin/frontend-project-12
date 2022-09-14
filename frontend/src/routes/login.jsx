@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import i18next from 'i18next';
 import { useFormik } from 'formik';
@@ -22,15 +22,29 @@ const validationSchema = yup.object({
     .required(i18Instance.t('errors.userName.required')),
   password: yup
     .string()
-    .min(8, i18Instance.t('errors.password.length'))
-		.matches(/[0-9]/, i18Instance.t('errors.password.number'))
+    .min(5, i18Instance.t('errors.password.length')),
+		/* .matches(/[0-9]/, i18Instance.t('errors.password.number'))
     .matches(/[a-z]/, i18Instance.t('errors.password.lowerCaseLetter'))
     .matches(/[A-Z]/, i18Instance.t('errors.password.upperCaseLetter'))
     .matches(/[^\w]/, 'Password requires a symbol')
-    .required(i18Instance.t('errors.password.required')),
+    .required(i18Instance.t('errors.password.required')), */
 });
 
+const isUserExist = (username, password) => {
+	axios.post('/api/v1/login', { username: username, password: password }).then((response) => {
+		localStorage.setItem('token', response.data.token);
+		localStorage.setItem('userame', response.data.username);
+		this.setState({ isLogged: true });
+		return [true, response.data] // => { token: ..., username: 'admin' }
+	}).catch((error) => {
+		console.log([false, error]);
+	})
+}
+
 const Login = () => {
+	const state = {
+		isLogged: false,
+	}
   const formik = useFormik({
     initialValues: {
       userName: '',
@@ -38,13 +52,9 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
+			isUserExist(values.userName, values.password)
     },
   });
-
-	axios.post('/api/v1/login', { username: 'admin', password: 'admin' }).then((response) => {
-		console.log(response.data); // => { token: ..., username: 'admin' }
-	});
 
   const setInputValue = useCallback(
     (key, value) =>
