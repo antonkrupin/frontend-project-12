@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import i18next from 'i18next';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -52,37 +53,42 @@ const Login = () => {
   return (
     <div className="main">
       <div className="wrapper">
-        <div className="image">
-          image
-        </div>
-        <div className="form" onSubmit={formik.handleSubmit}>
-          <h1 className="text-center mb-5">Войти</h1>
-          <form id="userForm" onSubmit={formik.handleSubmit}>
-            <input
-              className="form-control mb-3"
-              id="userName"
-              name="userName"
-              type="text"
-              placeholder="Имя пользователя"
-              onChange={(e) => setInputValue("userName", e.target.value)}
-            />
-            <div className="error text-danger text-center">
-              <small>{formik.touched.userName && formik.errors.userName}</small>
-            </div>
-            <input
-              className="form-control mb-3"
-              id="password"
-              name="password"
-              type="text"
-              placeholder="Пароль"
-              onChange={(e) => setInputValue("password", e.target.value)}
-            />
-            <div className="error text-danger text-center">
-              <small>{formik.touched.password && formik.errors.password}</small>
-            </div>
-            <button className="btn btn-outline-primary w-100" type="submit">Войти</button>
-          </form>
-        </div>
+        <div className="test">
+					<div className="image">
+						image
+					</div>
+					<div className="form" onSubmit={formik.handleSubmit}>
+						<h1 className="text-center mb-5">Войти</h1>
+						<form id="userForm" onSubmit={formik.handleSubmit}>
+							<input
+								className="form-control mb-3"
+								id="userName"
+								name="userName"
+								type="text"
+								placeholder="Имя пользователя"
+								onChange={(e) => setInputValue("userName", e.target.value)}
+							/>
+							<div className="error text-danger text-center">
+								<small>{formik.touched.userName && formik.errors.userName}</small>
+							</div>
+							<input
+								className="form-control mb-3"
+								id="password"
+								name="password"
+								type="text"
+								placeholder="Пароль"
+								onChange={(e) => setInputValue("password", e.target.value)}
+							/>
+							<div className="error text-danger text-center">
+								<small>{formik.touched.password && formik.errors.password}</small>
+							</div>
+							<button className="btn btn-outline-primary w-100" type="submit">Войти</button>
+						</form>
+					</div>
+				</div>
+				<div className="test1">
+					<Link to="/">Регистрация</Link>
+				</div>
       </div>
     </div>
   );
