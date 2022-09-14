@@ -30,7 +30,7 @@ const validationSchema = yup.object({
     .required(i18Instance.t('errors.password.required')), */
 });
 
-const isUserExist = (username, password) => {
+const isUserExist = (username, password, state) => {
 	axios.post('/api/v1/login', { username: username, password: password }).then((response) => {
 		localStorage.setItem('token', response.data.token);
 		localStorage.setItem('userame', response.data.username);
@@ -42,9 +42,9 @@ const isUserExist = (username, password) => {
 }
 
 const Login = () => {
-	/* const state = {
+	const state = {
 		isLogged: false,
-	} */
+	}
   const formik = useFormik({
     initialValues: {
       userName: '',
@@ -52,7 +52,7 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: values => {
-			isUserExist(values.userName, values.password)
+			isUserExist(values.userName, values.password, state)
     },
   });
 
