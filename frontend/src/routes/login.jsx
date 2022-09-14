@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import i18next from 'i18next';
 import { useFormik } from 'formik';
@@ -42,9 +42,9 @@ const isUserExist = (username, password) => {
 }
 
 const Login = () => {
-	const state = {
+	/* const state = {
 		isLogged: false,
-	}
+	} */
   const formik = useFormik({
     initialValues: {
       userName: '',
