@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import i18next from 'i18next';
 import { useFormik } from 'formik';
+import axios from 'axios';
 import * as yup from 'yup';
 
 import resources from '../locales/index';
@@ -40,6 +41,10 @@ const Login = () => {
       alert(JSON.stringify(values, null, 2));
     },
   });
+
+	axios.post('/api/v1/login', { username: 'admin', password: 'admin' }).then((response) => {
+		console.log(response.data); // => { token: ..., username: 'admin' }
+	});
 
   const setInputValue = useCallback(
     (key, value) =>
