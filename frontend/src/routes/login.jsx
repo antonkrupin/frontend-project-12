@@ -1,18 +1,32 @@
 import React, { useCallback } from 'react';
+import i18next from 'i18next';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+
+import resources from '../locales/index';
 import '../styles/login.css'
+
+const i18Instance = i18next.createInstance();
+
+i18Instance.init({
+	lng: 'ru',
+	resources,
+});
 
 const validationSchema = yup.object({
   userName: yup
-    .string('Enter user name')
-    .min(5, 'User name should be on minimum 5 characters length')
-    .required('User name is required'),
+    .string()
+    .min(5, i18Instance.t('errors.userName.length'))
+    .required(i18Instance.t('errors.userName.required')),
   password: yup
-    .string('Enter your password')
-    .min(8, 'Password should be on minimum 8 characters length')
-    .required('Password is required'),
-})
+    .string()
+    .min(8, i18Instance.t('errors.password.length'))
+		.matches(/[0-9]/, i18Instance.t('errors.password.number'))
+    .matches(/[a-z]/, i18Instance.t('errors.password.lowerCaseLetter'))
+    .matches(/[A-Z]/, i18Instance.t('errors.password.upperCaseLetter'))
+    .matches(/[^\w]/, 'Password requires a symbol')
+    .required(i18Instance.t('errors.password.required')),
+});
 
 const Login = () => {
   const formik = useFormik({
