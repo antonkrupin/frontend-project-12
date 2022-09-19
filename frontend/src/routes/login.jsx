@@ -1,9 +1,11 @@
 import React, { useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import i18next from 'i18next';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
+import useAuth from '../hooks';
+import { Alert } from 'react-bootstrap';
 
 import resources from '../locales/index';
 import '../styles/login.css'
@@ -30,29 +32,23 @@ const validationSchema = yup.object({
     .required(i18Instance.t('errors.password.required')), */
 });
 
-const isUserExist = (username, password, state) => {
-	axios.post('/api/v1/login', { username: username, password: password }).then((response) => {
-		localStorage.setItem('token', response.data.token);
-		localStorage.setItem('userame', response.data.username);
-		this.setState({ isLogged: true });
-		return [true, response.data] // => { token: ..., username: 'admin' }
-	}).catch((error) => {
-		console.log([false, error]);
-	})
-}
-
 const Login = () => {
-	const state = {
-		isLogged: false,
-	}
+	const navigate = useNavigate();
+	const { logIn } = useAuth();
+
   const formik = useFormik({
     initialValues: {
       userName: '',
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: values => {
-			isUserExist(values.userName, values.password, state)
+    onSubmit: async (values) => {
+			const response = await axios.post('/api/v1/login', { username: values.userName, password: values.password }).catch((error) => {
+				console.log([false, error]);
+			});
+			localStorage.setItem('userId', JSON.stringify(response.data));
+			logIn();
+			navigate('/');
     },
   });
 
