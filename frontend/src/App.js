@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation  } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import { Outlet, Link } from 'react-router-dom';
 import Login from './routes/login';
 import Page404 from './routes/page404';
@@ -30,13 +31,23 @@ const PrivateRoute = ({ children }) => {
   const location = useLocation();
 
   return (
-    auth.loggedIn ? children : <Navigate to="/login" state={{ from: location }} />
+    auth.loggedIn ? children : <Navigate to="login" state={{ from: location }} />
+  );
+};
+
+const AuthButton = () => {
+  const auth = useAuth();
+  const location = useLocation();
+
+  return (
+    auth.loggedIn
+      ? <Button onClick={auth.logOut}>Log out</Button>
+      : <Button as={Link} to="/login" state={{ from: location }}>Log in</Button>
   );
 };
 
 const App = () => (
 	<AuthProvider>
-		<div>
 			<BrowserRouter>
 				<Routes>
 				<Route
@@ -51,7 +62,6 @@ const App = () => (
 					<Route path="*" element={<Page404 />} />
 				</Routes>
 			</BrowserRouter>
-		</div>
 	</AuthProvider>
 );
 
