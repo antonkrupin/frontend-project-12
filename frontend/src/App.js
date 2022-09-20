@@ -4,7 +4,7 @@ import { Button, Navbar, Nav } from 'react-bootstrap';
 import { Outlet, Link } from 'react-router-dom';
 import Login from './routes/login';
 import Page404 from './routes/page404';
-import Main from './routes/main';
+import Chat from './routes/chat';
 import Test from './routes/test'
 import './App.css';
 import AuthContext from './contexts/index.jsx';
@@ -51,7 +51,7 @@ const App = () => (
 	<AuthProvider>
 			<BrowserRouter>
 				<Navbar bg="light" expand="lg">
-					<Navbar.Brand as={Link} to="/">Main page</Navbar.Brand>
+					<Navbar.Brand as={Link} to="/">Chat page</Navbar.Brand>
 					<Nav className="mr-auto">
 						<Nav.Link as={Link} to="/login">Login page</Nav.Link>
 						<Nav.Link as={Link} to="/test">Test page</Nav.Link>
@@ -63,7 +63,7 @@ const App = () => (
             path="/"
             element={(
               <PrivateRoute>
-                <Main />
+                <Chat />
               </PrivateRoute>
             )}
           />
