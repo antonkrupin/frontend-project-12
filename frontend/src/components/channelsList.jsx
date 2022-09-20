@@ -1,6 +1,11 @@
 const ChannelsList = () => {
+	const channels = JSON.parse(localStorage.getItem('channels'));
+	console.log(channels);
 	return (
-		<h1>This is channels list</h1>
+		<>
+		<h4>Каналы</h4>
+		{ channels.map((item) => <li key={item.id}># {item.name}</li> )}
+		</>
 	)
 }
 
