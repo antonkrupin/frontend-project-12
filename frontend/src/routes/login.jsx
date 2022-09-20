@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import i18next from 'i18next';
 import { useFormik } from 'formik';
@@ -36,6 +36,8 @@ const Login = () => {
 	const navigate = useNavigate();
 	const { logIn } = useAuth();
 
+	const [alert, setAlert] = useState('')
+
   const formik = useFormik({
     initialValues: {
       userName: '',
@@ -44,7 +46,7 @@ const Login = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
 			const response = await axios.post('/api/v1/login', { username: values.userName, password: values.password }).catch((error) => {
-				console.log([false, error]);
+				setAlert('the username or password is incorrect')
 			});
 			localStorage.setItem('userId', JSON.stringify(response.data));
 			logIn();
@@ -60,6 +62,16 @@ const Login = () => {
       }),
     [formik]
   );
+
+	let alertBlock;
+
+  if (alert !== '') {
+    alertBlock = (
+      <Alert variant="danger">
+        {alert}
+      </Alert>
+    );
+  }
 
   return (
     <div className="main">
@@ -93,6 +105,7 @@ const Login = () => {
 							<div className="error text-danger text-center">
 								<small>{formik.touched.password && formik.errors.password}</small>
 							</div>
+							{alertBlock}
 							<button className="btn btn-outline-primary w-100" type="submit">Войти</button>
 						</form>
 					</div>
