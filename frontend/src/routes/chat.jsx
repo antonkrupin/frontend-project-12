@@ -1,13 +1,43 @@
 import axios from 'axios';
 
+import ChannelsList from '../components/channelsList';
+import ChannelName from '../components/channelName';
+import ChannelWindow from '../components/channelWindow';
+
+
 const Chat = () => {
-	const userId = JSON.parse(localStorage.getItem('userId'));
-	const test = { Authorization: `Bearer ${userId.token}` };
-	const response = axios.get('/api/v1/data', { headers: test});
+	const getData = async () => {
+		const userId = JSON.parse(localStorage.getItem('userId'));
+		const test = { Authorization: `Bearer ${userId.token}` };
+		return await axios.get('/api/v1/data', { headers: test});
+	};
+
+	const response = getData();
 	response.then((data) => {
-		console.log(data.data);
+		localStorage.setItem('channels', JSON.stringify(data.data.channels));
+		localStorage.setItem('messages', JSON.stringify(data.data.messages));
 	})
-  return <h2>Chat page of the App</h2>
+	
+  return (
+		<>
+			<h1>Chat page of the App</h1>
+			<div className="container">
+				<div className="row">
+					<div className="col-4">
+						<ChannelsList />
+					</div>
+					<div className="col-8">
+						<div className="row">
+							<ChannelName />
+						</div>
+						<div className="row">
+							<ChannelWindow />
+						</div>
+					</div>
+				</div>
+			</div>
+		</>
+	)
 }
 
 export default Chat;
