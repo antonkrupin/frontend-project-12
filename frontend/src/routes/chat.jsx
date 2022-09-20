@@ -23,11 +23,11 @@ const Chat = () => {
 			<h1>Chat page of the App</h1>
 			<div className="container">
 				<div className="row">
-					<div className="col-4">
+					<div className="col-2 bg-info h-100">
 						<ChannelsList />
 					</div>
-					<div className="col-8">
-						<div className="row">
+					<div className="col-10">
+						<div className="row bg-info">
 							<ChannelName />
 						</div>
 						<div className="row">
