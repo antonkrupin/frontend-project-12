@@ -1,11 +1,11 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import i18next from 'i18next';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
 import useAuth from '../hooks';
-import { Form, Alert, Button, Overlay } from 'react-bootstrap';
+import { Form, Button, Overlay } from 'react-bootstrap';
 
 import resources from '../locales/index';
 import '../styles/login.css'
