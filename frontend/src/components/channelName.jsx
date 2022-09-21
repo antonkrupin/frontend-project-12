@@ -1,6 +1,9 @@
+import { useSelector } from 'react-redux';
+
 const ChannelName = () => {
+	const activeChannel = useSelector((state) => state.channels.activeChannel);
 	return (
-		<h1>This is channel name</h1>
+		<h4>This is channel name {activeChannel}</h4>
 	)
 }
 
