@@ -1,8 +1,10 @@
+import { Provider } from 'react-redux';
 import axios from 'axios';
 
 import ChannelsList from '../components/channelsList';
 import ChannelName from '../components/channelName';
 import ChannelWindow from '../components/channelWindow';
+import store from '../slices/index.js';
 
 
 const Chat = () => {
@@ -20,32 +22,26 @@ const Chat = () => {
 	
   return (
 		<>
-			<h1>Chat page of the App</h1>
-			<div className="container">
-				<div className="row">
-					<div className="col-2 bg-info h-100">
-						<ChannelsList />
-					</div>
-					<div className="col-10">
-						<div className="row bg-info">
-							<ChannelName />
+			<Provider store={store}>
+				<h1>Chat page of the App</h1>
+				<div className="container">
+					<div className="row">
+						<div className="col-2 bg-info h-100">
+							<ChannelsList />
 						</div>
-						<div className="row">
-							<ChannelWindow />
+						<div className="col-10">
+							<div className="row bg-info">
+								<ChannelName />
+							</div>
+							<div className="row">
+								<ChannelWindow />
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</Provider>
 		</>
 	)
 }
 
 export default Chat;
-
-/*
-
-axios.get('/api/v1/data').then((response) => {
-  console.log(response.data); // => { channels: [...], currentChannelId: 1, messages: [] }
-});
-
-*/
