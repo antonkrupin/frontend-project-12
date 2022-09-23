@@ -9,20 +9,21 @@ const messagesSlice = createSlice({
 	initialState,
 	reducers: {
 		addMessage: (state, action) => {
-			console.log(current(state));
-			console.log(action.payload);
-			if (state.messages.length === 0) {
-				const { message, activeChannelName } = action.payload;
+			const keys = state.messages.map((elem) => elem.channelName);
+			const { message, activeChannel } = action.payload;
+
+			if (keys.indexOf(activeChannel) === -1) {
 				state.messages.push({
-					channelName: activeChannelName,
+					channelName: activeChannel,
 					messages: [message],
 				});
+			} else {
+				state.messages.forEach((elem) => {
+					if (elem.channelName === activeChannel) {
+						elem.messages.push(message);
+					}
+				});
 			}
-			//state.messages = [action.payload, ...state.messages];
-			console.log(current(state.messages));
-			//console.log(state.messages);
-			//console.log(state.messages.length);
-			//console.log(state.messages);
 		},
 	},
 });
