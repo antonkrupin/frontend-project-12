@@ -1,13 +1,16 @@
 import { createSlice, current } from '@reduxjs/toolkit';
 
 const initialState ={
-	messages: JSON.parse(localStorage.getItem('messages')),
+	messages: [],
 }
 
 const messagesSlice = createSlice({
 	name: 'messages',
 	initialState,
 	reducers: {
+		setMessages: (state, action) => {
+			state.messages = action.payload;
+		},
 		addMessage: (state, action) => {
 			const keys = state.messages.map((elem) => elem.channelName);
 			const { message, activeChannel } = action.payload;
@@ -28,6 +31,9 @@ const messagesSlice = createSlice({
 	},
 });
 
-export const { addMessage } = messagesSlice.actions;
+export const {
+	setMessages, 
+	addMessage,
+ } = messagesSlice.actions;
 
 export default messagesSlice.reducer;

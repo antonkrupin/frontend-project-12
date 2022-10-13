@@ -4,6 +4,7 @@ const ChannelMessages = () => {
 	const activeChannel = useSelector((state) => state.channels.activeChannel.name);
 	
 	const allMessages = useSelector((state) => state.messages.messages);
+	console.log(allMessages);
 
 	const messagesToRender = allMessages.map((elem) => {
 		if (elem.channelName === activeChannel) {

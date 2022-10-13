@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation  } from 'react-router-dom';
 import { Button, Navbar, Nav } from 'react-bootstrap';
+import { Provider, useSelector } from 'react-redux';
 import { Outlet, Link } from 'react-router-dom';
 import Login from './routes/login';
 import Page404 from './routes/page404';
 import Chat from './routes/chat';
 import Test from './routes/test'
+import store from '../src/slices/index';
 import './App.css';
 import AuthContext from './contexts/index.jsx';
 import useAuth from './hooks/index.jsx';
@@ -50,6 +52,7 @@ const AuthButton = () => {
 
 const App = () => (
 	<AuthProvider>
+		<Provider store={store}>
 			<BrowserRouter>
 				<Navbar bg="light" expand="lg">
 					<Navbar.Brand as={Link} to="/">Chat page</Navbar.Brand>
@@ -61,18 +64,19 @@ const App = () => (
 				</Navbar>
 				<Routes>
 				<Route
-            path="/"
-            element={(
-              <PrivateRoute>
-                <Chat />
-              </PrivateRoute>
-            )}
-          />
+						path="/"
+						element={(
+							<PrivateRoute>
+								<Chat />
+							</PrivateRoute>
+						)}
+					/>
 					<Route path="login" element={<Login />} />
 					<Route path="*" element={<Page404 />} />
 					<Route path="test" element ={<Test />} />
 				</Routes>
 			</BrowserRouter>
+		</Provider>
 	</AuthProvider>
 );
 

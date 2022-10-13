@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getChannels, setActiveChannel } from '../slices/channelsReducer';
+import { getChannels, setChannels, setActiveChannel } from '../slices/channelsReducer';
 
-const ChannelsList = () => {
-	const channels = useSelector((state) => state.channels.channels);
-
+const ChannelsList = (props) => {
 	const dispatch = useDispatch();
-
+	
+	const channels = useSelector((state) => state.channels.channels);
+	
 	const getChannelName = (e) => {
 		const channelName = e.target.textContent.slice(2);
 		const activeChannel = channels.filter((channel) => channel.name === channelName ?? channel);
+		console.log('activeChannel', activeChannel);
 		dispatch(setActiveChannel(activeChannel[0]));
 	}	
 	

@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 
 const initialState = {
-	channels: JSON.parse(localStorage.getItem('channels')),
-	activeChannel: JSON.parse(localStorage.getItem('channels')),
-	activeChannelMessages: JSON.parse(localStorage.getItem('messages')),
+	channels: [],
+	activeChannel: [],
+	activeChannelMessages: JSON.parse(localStorage.getItem('messages')) || [],
 }
 
 const channelsSlice = createSlice({
@@ -13,8 +13,12 @@ const channelsSlice = createSlice({
 		getChannels: (state) => {
 			state.channels = JSON.parse(localStorage.getItem('channels'));
 		},
+		setChannels: (state, action) => {
+			state.channels = action.payload;
+		},
 		setActiveChannel: (state, action) => {
 			state.activeChannel = action.payload;
+			console.log(`active channel state`,state.activeChannel);
 		},
 		getActiveChannelMessages: (state) => {
 
@@ -23,7 +27,8 @@ const channelsSlice = createSlice({
 });
 
 export const { 
-	getChannels, 
+	getChannels,
+	setChannels,
 	setActiveChannel, 
 	getActiveChannelMessages } = channelsSlice.actions;
 
