@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import socketIO from 'socket.io-client';
 
 import ChannelsList from '../components/channelsList';
 import ChannelName from '../components/channelName';
@@ -10,6 +11,13 @@ import { setChannels, setActiveChannel } from '../slices/channelsReducer';
 
 const Chat = () => {
 	const dispatch = useDispatch();
+
+	const socket = socketIO.connect('http://localhost:3000');
+	console.log(socket.emit('newMessage', { body: 'test message', channelId: 1, id: 8, username: 'admin' }));
+	/*const test = socket.on('newMessage', (payload) => {
+		console.log(payload);
+	});*/
+
 	const getData = () => {
 		const userId = JSON.parse(localStorage.getItem('userId'));
 		const header = { Authorization: `Bearer ${userId.token}` };
