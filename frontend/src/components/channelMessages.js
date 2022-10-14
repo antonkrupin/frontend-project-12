@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import socketIO from 'socket.io-client';
 
 const ChannelMessages = () => {
 	const activeChannel = useSelector((state) => state.channels.activeChannel);
@@ -6,7 +7,7 @@ const ChannelMessages = () => {
 	const messages = useSelector((state) => state.messages.messages);
 
 	const channelMessages = messages[activeChannel.id];
-
+	
 	let renderedMessages;
 
 	if (channelMessages) {
