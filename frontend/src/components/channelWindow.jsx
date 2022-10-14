@@ -1,17 +1,18 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addMessage } from "../slices/messagesReducer";
 
 const ChannelWindow = () => {
 	const dispatch = useDispatch();
-	const activeChannel = useSelector((state) => state.channels.activeChannel.name);
-	//const messages = useSelector((state) => state.messages.messages);
-
+	const id = useSelector((state) => state.channels.activeChannel.id);
+	
 	const target = useRef();
+
 	const addMessageToChannel = (e) => {
 		e.preventDefault();
 		const message = target.current.value;
-		dispatch(addMessage({ activeChannel, message }));
+		dispatch(addMessage({ id, message }));
+		target.current.value = '';
 	}
 
 	return (

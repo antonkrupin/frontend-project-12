@@ -1,4 +1,3 @@
-import { useEffect } from 'react-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
@@ -7,9 +6,7 @@ import ChannelName from '../components/channelName';
 import ChannelWindow from '../components/channelWindow';
 import ChannelMessages from '../components/channelMessages';
 
-import { getChannels, setChannels, setActiveChannel } from '../slices/channelsReducer';
-import { setMessages } from '../slices/messagesReducer';
-
+import { setChannels, setActiveChannel } from '../slices/channelsReducer';
 
 const Chat = () => {
 	const dispatch = useDispatch();
@@ -19,10 +16,6 @@ const Chat = () => {
 		return axios.get('/api/v1/data', { headers: header});
 	};
 
-	/*localStorage.setItem('channels', JSON.stringify(['tetst', 'testst']));
-	localStorage.setItem('messages', JSON.stringify(['dsfdsfsf', 'fdfdsfsd']));
-	const test = JSON.parse(localStorage.getItem('channels'));
-	console.log('test', test);*/
 	getData().then((data) => {
 		localStorage.setItem('channels', JSON.stringify(data.data.channels));
 		localStorage.setItem('messages', JSON.stringify(data.data.messages));
@@ -30,11 +23,9 @@ const Chat = () => {
 		const channels = JSON.parse(localStorage.getItem('channels'));
 		dispatch(setChannels(channels));
 		dispatch(setActiveChannel(channels[0]));
-		const messages = JSON.parse(localStorage.getItem('messages'));
-		dispatch(setMessages(messages));
-	})
-
-	
+		//const messages = JSON.parse(localStorage.getItem('messages'));
+		//dispatch(setMessages(messages));
+	});
 
   return (
 		<div className="h-100 bg-light">

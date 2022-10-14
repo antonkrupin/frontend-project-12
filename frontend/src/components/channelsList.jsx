@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getChannels, setChannels, setActiveChannel } from '../slices/channelsReducer';
+import { setActiveChannel } from '../slices/channelsReducer';
 
-const ChannelsList = (props) => {
+const ChannelsList = () => {
 	const dispatch = useDispatch();
-	
 	const channels = useSelector((state) => state.channels.channels);
-	
-	const getChannelName = (e) => {
+			
+	const changeActiveChannel = (e) => {
 		const channelName = e.target.textContent.slice(2);
 		const activeChannel = channels.filter((channel) => channel.name === channelName ?? channel);
-		console.log('activeChannel', activeChannel);
 		dispatch(setActiveChannel(activeChannel[0]));
 	}	
 	
@@ -32,18 +30,10 @@ const ChannelsList = (props) => {
 			</button>
 		</div>
 			<ul className="nav flex-column nav-pills nav-fill px-2">
-				{ channels.map((item) => <li key={item.id} className="nav-item w-100" onClick={getChannelName}><button type="button" className="w-100 rounded-0 text-start btn"><span className="me-1">#</span> {item.name}</button></li> ) }
+				{ channels.map((item) => <li key={item.id} className="nav-item w-100" onClick={changeActiveChannel}><button type="button" className="w-100 rounded-0 text-start btn"><span className="me-1">#</span> {item.name}</button></li> ) }
 			</ul>
 		</>
 	)
 }
 
 export default ChannelsList;
-
-/*
-
-if (document.readyState === "complete") {
-      onPageLoad();
-    }
-
-*/

@@ -1,27 +1,28 @@
 import { useSelector } from 'react-redux';
 
 const ChannelName = () => {
-	const test = useSelector((state) => state.channels.activeChannel);
+	const activeChannel = useSelector((state) => state.channels.activeChannel);
+
+	const messages = useSelector((state) => state.messages.messages);
+
+	const channelMessages = messages[activeChannel.id];
+
+	let messagesCounter;
 	
-	let activeChannel;
-	if (test.length !== 0) {
-		activeChannel = test[0].name;
-	} else {
-		activeChannel = test.name;
-	}
-	console.log('active channel', activeChannel);
-	const activeChannelMessages = useSelector((state) => state.channels.activeChannelMessages);
-	
-	let messagesCountBlock;
-	if (activeChannelMessages.length === 0) {
-		messagesCountBlock = (
+	if (!channelMessages) {
+		messagesCounter = (
 			<span className="text-muted">0 сообщений</span>
-		);
+		)
+	} else {
+		messagesCounter = (
+			<span className="text-muted">{ channelMessages.length } сообщений</span>
+		)
 	}
+	
 	return (
 		<>
-		<p className="m-0"><b># {activeChannel}</b></p>
-		{ messagesCountBlock }
+		<p className="m-0"><b># {activeChannel.name}</b></p>
+			{messagesCounter}
 		</>
 	)
 }
