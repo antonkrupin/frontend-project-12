@@ -54,7 +54,7 @@ const AuthButton = () => {
   );
 };
 
-const socket = socketIO.connect('http://localhost:5001');
+const socket = socketIO.connect('http://localhost:3000');
 
 const App = () => (
 	<AuthProvider>
