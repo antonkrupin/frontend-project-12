@@ -1,19 +1,29 @@
+import { useEffect } from 'react';
+import { useState } from 'react';
 import { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addMessage } from "../slices/messagesReducer";
 
-const ChannelWindow = () => {
-	const dispatch = useDispatch();
-	const id = useSelector((state) => state.channels.activeChannel.id);
+const ChannelWindow = (props) => {
+	const socket = props.socket;
+	
+	const channelId = useSelector((state) => state.channels.activeChannel.id);
+
+	const username = useSelector((state) => state.messages.username);
 	
 	const target = useRef();
 
+	const [message, setMessage] = useState('');
+	
+	const messageHandler = (e) => {
+		setMessage(e.target.value);
+	};
+	
 	const addMessageToChannel = (e) => {
 		e.preventDefault();
-		const message = target.current.value;
-		dispatch(addMessage({ id, message }));
+		socket.emit('newMessage', { body: message, channelId, username });
 		target.current.value = '';
-	}
+	};
 
 	return (
 		<form className="py-1 border rounded-2">
@@ -24,6 +34,7 @@ const ChannelWindow = () => {
 					placeholder="Введите сообщение..." 
 					className="border-1 p-0 ps-2 form-control"
 					ref={target}
+					onChange={messageHandler}
 				/>
 				<button type="submit" className="btn btn-group-vertical" onClick={addMessageToChannel}>
 				<svg 
