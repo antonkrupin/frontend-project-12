@@ -25,11 +25,11 @@ const validationSchema = yup.object({
   password: yup
     .string()
     .min(5, i18Instance.t('errors.password.length')),
-		/* .matches(/[0-9]/, i18Instance.t('errors.password.number'))
+		/*.matches(/[0-9]/, i18Instance.t('errors.password.number'))
     .matches(/[a-z]/, i18Instance.t('errors.password.lowerCaseLetter'))
     .matches(/[A-Z]/, i18Instance.t('errors.password.upperCaseLetter'))
     .matches(/[^\w]/, 'Password requires a symbol')
-    .required(i18Instance.t('errors.password.required')), */
+    .required(i18Instance.t('errors.password.required')),*/
 });
 
 const Login = () => {
@@ -75,7 +75,7 @@ const Login = () => {
 
 	return (
 		<div className="main">
-			<Form onSubmit={formik.handleSubmit} >
+			<Form className="loginForm" onSubmit={formik.handleSubmit} >
 				<Overlay target={target.current} show={show} placement="bottom">
 					{({ placement, arrowProps, show: _show, popper, ...props }) => (
 						<div
@@ -103,9 +103,15 @@ const Login = () => {
 						required
 						ref={inputRef}
 					/>
+					<div className="error text-danger text-center">
+						<small>{formik.touched.userName && formik.errors.userName}</small>
+					</div>
 				</Form.Group>
 				<Form.Group className="mb-3" controlId="password" >
 					<Form.Control type="text" placeholder="Введите пароль" name="password" onChange={(e) => setInputValue("password", e.target.value)} required />
+					<div className="error text-danger text-center">
+						<small>{formik.touched.password && formik.errors.password}</small>
+					</div>
 				</Form.Group>
 				<Button className="w-100" variant="primary" type="submit">
 					Войти
