@@ -1,9 +1,13 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
+import Channel from './channel';
 import { setActiveChannel } from '../slices/channelsReducer';
+import { addChannelModalShow } from '../slices/modalsReducer';
 
 const ChannelsList = () => {
 	const dispatch = useDispatch();
+
 	const channels = useSelector((state) => state.channels.channels);
 			
 	const changeActiveChannel = (e) => {
@@ -16,7 +20,7 @@ const ChannelsList = () => {
 		<>
 		<div className="d-flex justify-content-between mb-2 ps-4 pe-2">
 			<span>Каналы</span>
-			<button type="button" className="p-0 text-primary btn btn-group-vertical">
+			<button type="button" className="p-0 text-primary btn btn-group-vertical" onClick={() => dispatch(addChannelModalShow())}>
 				<svg 
 					xmlns="http://www.w3.org/2000/svg" 
 					viewBox="0 0 16 16" 
@@ -30,7 +34,7 @@ const ChannelsList = () => {
 			</button>
 		</div>
 			<ul className="nav flex-column nav-pills nav-fill px-2">
-				{ channels.map((item) => <li key={item.id} className="nav-item w-100" onClick={changeActiveChannel}><button type="button" className="w-100 rounded-0 text-start btn"><span className="me-1">#</span> {item.name}</button></li> ) }
+				{ channels.map((channel) => <Channel key={channel.id} channel={channel} onClick={changeActiveChannel}/>) }
 			</ul>
 		</>
 	)
