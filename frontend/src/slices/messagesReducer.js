@@ -1,7 +1,8 @@
 import { createSlice, current } from '@reduxjs/toolkit';
 
 const initialState ={
-	messages: JSON.parse(localStorage.getItem('messages')) || {},
+	messages: JSON.parse(localStorage.getItem('messages')) || [],
+	username: '',
 }
 
 const messagesSlice = createSlice({
@@ -12,13 +13,10 @@ const messagesSlice = createSlice({
 			state.messages = action.payload;
 		},
 		addMessage: (state, action) => {
-			const { message, id } = action.payload;
-			if (id in state.messages) {
-				state.messages[id].push(message);
-			} else {
-				state.messages[id] = [message];
-			}
-			localStorage.setItem('messages', JSON.stringify(state.messages));
+			state.messages.push(action.payload);
+		},
+		setUserName: (state, action) => {
+			state.username = action.payload;
 		},
 	},
 });
@@ -26,6 +24,7 @@ const messagesSlice = createSlice({
 export const {
 	setMessages, 
 	addMessage,
+	setUserName,
  } = messagesSlice.actions;
 
 export default messagesSlice.reducer;

@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import i18next from 'i18next';
 import { useFormik } from 'formik';
 import axios from 'axios';
@@ -111,6 +111,7 @@ const Login = () => {
 					Войти
 				</Button>
 			</Form>
+			<Link to="/signup">Регистрация</Link>
 		</div>
 	)
 
