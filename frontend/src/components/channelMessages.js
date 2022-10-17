@@ -1,18 +1,18 @@
 import { useSelector } from 'react-redux';
 
 const ChannelMessages = () => {
-	const activeChannel = useSelector((state) => state.channels.activeChannel);
+	const channelId = useSelector((state) => state.channels.activeChannel.id);
 
 	const messages = useSelector((state) => state.messages.messages);
 
-	const channelMessages = messages[activeChannel.id];
-	
+	const channelMessages = messages.filter((message) => message.channelId === channelId);
+		
 	let renderedMessages;
 
 	if (channelMessages) {
 		renderedMessages = (
 			<>
-			{ channelMessages.map((message, index) => <div key={index} className="text-break mb-2"><b>{message}</b></div>) }
+			{ channelMessages.map((message, index) => <div key={index} className="text-break mb-2"><b>{message.username}: {message.body}</b></div>) }
 			</>
 		)
 	}
