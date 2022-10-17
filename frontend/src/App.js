@@ -3,14 +3,18 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation  } from 'react-rout
 import { Button, Navbar, Nav } from 'react-bootstrap';
 import { Provider, useSelector } from 'react-redux';
 import { Outlet, Link } from 'react-router-dom';
+import socketIO from 'socket.io-client';
+
 import Login from './routes/login';
+import SignUp from './routes/signup';
 import Page404 from './routes/page404';
 import Chat from './routes/chat';
 import Test from './routes/test'
 import store from '../src/slices/index';
-import './App.css';
 import AuthContext from './contexts/index.jsx';
 import useAuth from './hooks/index.jsx';
+
+import './App.css';
 
 
 const AuthProvider = ({ children }) => {
@@ -50,6 +54,8 @@ const AuthButton = () => {
   );
 };
 
+const socket = socketIO.connect('http://localhost:3000');
+
 const App = () => (
 	<AuthProvider>
 		<Provider store={store}>
@@ -67,13 +73,14 @@ const App = () => (
 						path="/"
 						element={(
 							<PrivateRoute>
-								<Chat />
+								<Chat socket={socket}/>
 							</PrivateRoute>
 						)}
 					/>
 					<Route path="login" element={<Login />} />
 					<Route path="*" element={<Page404 />} />
-					<Route path="test" element ={<Test />} />
+					<Route path="test" element={<Test />} />
+					<Route path="signup" element={<SignUp />} />
 				</Routes>
 			</BrowserRouter>
 		</Provider>
