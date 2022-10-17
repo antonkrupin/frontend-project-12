@@ -44,7 +44,7 @@
   height: 8vh;
 }
 
-form {
+.loginForm {
 	position: fixed;
 	width: 25%;
 	left: 50%;
