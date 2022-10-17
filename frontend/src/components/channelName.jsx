@@ -2,10 +2,10 @@ import { useSelector } from 'react-redux';
 
 const ChannelName = () => {
 	const activeChannel = useSelector((state) => state.channels.activeChannel);
-
+	
 	const messages = useSelector((state) => state.messages.messages);
 
-	const channelMessages = messages[activeChannel.id];
+	const channelMessages = messages.filter((message) => message.channelId === activeChannel.id);
 
 	let messagesCounter;
 	
