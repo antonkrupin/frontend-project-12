@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import socketIO from 'socket.io-client';
@@ -7,13 +8,14 @@ import ChannelName from '../components/channelName';
 import ChannelWindow from '../components/channelWindow';
 import ChannelMessages from '../components/channelMessages';
 
+import { setUserName, addMessage } from '../slices/messagesReducer';
 import { setChannels, setActiveChannel } from '../slices/channelsReducer';
 
-const Chat = () => {
+const Chat = (props) => {
 	const dispatch = useDispatch();
-
-	const socket = socketIO.connect('http://localhost:3000');
-	console.log(socket.emit('newMessage', { body: 'test message', channelId: 1, id: 8, username: 'admin' }));
+	const socket = props.socket;
+	//const socket = socketIO.connect('http://localhost:3000');
+	//console.log(socket.emit('newMessage', { body: 'test message', channelId: 1, id: 8, username: 'admin' }));
 	/*const test = socket.on('newMessage', (payload) => {
 		console.log(payload);
 	});*/
@@ -29,11 +31,17 @@ const Chat = () => {
 		localStorage.setItem('messages', JSON.stringify(data.data.messages));
 	}).then(() => {
 		const channels = JSON.parse(localStorage.getItem('channels'));
+		const username = JSON.parse(localStorage.getItem('userId')).username;
+		dispatch(setUserName(username));
 		dispatch(setChannels(channels));
 		dispatch(setActiveChannel(channels[0]));
-		//const messages = JSON.parse(localStorage.getItem('messages'));
-		//dispatch(setMessages(messages));
 	});
+
+	useEffect(() => {
+		socket.on('newMessage', (payload) => {
+			dispatch(addMessage(payload));
+		});
+	}, []);
 
   return (
 		<div className="h-100 bg-light">
@@ -42,18 +50,18 @@ const Chat = () => {
 					<div className="container h-100 my-4 overflow-hidden rounded shadow">
 						<div className="row h-100 bg-white flex-md-row">
 							<div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
-								<ChannelsList />
+								<ChannelsList socket={socket}/>
 							</div>
 							<div className="col p-0 h-100">
 								<div className="d-flex flex-column h-100">
 									<div className="bg-light mb-4 p-3 shadow-sm small">
-										<ChannelName />
+										<ChannelName socket={socket}/>
 									</div>
 									<div id="messages-box" className="chat-messages overflow-auto px-5">
-										<ChannelMessages />
+										<ChannelMessages socket={socket}/>
 									</div>
 									<div className="mt-auto px-5 py-3">
-										<ChannelWindow />
+										<ChannelWindow socket={socket}/>
 									</div>
 								</div>
 							</div>
