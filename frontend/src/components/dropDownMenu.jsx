@@ -1,46 +1,34 @@
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+
+import { renameChannelId, deleteChannelId } from '../slices/channelsReducer';
+import { renameChannelModalShow, deleteChannelModalShow } from '../slices/modalsReducer';
 
 const DropDownMenu = (props) => {
+	const dispatch = useDispatch();
+
+	const renameChannelHandler = () => {
+		dispatch(renameChannelId(props.id));
+		dispatch(renameChannelModalShow());
+	}
+
+	const deleteChannelHandler = () => {
+		dispatch(deleteChannelId(props.id));
+		dispatch(deleteChannelModalShow());
+	}
+
   return (
-    <>
-    <div x-placement="bottom-start" 
-         aria-labelledby={props.dropDownId} 
-         className="dropdown-menu" 
-         data-popper-reference-hidden="false" 
-         data-popper-escaped="false" 
-         data-popper-placement="bottom-start" 
-         >
-      <a data-rr-ui-dropdown-item="" className="dropdown-item" role="button" tabIndex="0" href="#">Удалить</a>
-      <a data-rr-ui-dropdown-item="" className="dropdown-item" role="button" tabIndex="0" href="#">Переименовать</a>
-    </div>
-    </>
+    <Dropdown as={ButtonGroup} className="d-flex">
+      <Button onClick={props.onClick} id={props.dropDownId} className={props.channelNameClass}># {props.channelName}</Button>
+
+      <Dropdown.Toggle split className={props.dropDownClass} id={props.dropDownId} />
+
+      <Dropdown.Menu>
+        <Dropdown.Item onClick={deleteChannelHandler} href="#">Удалить</Dropdown.Item>
+        <Dropdown.Item onClick={renameChannelHandler} href="#">Переименовать</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   )
 };
 
 export default DropDownMenu;
-
-/*
-style="position: absolute; inset: 0px auto auto 0px; transform: translate(173px, 40px);
-
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Dropdown from 'react-bootstrap/Dropdown';
-
-function SplitBasicExample() {
-  return (
-    <Dropdown as={ButtonGroup}>
-      <Button variant="success">Split Button</Button>
-
-      <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
-
-      <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-  );
-}
-
-export default SplitBasicExample;
-*/
