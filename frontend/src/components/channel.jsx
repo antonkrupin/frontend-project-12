@@ -18,6 +18,10 @@ const Channel = (props) => {
 		'btn-secondary': isActiveChannel,
 	});
 
+	const test = cn('w-100 rounded-0 text-start text-truncate', {
+		'btn-secondary': isActiveChannel,
+	})
+
 	const dropDownClass = cn('flex-grow-0 dropdown-toggle dropdown-toggle-split btn', {
 		'btn-secondary': isActiveChannel,
 	});
@@ -36,15 +40,18 @@ const Channel = (props) => {
 	if (channel.removable) {
 		channelItem = (
 			<>
-				<li className="nav-item w-100" onClick={onClick}>
+			<li className="nav-item w-100" >
+				<DropDownMenu onClick={onClick} id={channel.id} dropDownId={dropDownId} dropDownClass={dropDownClass} channelNameClass={test} channelName={channel.name}/>
+			</li>
+				{/*<li className="nav-item w-100" onClick={onClick}>
 					<div role="group" className="d-flex dropdown btn-group">
 						<button type="button" className={channelNameClass}>
 							<span className="me-1">#</span> {channel.name}
 						</button>
 						<button type="button" id={dropDownId} aria-expanded="false" className={dropDownClass}><span className="visually-hidden">Управление каналом</span></button>
-						{/*<DropDownMenu dropDownId={dropDownId}/>*/}
+						<DropDownMenu dropDownId={dropDownId} dropDownClass={dropDownClass}/>
 					</div>
-				</li>
+				</li>*/}
 			</>
 		)
 	}
