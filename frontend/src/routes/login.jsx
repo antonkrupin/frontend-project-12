@@ -45,8 +45,8 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-			console.log('test');
 			const response = await axios.post('/api/v1/login', { username: values.userName, password: values.password }).catch((error) => {
+				console.log(error);
 				setAlert('Неверные имя пользователя или пароль');
 				setShow(!show);
 			});
