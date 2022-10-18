@@ -45,6 +45,7 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+			console.log('test');
 			const response = await axios.post('/api/v1/login', { username: values.userName, password: values.password }).catch((error) => {
 				setAlert('Неверные имя пользователя или пароль');
 				setShow(!show);
@@ -74,6 +75,59 @@ const Login = () => {
   );
 
 	return (
+		<div className="container-fluid h-100">
+			<div className="row justify-content-center align-content-center h-100">
+				<div className="col-12 col-md-8 col-xxl-6">
+					<div className="card shadow-sm">
+						<div className="card-body row p-5">
+								<div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
+									<img src="/static/media/signup_img.jpg" alt="Логин"/>
+								</div>
+								<Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
+									<h1 className="text-center mb-4">Войти</h1>
+									<div className="form-floating mb-3">
+										<input
+											onChange={(e) => setInputValue("userName", e.target.value)}
+											name="username"
+											autoComplete="username"
+											required=""
+											placeholder="Ваш ник"
+											id="username"
+											className="form-control"
+											defaultValue=""
+											ref={inputRef}
+										/>
+											<label htmlFor="username">Ваш ник</label>
+									</div>
+									<div className="form-floating mb-4">
+										<input
+											onChange={(e) => setInputValue("password", e.target.value)}
+											name="password"
+											autoComplete="current-password"
+											required=""
+											placeholder="Пароль"
+											type="password"
+											id="password"
+											className="form-control"
+											defaultValue=""
+										/>
+											<label className="form-label" htmlFor="password">Пароль</label>
+									</div>
+									<button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</button>
+								</Form>
+						</div>
+						<div className="card-footer p-4">
+							<div className="text-center">
+								<span>Нет аккаунта?</span> <Link to="/signup">Регистрация</Link>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	)
+
+	/*return (
 		<div className="main">
 			<Form className="loginForm" onSubmit={formik.handleSubmit} >
 				<Overlay target={target.current} show={show} placement="bottom">
@@ -119,7 +173,7 @@ const Login = () => {
 			</Form>
 			<Link to="/signup">Регистрация</Link>
 		</div>
-	)
+	)*/
 
   /*return (
     <div className="main">
