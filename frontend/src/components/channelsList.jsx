@@ -2,10 +2,12 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Channel from './channel';
+import RenameChannelModal from './modals/RenameChannelModal';
+import DeleteChannelModal from './modals/DeleteChannelModal';
 import { setActiveChannel } from '../slices/channelsReducer';
 import { addChannelModalShow } from '../slices/modalsReducer';
 
-const ChannelsList = () => {
+const ChannelsList = (props) => {
 	const dispatch = useDispatch();
 
 	const channels = useSelector((state) => state.channels.channels);
@@ -33,9 +35,11 @@ const ChannelsList = () => {
 				<span className="visually-hidden">+</span>
 			</button>
 		</div>
-			<ul className="nav flex-column nav-pills nav-fill px-2">
-				{ channels.map((channel) => <Channel key={channel.id} channel={channel} onClick={changeActiveChannel}/>) }
-			</ul>
+		<ul className="nav flex-column nav-pills nav-fill px-2">
+			{ channels.map((channel) => <Channel key={channel.id} channel={channel} onClick={changeActiveChannel} />) }
+		</ul>
+		<RenameChannelModal socket={props.socket} channels={channels}/>
+		<DeleteChannelModal socket={props.socket} channels={channels}/>
 		</>
 	)
 }
