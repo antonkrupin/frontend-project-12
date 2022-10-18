@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -6,12 +7,17 @@ import axios from 'axios';
 const SignUp = () => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const shouldRedirect = false;
 	//axios.post('/api/v1/signup', { username: 'newuser', password: '123456' });
 
 	const createNewUser = async (e) => {
 		e.preventDefault();
+		console.log('test');
+		//await axios.post('/api/v1/signup', { username: 'newuser', password: '123456' })
+		console.log('username', username);
+		console.log('password', password);
 		const response = await axios.post('/api/v1/signup', { username, password });
-		response.then((data) => console.log(data.status));
+		//response.then((data) => console.log(data.status));
 		setUsername('');
 		setPassword('');
 	}
@@ -25,19 +31,19 @@ const SignUp = () => {
 						<form className="w-50">
 							<h1 className="text-center mb-4">Регистрация</h1>
 							<div className="form-floating mb-3">
-								<input placeholder="От 3 до 20 символов" name="username" autoComplete="username" required="" id="username" className="form-control is-invalid" defaultValue="" />
+								<input onChange={(e) => setUsername(e.target.value)} placeholder="От 3 до 20 символов" name="username" autoComplete="username" required="" id="username" className="form-control is-invalid" defaultValue="" />
 								<label className="form-label" htmlFor="username">Имя пользователя</label>
 								<div placement="right" className="invalid-tooltip">Обязательное поле</div>
 							</div>
 							<div className="form-floating mb-3">
-								<input placeholder="Не менее 6 символов" name="password" aria-describedby="passwordHelpBlock" required="" autoComplete="new-password" type="password" id="password" className="form-control" defaultValue="" />
+								<input onChange={(e) => setPassword(e.target.value)} placeholder="Не менее 6 символов" name="password" aria-describedby="passwordHelpBlock" required="" autoComplete="new-password" type="password" id="password" className="form-control" defaultValue="" />
 								<div className="invalid-tooltip">Обязательное поле</div><label className="form-label" htmlFor="password">Пароль</label>
 							</div>
 							<div className="form-floating mb-4">
 								<input placeholder="Пароли должны совпадать" name="confirmPassword" required="" autoComplete="new-password" type="password" id="confirmPassword" className="form-control" defaultValue="" />
 								<div className="invalid-tooltip"></div><label className="form-label" htmlFor="confirmPassword">Подтвердите пароль</label>
 							</div>
-							<button type="submit" className="w-100 btn btn-outline-primary">Зарегистрироваться</button>
+							<button onClick={createNewUser} type="submit" className="w-100 btn btn-outline-primary">Зарегистрироваться</button>
 						</form>
 					</div>
 				</div>
