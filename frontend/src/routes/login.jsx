@@ -1,33 +1,35 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import i18next from 'i18next';
+//import i18next from 'i18next';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
 import { Form, Button, Overlay } from 'react-bootstrap';
 import cn from 'classnames';
 
+import i18 from '../assets/i18';
+
 import useAuth from '../hooks';
 import OverlayWrong from '../components/overlays/overlayWrong';
-import resources from '../locales/index';
+//import resources from '../locales/index';
 
 import '../styles/login.css'
 
 
-const i18Instance = i18next.createInstance();
+/*const i18Instance = i18next.createInstance();
 
 i18Instance.init({
 	lng: 'ru',
 	resources,
-});
+});*/
 
 const validationSchema = yup.object({
   username: yup
     .string()
-		.required(i18Instance.t('errors.username.required')),
+		.required(i18.t('errors.username.required')),
   password: yup
     .string()
-		.required(i18Instance.t('errors.password.required')),
+		.required(i18.t('errors.password.required')),
 });
 
 const Login = () => {
@@ -117,7 +119,7 @@ const Login = () => {
 									</div>
 									<button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</button>
 								</form>
-								<OverlayWrong overlayRef={passwordRef} show={showErrorOverlay} overlayText={i18Instance.t('errors.authorization.wrong')}/>
+								<OverlayWrong overlayRef={passwordRef} show={showErrorOverlay} overlayText={i18.t('errors.authorization.wrong')}/>
 						</div>
 						<div className="card-footer p-4">
 							<div className="text-center">

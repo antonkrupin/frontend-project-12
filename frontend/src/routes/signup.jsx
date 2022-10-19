@@ -1,35 +1,37 @@
 import { useState, useCallback, useRef } from 'react';
 import { Navigate, useNavigate, Link } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
-import i18next from 'i18next';
+//import i18next from 'i18next';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import cn from 'classnames';
 
+import i18 from '../assets/i18';
+
 import useAuth from '../hooks';
 import OverlayWrong from '../components/overlays/overlayWrong';
-import resources from '../locales/index';
+//import resources from '../locales/index';
 
 
-const i18Instance = i18next.createInstance();
+/*const i18Instance = i18next.createInstance();
 
 i18Instance.init({
 	lng: 'ru',
 	resources,
-});
+});*/
 
 const validationSchema = yup.object({
   username: yup
     .string()
-    .min(5, i18Instance.t('errors.username.length'))
-		.max(20, i18Instance.t('errors.username.maxLength'))
-    .required(i18Instance.t('errors.username.required')),
+    .min(5, i18.t('errors.username.length'))
+		.max(20, i18.t('errors.username.maxLength'))
+    .required(i18.t('errors.username.required')),
   password: yup
     .string()
-    .min(6, i18Instance.t('errors.password.length'))
-		.matches(/[0-9]/, i18Instance.t('errors.password.number'))
-    .matches(/[a-z]/, i18Instance.t('errors.password.lowerCaseLetter')),
+    .min(6, i18.t('errors.password.length'))
+		.matches(/[0-9]/, i18.t('errors.password.number'))
+    .matches(/[a-z]/, i18.t('errors.password.lowerCaseLetter')),
     /*.matches(/[A-Z]/, i18Instance.t('errors.password.upperCaseLetter'))
     .required(i18Instance.t('errors.password.required')),*/
 });
@@ -66,7 +68,7 @@ const SignUp = () => {
 			} = values;
 			if (password !== confirmPassword) {
 				setOverlayRef(confirmPasswordRef);
-				setOverlayText(i18Instance.t('errors.authorization.confirmPassword'));
+				setOverlayText(i18.t('errors.authorization.confirmPassword'));
 				const className = cn('form-control', 'is-invalid');
 				passwordRef.current.className = className;
 				confirmPasswordRef.current.className = className;
@@ -75,7 +77,7 @@ const SignUp = () => {
 				const response = await axios.post('/api/v1/signup', { username, password }).catch((error) => {
 					if (error.response.status === 409) {
 						setOverlayRef(confirmPasswordRef);
-						setOverlayText(i18Instance.t('errors.authorization.userExist'));
+						setOverlayText(i18.t('errors.authorization.userExist'));
 						const className = cn('form-control', 'is-invalid');
 						usernameRef.current.className = className;
 						passwordRef.current.className = className;
