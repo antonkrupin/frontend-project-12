@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import { Form, Button, Overlay } from 'react-bootstrap';
 import cn from 'classnames';
 
-import i18 from '../assets/i18';
+import i18 from '../asserts/i18';
 
 import useAuth from '../hooks';
 import OverlayWrong from '../components/overlays/overlayWrong';

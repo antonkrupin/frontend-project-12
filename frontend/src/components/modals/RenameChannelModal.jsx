@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
 import { Form, InputGroup, Modal, Button } from 'react-bootstrap';
 
-import i18 from '../../assets/i18';
+import i18 from '../../asserts/i18';
 
 import { renameChannelModalShow } from '../../slices/modalsReducer';
 
