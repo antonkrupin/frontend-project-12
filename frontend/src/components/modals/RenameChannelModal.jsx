@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
 import { Form, InputGroup, Modal, Button } from 'react-bootstrap';
 
+import i18 from '../../assets/i18';
+
 import { renameChannelModalShow } from '../../slices/modalsReducer';
 
 const RenameChannelModal = (props) => {
@@ -18,16 +20,17 @@ const RenameChannelModal = (props) => {
 
 	const isRenameChannelModalShow = useSelector((state) => state.modals.isRenameChannelModalShow);
 	
-	const [name, setChannelName] = useState(null);
+	const [name, setChannelName] = useState('');
 
+	const [error, setError] = useState('');
+	
 	const renameChannelHandler = (e) => {
 		e.preventDefault();
 		if (!_.includes(channelsNames, name)) {
 			socket.emit('renameChannel', { id: channelId, name });
 			dispatch(renameChannelModalShow())
-		} else {
-			console.log('double channel name');
 		}
+		setError(i18.t('errors.channels.renameChannel'));
 	}
 
 	return (
@@ -37,11 +40,16 @@ const RenameChannelModal = (props) => {
 				<Modal.Title>Переименовать канал</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<Form className="is-invalid" >
-					<InputGroup className="mb-3 is-invalid required" onChange={(e) => setChannelName(e.target.value)}>
-						<Form.Control aria-label="chartName" />
-					</InputGroup>
-				</Form>
+				<form>
+					<input 
+						onChange={(e) => setChannelName(e.target.value)}
+						required
+						id="channelName"
+						className="form-control"
+						defaultValue={name}
+					/>
+					<div className="text-danger">{error}</div>
+				</form>
 			</Modal.Body>
 			<Modal.Footer className="border-top-0">
 				<Button variant="secondary" onClick={() => dispatch(renameChannelModalShow())}>
