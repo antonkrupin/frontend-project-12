@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import socketIO from 'socket.io-client';
 import reportWebVitals from './reportWebVitals';
 
 import App from './App';
@@ -9,9 +10,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const socket = socketIO.connect('http://localhost:3000');
 root.render(
 	<Provider store={store}>
-  	<App />
+  	<App socket={socket}/>
 	</Provider>
 );
 
