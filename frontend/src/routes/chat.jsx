@@ -15,55 +15,49 @@ import { fetchChannels, addChannel, setActiveChannel, renameChannel, deleteChann
 
 const Chat = (props) => {
 	const dispatch = useDispatch();
+
 	const socket = props.socket;
-	
-	/*const getData = () => {
-		const userId = JSON.parse(localStorage.getItem('userId'));
-		const header = { Authorization: `Bearer ${userId.token}` };
-		return axios.get('/api/v1/data', { headers: header});
-	};
 
-	getData().then((data) => {
-		localStorage.setItem('channels', JSON.stringify(data.data.channels));
-		localStorage.setItem('messages', JSON.stringify(data.data.messages));
-	}).then(() => {
-		const channels = JSON.parse(localStorage.getItem('channels'));
-		const username = JSON.parse(localStorage.getItem('userId')).username;
-		dispatch(setUserName(username));
-		dispatch(setChannels(channels));
-		dispatch(setActiveChannel(channels[0]));
-	});*/
+	const { fetchChannelsStatus } = useSelector((state) => state.channels);
 
-	const {status, error} = useSelector((state) => state.channels);
+	const { fetchMessagesStatus } = useSelector((state) => state.messages);
 	
 	useEffect(() => {
 		const username = JSON.parse(localStorage.getItem('userId')).username;
+	
 		dispatch(setUserName(username));
 		dispatch(fetchChannels());
 		dispatch(fetchMessages());
+
 		socket.on('newMessage', (payload) => {
 			dispatch(addMessage(payload));
 		});
+
 		socket.on('newChannel', (payload) => {
 			dispatch(setActiveChannel(payload));
 			dispatch(addChannel(payload));
 		});
+
 		socket.on('renameChannel', (payload) => {
 			dispatch(renameChannel(payload));
 		});
+
 		socket.on('removeChannel', (payload) => {
 			dispatch(deleteChannel(payload));
 		});
+	
 	}, []);
 	
   return (
 		<>
-			{status === 'loading' && <div class="d-flex justify-content-center">
-				<div class="spinner-border" role="status">
-					<span class="sr-only">Loading...</span>
+			{(fetchChannelsStatus === 'loading' || fetchMessagesStatus === 'loading') && 
+				<div className="d-flex flex-column justify-content-center align-items-center">
+					<div className="spinner-border text-primary" role="status">
+					</div>
+					<span className="sr-only text-primary">Загрузка...</span>
 				</div>
-			</div>}
-			<div className="h-100 bg-light">
+			}
+			{(fetchChannelsStatus === 'resolved' && fetchMessagesStatus === 'resolved') && <><div className="h-100 bg-light">
 				<div className="h-100">
 					<div className="h-100" id="chat">
 						<div className="container h-100 my-4 overflow-hidden rounded shadow">
@@ -89,37 +83,9 @@ const Chat = (props) => {
 					</div>
 				</div>
 			</div>
-			<AddChannelModal socket={socket}/>
+			<AddChannelModal socket={socket}/></>}
 		</>
 	)
 }
 
 export default Chat;
-
-/*
-
-	<div className="modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div className="modal-dialog modal-dialog-centered" role="document">
-    <div className="modal-content">
-      <div className="modal-header">
-        <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div className="modal-body">
-        <div className="d-flex h-100 justify-content-center">
-					<div className="spinner-border" role="status">
-						<span className="sr-only">Loading...</span>
-					</div>
-				</div>
-      </div>
-      <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" className="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-*/
