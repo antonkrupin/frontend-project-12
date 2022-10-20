@@ -1,11 +1,37 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { createSlice, createAsyncThunk, current} from '@reduxjs/toolkit';
 
 const initialState = {
 	channels: [],
+	status: null,
+	error: null,
 	activeChannel: {},
 	renameChannelId: '',
 	deleteChannelId: '',
 }
+
+export const fetchChannels = createAsyncThunk(
+	'channels/fetchChannels',
+	async function(_, {rejectWithValue}) {
+		try {
+			const userId = JSON.parse(localStorage.getItem('userId'));
+			const header = { Authorization: `Bearer ${userId.token}` };
+
+			const response = await axios.get('/api/v1/data', { headers: header});
+
+			if(response.status !== 200) {
+				throw new Error('Server Error!');
+			}
+
+			const channels = response.data.channels;
+
+			return channels;
+		} catch (error) {	
+				return rejectWithValue(error.message);
+		}
+		
+	}
+);
 
 const channelsSlice = createSlice({
 	name: 'channels',
@@ -13,9 +39,6 @@ const channelsSlice = createSlice({
 	reducers: {
 		getChannels: (state) => {
 			state.channels = JSON.parse(localStorage.getItem('channels'));
-		},
-		setChannels: (state, action) => {
-			state.channels = action.payload;
 		},
 		setActiveChannel: (state, action) => {
 			state.activeChannel = action.payload;
@@ -49,11 +72,25 @@ const channelsSlice = createSlice({
 			localStorage.setItem('channels', JSON.stringify(state.channels));
 		},
 	},
+	extraReducers: {
+		[fetchChannels.pending]: (state) => {
+			state.status = 'loading';
+			state.error = null;
+		},
+		[fetchChannels.fulfilled]: (state, action) => {
+			state.status = 'resolved';
+			state.channels = action.payload;
+			state.activeChannel = action.payload[0];
+		},
+		[fetchChannels.rejected]: (state, action) => {
+			state.status = 'rejected';
+			state.error = action.payload;
+		},
+	},
 });
 
 export const { 
 	getChannels,
-	setChannels,
 	setActiveChannel,
 	addChannel,
 	renameChannelId,
