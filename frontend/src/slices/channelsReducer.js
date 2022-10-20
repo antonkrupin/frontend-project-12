@@ -3,10 +3,11 @@ import { createSlice, createAsyncThunk, current} from '@reduxjs/toolkit';
 
 const initialState = {
 	channels: [],
-	status: null,
+	fetchChannelsStatus: null,
 	error: null,
 	activeChannel: {},
 	renameChannelId: '',
+	renameChannelStatus: null,
 	deleteChannelId: '',
 }
 
@@ -16,20 +17,15 @@ export const fetchChannels = createAsyncThunk(
 		try {
 			const userId = JSON.parse(localStorage.getItem('userId'));
 			const header = { Authorization: `Bearer ${userId.token}` };
-
 			const response = await axios.get('/api/v1/data', { headers: header});
-
 			if(response.status !== 200) {
 				throw new Error('Server Error!');
 			}
-
 			const channels = response.data.channels;
-
 			return channels;
 		} catch (error) {	
 				return rejectWithValue(error.message);
 		}
-		
 	}
 );
 
@@ -37,9 +33,9 @@ const channelsSlice = createSlice({
 	name: 'channels',
 	initialState,
 	reducers: {
-		getChannels: (state) => {
+		/*getChannels: (state) => {
 			state.channels = JSON.parse(localStorage.getItem('channels'));
-		},
+		},*/
 		setActiveChannel: (state, action) => {
 			state.activeChannel = action.payload;
 		},
@@ -49,8 +45,10 @@ const channelsSlice = createSlice({
 		},
 		renameChannelId: (state, action) => {
 			state.renameChannelId = action.payload;
+			state.renameChannelStatus = 'renaming';
 		},
 		renameChannel: (state, action) => {
+			state.renameChannelStatus = 'renamed';
 			const { id, name } = action.payload;
 			state.channels.forEach((channel) => {
 				if (channel.id === id) {
@@ -58,6 +56,7 @@ const channelsSlice = createSlice({
 				}
 			});
 			localStorage.setItem('channels', JSON.stringify(state.channels));
+			state.renameChannelStatus = null;
 		},
 		deleteChannelId: (state, action) => {
 			state.deleteChannelId = action.payload;
@@ -74,23 +73,23 @@ const channelsSlice = createSlice({
 	},
 	extraReducers: {
 		[fetchChannels.pending]: (state) => {
-			state.status = 'loading';
+			state.fetchChannelsStatus = 'loading';
 			state.error = null;
 		},
 		[fetchChannels.fulfilled]: (state, action) => {
-			state.status = 'resolved';
+			state.fetchChannelsStatus = 'resolved';
 			state.channels = action.payload;
 			state.activeChannel = action.payload[0];
 		},
 		[fetchChannels.rejected]: (state, action) => {
-			state.status = 'rejected';
+			state.fetchChannelsStatus = 'rejected';
 			state.error = action.payload;
 		},
 	},
 });
 
 export const { 
-	getChannels,
+	//getChannels,
 	setActiveChannel,
 	addChannel,
 	renameChannelId,
