@@ -21,8 +21,11 @@ const ChannelWindow = (props) => {
 	
 	const addMessageToChannel = (e) => {
 		e.preventDefault();
-		socket.emit('newMessage', { body: message, channelId, username });
+		if(message) {
+			socket.emit('newMessage', { body: message, channelId, username });
+		}
 		target.current.value = '';
+		setMessage('');
 	};
 
 	return (
