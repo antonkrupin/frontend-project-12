@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import socketIO from 'socket.io-client';
 
@@ -10,19 +10,14 @@ import ChannelMessages from '../components/channelMessages';
 import AddChannelModal from '../components/modals/AddChannelModal';
 import RenameChannelModal from '../components/modals/RenameChannelModal';
 
-import { setUserName, addMessage } from '../slices/messagesReducer';
-import { addChannel, setChannels, setActiveChannel, renameChannel, deleteChannel } from '../slices/channelsReducer';
+import { fetchMessages, setUserName, addMessage } from '../slices/messagesReducer';
+import { fetchChannels, addChannel, setActiveChannel, renameChannel, deleteChannel } from '../slices/channelsReducer';
 
 const Chat = (props) => {
 	const dispatch = useDispatch();
 	const socket = props.socket;
-	//const socket = socketIO.connect('http://localhost:3000');
-	//console.log(socket.emit('newMessage', { body: 'test message', channelId: 1, id: 8, username: 'admin' }));
-	/*const test = socket.on('newMessage', (payload) => {
-		console.log(payload);
-	});*/
-
-	const getData = () => {
+	
+	/*const getData = () => {
 		const userId = JSON.parse(localStorage.getItem('userId'));
 		const header = { Authorization: `Bearer ${userId.token}` };
 		return axios.get('/api/v1/data', { headers: header});
@@ -37,9 +32,15 @@ const Chat = (props) => {
 		dispatch(setUserName(username));
 		dispatch(setChannels(channels));
 		dispatch(setActiveChannel(channels[0]));
-	});
+	});*/
 
+	const {status, error} = useSelector((state) => state.channels);
+	
 	useEffect(() => {
+		const username = JSON.parse(localStorage.getItem('userId')).username;
+		dispatch(setUserName(username));
+		dispatch(fetchChannels());
+		dispatch(fetchMessages());
 		socket.on('newMessage', (payload) => {
 			dispatch(addMessage(payload));
 		});
@@ -54,9 +55,14 @@ const Chat = (props) => {
 			dispatch(deleteChannel(payload));
 		});
 	}, []);
-
+	
   return (
 		<>
+			{status === 'loading' && <div class="d-flex justify-content-center">
+				<div class="spinner-border" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>}
 			<div className="h-100 bg-light">
 				<div className="h-100">
 					<div className="h-100" id="chat">
@@ -89,3 +95,31 @@ const Chat = (props) => {
 }
 
 export default Chat;
+
+/*
+
+	<div className="modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div className="modal-dialog modal-dialog-centered" role="document">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div className="modal-body">
+        <div className="d-flex h-100 justify-content-center">
+					<div className="spinner-border" role="status">
+						<span className="sr-only">Loading...</span>
+					</div>
+				</div>
+      </div>
+      <div className="modal-footer">
+        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" className="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+*/
