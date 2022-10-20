@@ -1,10 +1,6 @@
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Dropdown from 'react-bootstrap/Dropdown';
-
 import DropDownMenu from './dropDownMenu';
 
 const Channel = (props) => {
@@ -43,15 +39,6 @@ const Channel = (props) => {
 			<li className="nav-item w-100" >
 				<DropDownMenu onClick={onClick} id={channel.id} dropDownId={dropDownId} dropDownClass={dropDownClass} channelNameClass={test} channelName={channel.name}/>
 			</li>
-				{/*<li className="nav-item w-100" onClick={onClick}>
-					<div role="group" className="d-flex dropdown btn-group">
-						<button type="button" className={channelNameClass}>
-							<span className="me-1">#</span> {channel.name}
-						</button>
-						<button type="button" id={dropDownId} aria-expanded="false" className={dropDownClass}><span className="visually-hidden">Управление каналом</span></button>
-						<DropDownMenu dropDownId={dropDownId} dropDownClass={dropDownClass}/>
-					</div>
-				</li>*/}
 			</>
 		)
 	}
