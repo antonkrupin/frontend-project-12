@@ -7,7 +7,7 @@ const ChannelName = () => {
 
 	const channelMessages = messages.filter((message) => message.channelId === activeChannel.id);
 
-	let messagesCounter;
+	/*let messagesCounter;
 	
 	if (!channelMessages) {
 		messagesCounter = (
@@ -17,12 +17,12 @@ const ChannelName = () => {
 		messagesCounter = (
 			<span className="text-muted">{ channelMessages.length } сообщений</span>
 		)
-	}
+	}*/
 	
 	return (
 		<>
 		<p className="m-0"><b># {activeChannel.name}</b></p>
-			{messagesCounter}
+			<span className="text-muted">{ channelMessages.length } сообщений</span>
 		</>
 	)
 }
