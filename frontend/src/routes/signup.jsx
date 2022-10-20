@@ -11,15 +11,6 @@ import i18 from '../asserts/i18';
 
 import useAuth from '../hooks';
 import OverlayWrong from '../components/overlays/overlayWrong';
-//import resources from '../locales/index';
-
-
-/*const i18Instance = i18next.createInstance();
-
-i18Instance.init({
-	lng: 'ru',
-	resources,
-});*/
 
 const validationSchema = yup.object({
   username: yup
@@ -53,6 +44,8 @@ const SignUp = () => {
 
 	const [overlayText, setOverlayText] = useState('');
 
+	const [status, setStatus] = useState(null);
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -74,33 +67,25 @@ const SignUp = () => {
 				confirmPasswordRef.current.className = className;
 				setShowErrorOverlay(!showErrorOverlay);
 			} else {
-				const response = await axios.post('/api/v1/signup', { username, password }).catch((error) => {
-					if (error.response.status === 409) {
-						setOverlayRef(confirmPasswordRef);
-						setOverlayText(i18.t('errors.authorization.userExist'));
-						const className = cn('form-control', 'is-invalid');
-						usernameRef.current.className = className;
-						passwordRef.current.className = className;
-						confirmPasswordRef.current.className = className;
-						setShowErrorOverlay(!showErrorOverlay);
-					}
+				setStatus('registration');
+				await axios.post('/api/v1/signup', { username, password })
+				.then((data) => {
+					localStorage.setItem('userId', JSON.stringify(data.data));
+					logIn();
+					navigate('/');
+					setStatus('registred');
+				})
+				.catch((error) => {
+					setOverlayRef(confirmPasswordRef);
+					setOverlayText(i18.t('errors.authorization.userExist'));
+					const className = cn('form-control', 'is-invalid');
+					usernameRef.current.className = className;
+					passwordRef.current.className = className;
+					confirmPasswordRef.current.className = className;
+					setShowErrorOverlay(!showErrorOverlay);
+					setStatus(null);
 				});
-				localStorage.setItem('userId', JSON.stringify(response.data));
-				logIn();
-				navigate('/');
 			}
-			/*const response = await axios.post('/api/v1/login', { username: values.username, password: values.password }).catch((error) => {
-				const className = cn('form-control', 'is-invalid');
-				usernameRef.current.className = className;
-				passwordRef.current.className = className;
-				setShowErrorOverlay(!showErrorOverlay);
-			});*/
-			//409 пользователь существует
-			/*const response = await axios.post('/api/v1/signup', { username, password });
-			setShowErrorOverlay(!showErrorOverlay);
-			localStorage.setItem('userId', JSON.stringify(response.data));
-			logIn();
-			navigate('/');*/
     },
   });
 
@@ -113,22 +98,18 @@ const SignUp = () => {
     [formik]
   );
 
-	//const [username, setusername] = useState('');
-	//const [password, setPassword] = useState('');
-	//const shouldRedirect = false;
-	//axios.post('/api/v1/signup', { username: 'newuser', password: '123456' });
-
-	/*const createNewUser = async (e) => {
-		e.preventDefault();
-		console.log('test');
-		//await axios.post('/api/v1/signup', { username: 'newuser', password: '123456' })
-		console.log('username', username);
-		console.log('password', password);
-		const response = await axios.post('/api/v1/signup', { username, password });
-		//response.then((data) => console.log(data.status));
-		setusername('');
-		setPassword('');
-	}*/
+	let buttonEnter;
+	buttonEnter = (
+		<button type="submit" className="w-100 mb-3 btn btn-outline-primary">Зарегистрироваться</button>
+	)
+	if (status === 'registration') {
+		buttonEnter = (
+			<button type="submit" className="w-100 mb-3 btn btn-outline-primary disabled">
+				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
+				Регистрация
+			</button>
+		)
+	}
 
 	return (
 		<div className="container-fluid h-100">
@@ -186,7 +167,8 @@ const SignUp = () => {
 									/>
 									<label className="form-label" htmlFor="confirmPassword">Подтвердите пароль</label>
 								</div>
-								<button type="submit" className="w-100 btn btn-outline-primary">Зарегистрироваться</button>
+								{/*<button type="submit" className="w-100 btn btn-outline-primary">Зарегистрироваться</button>*/}
+								{buttonEnter}
 								<OverlayWrong overlayRef={overlayRef} show={showErrorOverlay} overlayText={overlayText}/>
 							</form>
 						</div>
