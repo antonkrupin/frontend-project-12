@@ -5,6 +5,8 @@ import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 const initialState ={
 	messages: [],
 	username: '',
+	fetchMessagesStatus: null,
+	error: null,
 }
 
 export const fetchMessages = createAsyncThunk(
@@ -25,9 +27,9 @@ const messagesSlice = createSlice({
 	name: 'messages',
 	initialState,
 	reducers: {
-		setMessages: (state, action) => {
+		/*setMessages: (state, action) => {
 			state.messages = action.payload;
-		},
+		},*/
 		addMessage: (state, action) => {
 			state.messages.push(action.payload);
 			localStorage.setItem('messages', JSON.stringify(state.messages));
@@ -50,11 +52,11 @@ const messagesSlice = createSlice({
 	},
 	extraReducers: {
 		[fetchMessages.pending]: (state) => {
-			state.status = 'loading';
+			state.fetchMessagesStatus = 'loading';
 			state.error = null;
 		},
 		[fetchMessages.fulfilled]: (state, action) => {
-			state.status = 'resolved';
+			state.fetchMessagesStatus = 'resolved';
 			state.messages = action.payload;
 		},
 		[fetchMessages.rejected]: (state, action) => {},
@@ -62,7 +64,7 @@ const messagesSlice = createSlice({
 });
 
 export const {
-	setMessages, 
+	//setMessages, 
 	addMessage,
 	setUserName,
 	deleteMessages,
