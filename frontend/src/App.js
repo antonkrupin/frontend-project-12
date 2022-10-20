@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation  } from 'react-router-dom';
 import { Button, Navbar, Nav } from 'react-bootstrap';
 import { Outlet, Link } from 'react-router-dom';
-import socketIO from 'socket.io-client';
+//import socketIO from 'socket.io-client';
 
 import Login from './routes/login';
 import SignUp from './routes/signup';
@@ -52,9 +52,9 @@ const AuthButton = () => {
   );
 };
 
-const socket = socketIO.connect('http://localhost:3000');
+//const socket = socketIO.connect('http://localhost:3000');
 
-const App = () => (
+const App = (props) => (
 	<AuthProvider>
 		<BrowserRouter>
 			<Navbar bg="light" expand="lg">
@@ -70,7 +70,7 @@ const App = () => (
 					path="/"
 					element={(
 						<PrivateRoute>
-							<Chat socket={socket}/>
+							<Chat socket={props.socket}/>
 						</PrivateRoute>
 					)}
 				/>
