@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 //import i18next from 'i18next';
 import { useFormik } from 'formik';
@@ -37,6 +38,8 @@ const Login = () => {
 
 	const { logIn } = useAuth();
 
+	const [status, setStatus] = useState(null);
+
   const formik = useFormik({
     initialValues: {
       userName: '',
@@ -44,15 +47,19 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-			const response = await axios.post('/api/v1/login', { username: values.username, password: values.password }).catch((error) => {
+			setStatus('loading');
+			await axios.post('/api/v1/login', { username: values.username, password: values.password }).then((data) => {
+				localStorage.setItem('userId', JSON.stringify(data.data));
+				logIn();
+				navigate('/');
+				setStatus('loaded');
+			})
+			.catch((error) => {
 				const className = cn('form-control', 'is-invalid');
 				userNameRef.current.className = className;
 				passwordRef.current.className = className;
 				setShowErrorOverlay(!showErrorOverlay);
 			});
-			localStorage.setItem('userId', JSON.stringify(response.data));
-			logIn();
-			navigate('/');
     },
   });
 
@@ -61,7 +68,7 @@ const Login = () => {
 	const userNameRef = useRef();
 
 	const passwordRef = useRef();
-
+	
 	useEffect(() => {
 		userNameRef.current.focus();
 	}, [])
@@ -75,61 +82,81 @@ const Login = () => {
     [formik]
   );
 
+	let buttonEnter;
+	buttonEnter = (
+		<button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</button>
+	)
+	if (status === 'loading') {
+		buttonEnter = (
+			<button type="submit" className="w-100 mb-3 btn btn-outline-primary disabled">
+				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
+				Вход
+			</button>
+		)
+	}
+
 	return (
-		<div className="container-fluid h-100">
-			<div className="row justify-content-center align-content-center h-100">
-				<div className="col-12 col-md-8 col-xxl-6">
-					<div className="card shadow-sm">
-						<div className="card-body row p-5">
-								<div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-									<img src="/static/media/signup_img.jpg" alt="Логин"/>
+		<>
+			<div className="container-fluid h-100">
+				<div className="row justify-content-center align-content-center h-100">
+					<div className="col-12 col-md-8 col-xxl-6">
+						<div className="card shadow-sm">
+							<div className="card-body row p-5">
+									<div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
+										<img src="/static/media/signup_img.jpg" alt="Логин"/>
+									</div>
+									<form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
+										<h1 className="text-center mb-4">Войти</h1>
+										<div className="form-floating mb-3">
+											<input
+												onChange={(e) => setInputValue("username", e.target.value)}
+												name="username"
+												autoComplete="username"
+												required
+												placeholder="Ваш ник"
+												id="username"
+												className="form-control"
+												defaultValue=""
+												ref={userNameRef}
+											/>
+												<label htmlFor="username">Ваш ник</label>
+												<small className="text-danger">{formik.touched.username && formik.errors.username}</small>
+										</div>
+										<div className="form-floating mb-4">
+											<input
+												onChange={(e) => setInputValue("password", e.target.value)}
+												name="password"
+												autoComplete="current-password"
+												required
+												placeholder="Пароль"
+												type="password"
+												id="password"
+												className="form-control"
+												defaultValue=""
+												ref={passwordRef}
+											/>
+												<label className="form-label" htmlFor="password">Пароль</label>
+												<small className="text-danger">{formik.touched.password && formik.errors.password}</small>
+										</div>
+										{/*<button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти
+										<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  									<span class="sr-only">Loading...</span>
+										</button>*/}
+										{buttonEnter}
+										
+									</form>
+									<OverlayWrong overlayRef={passwordRef} show={showErrorOverlay} overlayText={i18.t('errors.authorization.wrong')}/>
+							</div>
+							<div className="card-footer p-4">
+								<div className="text-center">
+									<span>Нет аккаунта?</span> <Link to="/signup">Регистрация</Link>
 								</div>
-								<form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-									<h1 className="text-center mb-4">Войти</h1>
-									<div className="form-floating mb-3">
-										<input
-											onChange={(e) => setInputValue("username", e.target.value)}
-											name="username"
-											autoComplete="username"
-											required
-											placeholder="Ваш ник"
-											id="username"
-											className="form-control"
-											defaultValue=""
-											ref={userNameRef}
-										/>
-											<label htmlFor="username">Ваш ник</label>
-											<small className="text-danger">{formik.touched.username && formik.errors.username}</small>
-									</div>
-									<div className="form-floating mb-4">
-										<input
-											onChange={(e) => setInputValue("password", e.target.value)}
-											name="password"
-											autoComplete="current-password"
-											required
-											placeholder="Пароль"
-											type="password"
-											id="password"
-											className="form-control"
-											defaultValue=""
-											ref={passwordRef}
-										/>
-											<label className="form-label" htmlFor="password">Пароль</label>
-											<small className="text-danger">{formik.touched.password && formik.errors.password}</small>
-									</div>
-									<button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</button>
-								</form>
-								<OverlayWrong overlayRef={passwordRef} show={showErrorOverlay} overlayText={i18.t('errors.authorization.wrong')}/>
-						</div>
-						<div className="card-footer p-4">
-							<div className="text-center">
-								<span>Нет аккаунта?</span> <Link to="/signup">Регистрация</Link>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	)
 }
 
