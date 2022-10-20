@@ -25,13 +25,20 @@ const RenameChannelModal = (props) => {
 
 	const [error, setError] = useState('');
 
+	const { renameChannelStatus } = useSelector((state) => state.channels);
+
+	const [status, setStatus] = useState(null);
+
 	const renameChannelHandler = (e) => {
 		e.preventDefault();
+		setStatus('renaming');
 		if (!_.includes(channelsNames, name)) {
 			socket.emit('renameChannel', { id: channelId, name });
 			setChannelName('');
 			setError('');
-			dispatch(renameChannelModalShow());
+			if (renameChannelStatus === 'renamed') {
+				dispatch(renameChannelModalShow());
+			}
 		}
 		setError(i18.t('errors.channels.renameChannel'));
 	}
@@ -40,6 +47,20 @@ const RenameChannelModal = (props) => {
 		setChannelName('');
 		setError('');
 		dispatch(renameChannelModalShow());
+		setStatus(null);
+	}
+
+	let buttonSend;
+	buttonSend = (
+		<button className="primary" onClick={renameChannelHandler}>Отправить</button>
+	)
+	if (renameChannelStatus === 'renaming' && status === 'renaming') {
+		buttonSend = (
+			<button type="submit" className="w-100 mb-3 btn btn-outline-primary disabled">
+				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
+				Переименование
+			</button>
+		)
 	}
 
 	return (
@@ -64,9 +85,10 @@ const RenameChannelModal = (props) => {
 				<Button variant="secondary" onClick={cancelRenameChannelHandler}>
 					Отменить
 				</Button>
-				<Button variant="primary" onClick={renameChannelHandler}>
+				{/*<Button variant="primary" onClick={renameChannelHandler}>
 					Отправить
-				</Button>
+				</Button>*/}
+				{buttonSend}
 			</Modal.Footer>
 		</Modal>
 		</>
