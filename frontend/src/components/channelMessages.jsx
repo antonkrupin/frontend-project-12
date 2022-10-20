@@ -7,7 +7,7 @@ const ChannelMessages = () => {
 
 	const channelMessages = messages.filter((message) => message.channelId === channelId);
 		
-	let renderedMessages;
+	/*let renderedMessages;
 
 	if (channelMessages) {
 		renderedMessages = (
@@ -15,11 +15,11 @@ const ChannelMessages = () => {
 			{ channelMessages.map((message, index) => <div key={index} className="text-break mb-2"><b>{message.username}: {message.body}</b></div>) }
 			</>
 		)
-	}
+	}*/
 
 	return (
 		<>
-		{renderedMessages}
+			{ channelMessages.map((message, index) => <div key={index} className="text-break mb-2"><b>{message.username}: {message.body}</b></div>) }
 		</>
 	);
 }
