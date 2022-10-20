@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-//import i18next from 'i18next';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
@@ -12,17 +11,8 @@ import i18 from '../asserts/i18';
 
 import useAuth from '../hooks';
 import OverlayWrong from '../components/overlays/overlayWrong';
-//import resources from '../locales/index';
 
 import '../styles/login.css'
-
-
-/*const i18Instance = i18next.createInstance();
-
-i18Instance.init({
-	lng: 'ru',
-	resources,
-});*/
 
 const validationSchema = yup.object({
   username: yup
@@ -47,18 +37,19 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-			setStatus('loading');
+			setStatus('authorization');
 			await axios.post('/api/v1/login', { username: values.username, password: values.password }).then((data) => {
 				localStorage.setItem('userId', JSON.stringify(data.data));
 				logIn();
 				navigate('/');
-				setStatus('loaded');
+				setStatus('authorized');
 			})
 			.catch((error) => {
 				const className = cn('form-control', 'is-invalid');
 				userNameRef.current.className = className;
 				passwordRef.current.className = className;
 				setShowErrorOverlay(!showErrorOverlay);
+				setStatus(null);
 			});
     },
   });
@@ -86,7 +77,7 @@ const Login = () => {
 	buttonEnter = (
 		<button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</button>
 	)
-	if (status === 'loading') {
+	if (status === 'authorization') {
 		buttonEnter = (
 			<button type="submit" className="w-100 mb-3 btn btn-outline-primary disabled">
 				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
@@ -138,18 +129,13 @@ const Login = () => {
 												<label className="form-label" htmlFor="password">Пароль</label>
 												<small className="text-danger">{formik.touched.password && formik.errors.password}</small>
 										</div>
-										{/*<button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти
-										<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-  									<span class="sr-only">Loading...</span>
-										</button>*/}
 										{buttonEnter}
-										
 									</form>
 									<OverlayWrong overlayRef={passwordRef} show={showErrorOverlay} overlayText={i18.t('errors.authorization.wrong')}/>
 							</div>
 							<div className="card-footer p-4">
 								<div className="text-center">
-									<span>Нет аккаунта?</span> <Link to="/signup">Регистрация</Link>
+									<span >Нет аккаунта?</span> <Link to={status !== 'authorization' ? '/signup' : '#'} >Регистрация</Link>
 								</div>
 							</div>
 						</div>
