@@ -1,10 +1,25 @@
 import _ from 'lodash';
-import { createSlice, current } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 
 const initialState ={
-	messages: JSON.parse(localStorage.getItem('messages')) || [],
+	messages: [],
 	username: '',
 }
+
+export const fetchMessages = createAsyncThunk(
+	'messages/fetchMessages',
+	async function() {
+		const userId = JSON.parse(localStorage.getItem('userId'));
+		const header = { Authorization: `Bearer ${userId.token}` };
+
+		const response = await axios.get('/api/v1/data', { headers: header});
+
+		const messages = response.data.messages;
+
+		return messages;
+	}
+);
 
 const messagesSlice = createSlice({
 	name: 'messages',
@@ -32,6 +47,17 @@ const messagesSlice = createSlice({
 			state.messages = difference;
 			localStorage.setItem('messages', JSON.stringify(state.messages));
 		},
+	},
+	extraReducers: {
+		[fetchMessages.pending]: (state) => {
+			state.status = 'loading';
+			state.error = null;
+		},
+		[fetchMessages.fulfilled]: (state, action) => {
+			state.status = 'resolved';
+			state.messages = action.payload;
+		},
+		[fetchMessages.rejected]: (state, action) => {},
 	},
 });
 
