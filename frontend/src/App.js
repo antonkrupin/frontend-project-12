@@ -59,14 +59,10 @@ const App = (props) => (
 		<BrowserRouter>
 			<Navbar bg="light" expand="lg">
 				<Navbar.Brand as={Link} to="/">Chat page</Navbar.Brand>
-				<Nav className="mr-auto">
-					<Nav.Link as={Link} to="/login">Login page</Nav.Link>
-					<Nav.Link as={Link} to="/test">Test page</Nav.Link>
-				</Nav>
 				<AuthButton />
 			</Navbar>
 			<Routes>
-			<Route
+				<Route
 					path="/"
 					element={(
 						<PrivateRoute>
