@@ -11,7 +11,8 @@ import AddChannelModal from '../components/modals/AddChannelModal';
 import RenameChannelModal from '../components/modals/RenameChannelModal';
 
 import { fetchMessages, setUserName, addMessage } from '../slices/messagesReducer';
-import { fetchChannels, addChannel, setActiveChannel, renameChannel, deleteChannel } from '../slices/channelsReducer';
+import { setChannelStatus, fetchChannels, addChannel, setActiveChannel, renameChannel, deleteChannel } from '../slices/channelsReducer';
+import { addChannelModalShow, renameChannelModalShow, deleteChannelModalShow } from '../slices/modalsReducer';
 
 const Chat = (props) => {
 	const dispatch = useDispatch();
@@ -36,14 +37,20 @@ const Chat = (props) => {
 		socket.on('newChannel', (payload) => {
 			dispatch(setActiveChannel(payload));
 			dispatch(addChannel(payload));
+			dispatch(addChannelModalShow());
+			dispatch(setChannelStatus('added'));
 		});
 
 		socket.on('renameChannel', (payload) => {
 			dispatch(renameChannel(payload));
+			dispatch(renameChannelModalShow());
+			dispatch(setChannelStatus('renamed'));
 		});
 
 		socket.on('removeChannel', (payload) => {
 			dispatch(deleteChannel(payload));
+			dispatch(deleteChannelModalShow());
+			dispatch(setChannelStatus('deleted'));
 		});
 	
 	}, []);
