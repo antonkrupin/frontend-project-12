@@ -6,7 +6,7 @@ import { Form, InputGroup, Modal, Button } from 'react-bootstrap';
 import i18 from '../../asserts/i18';
 
 import { renameChannelModalShow } from '../../slices/modalsReducer';
-import { renameChannelId } from '../../slices/channelsReducer';
+import { renameChannelId, setChannelStatus } from '../../slices/channelsReducer';
 
 const RenameChannelModal = (props) => {
 	const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const RenameChannelModal = (props) => {
 
 	const channelId = useSelector((state) => state.channels.renameChannelId);
 
-	const renamedChannel = useSelector((state) => state.channels.channels).filter(({id}) => id === channelId);
+	//const renamedChannel = useSelector((state) => state.channels.channels).filter(({id}) => id === channelId);
 
 	const isRenameChannelModalShow = useSelector((state) => state.modals.isRenameChannelModalShow);
 	
@@ -25,38 +25,35 @@ const RenameChannelModal = (props) => {
 
 	const [error, setError] = useState('');
 
-	const { renameChannelStatus } = useSelector((state) => state.channels);
-
-	const [status, setStatus] = useState(null);
+	const { channelStatus } = useSelector((state) => state.channels);
 
 	const renameChannelHandler = (e) => {
 		e.preventDefault();
-		setStatus('renaming');
+		dispatch(setChannelStatus('renaming'));
 		if (!_.includes(channelsNames, name)) {
 			socket.emit('renameChannel', { id: channelId, name });
 			setChannelName('');
 			setError('');
-			if (renameChannelStatus === 'renamed') {
-				dispatch(renameChannelModalShow());
-			}
+		} else {
+			dispatch(setChannelStatus(null));
+			setError(i18.t('errors.channels.renameChannel'));
 		}
-		setError(i18.t('errors.channels.renameChannel'));
+		
 	}
 
 	const cancelRenameChannelHandler = () => {
 		setChannelName('');
 		setError('');
 		dispatch(renameChannelModalShow());
-		setStatus(null);
 	}
 
 	let buttonSend;
 	buttonSend = (
-		<button className="primary" onClick={renameChannelHandler}>Отправить</button>
+		<button className="btn btn-primary" onClick={renameChannelHandler}>Отправить</button>
 	)
-	if (renameChannelStatus === 'renaming' && status === 'renaming') {
+	if (channelStatus === 'renaming') {
 		buttonSend = (
-			<button type="submit" className="w-100 mb-3 btn btn-outline-primary disabled">
+			<button type="submit" className="btn btn-primary disabled">
 				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
 				Переименование
 			</button>
@@ -65,7 +62,7 @@ const RenameChannelModal = (props) => {
 
 	return (
 		<>
-		<Modal show={isRenameChannelModalShow} onHide={cancelRenameChannelHandler}>
+		<Modal show={isRenameChannelModalShow} onHide={cancelRenameChannelHandler} >
 			<Modal.Header closeButton >
 				<Modal.Title>Переименовать канал</Modal.Title>
 			</Modal.Header>
