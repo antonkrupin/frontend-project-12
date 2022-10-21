@@ -5,6 +5,7 @@ import { Form, InputGroup, Modal, Button } from 'react-bootstrap';
 
 import { deleteMessages } from '../../slices/messagesReducer'; 
 import { deleteChannelModalShow } from '../../slices/modalsReducer';
+import { setChannelStatus } from '../../slices/channelsReducer';
 
 const DeleteChannelModal = (props) => {
 	const dispatch = useDispatch();
@@ -21,11 +22,27 @@ const DeleteChannelModal = (props) => {
 	
 	const [name, setChannelName] = useState(null);
 
+	const { channelStatus } = useSelector((state) => state.channels);
+
 	const deleteChannelHandler = (e) => {
 		e.preventDefault();
+		dispatch(setChannelStatus('deleting'));
 		socket.emit('removeChannel', { id: channelId });
 		dispatch(deleteMessages({ channelId }));
-		dispatch(deleteChannelModalShow());
+		//dispatch(deleteChannelModalShow());
+	}
+
+	let buttonDelete;
+	buttonDelete = (
+		<button className="btn btn-danger" onClick={deleteChannelHandler}>Удалить</button>
+	)
+	if (channelStatus === 'deleting') {
+		buttonDelete = (
+			<button type="submit" className="btn btn-danger disabled">
+				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
+				Удаление
+			</button>
+		)
 	}
 
 	return (
@@ -38,9 +55,10 @@ const DeleteChannelModal = (props) => {
 				<Button variant="secondary" onClick={() => dispatch(deleteChannelModalShow())}>
 					Отменить
 				</Button>
-				<Button variant="danger" onClick={deleteChannelHandler}>
+				{/*<Button variant="danger" onClick={deleteChannelHandler}>
 					Удалить
-				</Button>
+					</Button>*/}
+				{buttonDelete}
 			</Modal.Footer>
 		</Modal>
 		</>
