@@ -6,8 +6,8 @@ const initialState = {
 	fetchChannelsStatus: null,
 	error: null,
 	activeChannel: {},
+	channelStatus: null,
 	renameChannelId: '',
-	renameChannelStatus: null,
 	deleteChannelId: '',
 }
 
@@ -33,22 +33,22 @@ const channelsSlice = createSlice({
 	name: 'channels',
 	initialState,
 	reducers: {
-		/*getChannels: (state) => {
-			state.channels = JSON.parse(localStorage.getItem('channels'));
-		},*/
+		setChannelStatus: (state, action) => {
+			state.channelStatus = action.payload;
+		},
 		setActiveChannel: (state, action) => {
 			state.activeChannel = action.payload;
 		},
 		addChannel: (state, action) => {
 			state.channels.push(action.payload);
 			localStorage.setItem('channels', JSON.stringify(state.channels));
+			state.channelStatus = null;
 		},
 		renameChannelId: (state, action) => {
+			//state.channelStatus = null;
 			state.renameChannelId = action.payload;
-			state.renameChannelStatus = 'renaming';
 		},
 		renameChannel: (state, action) => {
-			state.renameChannelStatus = 'renamed';
 			const { id, name } = action.payload;
 			state.channels.forEach((channel) => {
 				if (channel.id === id) {
@@ -56,7 +56,7 @@ const channelsSlice = createSlice({
 				}
 			});
 			localStorage.setItem('channels', JSON.stringify(state.channels));
-			state.renameChannelStatus = null;
+			state.channelStatus = null;
 		},
 		deleteChannelId: (state, action) => {
 			state.deleteChannelId = action.payload;
@@ -89,7 +89,7 @@ const channelsSlice = createSlice({
 });
 
 export const { 
-	//getChannels,
+	setChannelStatus,
 	setActiveChannel,
 	addChannel,
 	renameChannelId,
