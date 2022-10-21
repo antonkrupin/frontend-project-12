@@ -24,5 +24,19 @@ export default {
 				renameChannel: 'Имя канала должно быть уникальным',
 			}
 		},
+		ui: {
+			modals: {
+				
+			},
+			buttons: {
+				cancle: 'Отменить',
+				delete: 'Удалить',
+				add: 'Отправить',
+				rename: 'Отправить',
+				adding: 'Создание',
+				login: 'Войти',
+				logout: 'Выйти',
+			},
+		}
 	},
 };
