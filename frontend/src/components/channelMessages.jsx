@@ -6,16 +6,6 @@ const ChannelMessages = () => {
 	const messages = useSelector((state) => state.messages.messages);
 
 	const channelMessages = messages.filter((message) => message.channelId === channelId);
-		
-	/*let renderedMessages;
-
-	if (channelMessages) {
-		renderedMessages = (
-			<>
-			{ channelMessages.map((message, index) => <div key={index} className="text-break mb-2"><b>{message.username}: {message.body}</b></div>) }
-			</>
-		)
-	}*/
 
 	return (
 		<>
