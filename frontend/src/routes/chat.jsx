@@ -2,7 +2,10 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import socketIO from 'socket.io-client';
+import { ToastContainer, toast } from 'react-toastify';
+import { injectStyle } from "react-toastify/dist/inject-style";
 
+import  i18n from '../asserts/i18';
 import ChannelsList from '../components/channelsList';
 import ChannelName from '../components/channelName';
 import ChannelWindow from '../components/channelWindow';
@@ -14,6 +17,10 @@ import { fetchMessages, setUserName, addMessage } from '../slices/messagesReduce
 import { setChannelStatus, fetchChannels, addChannel, setActiveChannel, renameChannel, deleteChannel } from '../slices/channelsReducer';
 import { addChannelModalShow, renameChannelModalShow, deleteChannelModalShow } from '../slices/modalsReducer';
 
+if (typeof window !== "undefined") {
+  injectStyle();
+}
+
 const Chat = (props) => {
 	const dispatch = useDispatch();
 
@@ -23,6 +30,14 @@ const Chat = (props) => {
 
 	const { fetchMessagesStatus } = useSelector((state) => state.messages);
 	
+	const notify = (text) => {
+		toast.success(text, {
+			position: "top-right",
+			autoClose: 5000,
+			theme: "light",
+		});
+	}
+
 	useEffect(() => {
 		const username = JSON.parse(localStorage.getItem('userId')).username;
 	
@@ -38,18 +53,21 @@ const Chat = (props) => {
 			dispatch(setActiveChannel(payload));
 			dispatch(addChannel(payload));
 			dispatch(addChannelModalShow());
+			notify(i18n.t('ui.toasts.channelCreated'));
 			dispatch(setChannelStatus('added'));
 		});
 
 		socket.on('renameChannel', (payload) => {
 			dispatch(renameChannel(payload));
 			dispatch(renameChannelModalShow());
+			notify(i18n.t('ui.toasts.channelRenamed'));
 			dispatch(setChannelStatus('renamed'));
 		});
 
 		socket.on('removeChannel', (payload) => {
 			dispatch(deleteChannel(payload));
 			dispatch(deleteChannelModalShow());
+			notify(i18n.t('ui.toasts.channelDeleted'));
 			dispatch(setChannelStatus('deleted'));
 		});
 	
@@ -90,6 +108,7 @@ const Chat = (props) => {
 					</div>
 				</div>
 			</div>
+			<ToastContainer />
 			<AddChannelModal socket={socket}/></>}
 		</>
 	)
