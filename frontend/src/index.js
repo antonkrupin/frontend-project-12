@@ -6,11 +6,17 @@ import reportWebVitals from './reportWebVitals';
 
 import App from './App';
 import store from './slices/index';
+import { injectStyle } from "react-toastify/dist/inject-style";
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const socket = socketIO.connect('http://localhost:3000');
+
+if (typeof window !== "undefined") {
+  injectStyle();
+}
+
 root.render(
 	<Provider store={store}>
 		<App socket={socket}/>
