@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation  } from 'react-router-dom';
-import { Button, Navbar, Nav } from 'react-bootstrap';
-import { Outlet, Link } from 'react-router-dom';
-//import socketIO from 'socket.io-client';
+import { Button, Navbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 
 import Login from './routes/login';
 import SignUp from './routes/signup';
