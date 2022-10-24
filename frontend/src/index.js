@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const socket = socketIO.connect('http://localhost:3000');
 root.render(
 	<Provider store={store}>
-  	<App socket={socket}/>
+		<App socket={socket}/>
 	</Provider>
 );
 
