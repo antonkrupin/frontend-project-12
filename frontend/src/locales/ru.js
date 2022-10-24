@@ -36,6 +36,12 @@ export default {
 			modals: {
 				
 			},
+			toasts: {
+				channelCreated: 'Канал создан',
+				channelRenamed: 'Канал переименован',
+				channelDeleted: 'Канал удален',
+				networkError: 'Ошибка соединения',
+			},
 			buttons: {
 				cancle: 'Отменить',
 				delete: 'Удалить',
