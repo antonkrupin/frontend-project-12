@@ -8,7 +8,6 @@ import Login from './routes/login';
 import SignUp from './routes/signup';
 import Page404 from './routes/page404';
 import Chat from './routes/chat';
-import Test from './routes/test'
 import AuthContext from './contexts/index.jsx';
 import useAuth from './hooks/index.jsx';
 
@@ -71,7 +70,6 @@ const App = (props) => (
 				/>
 				<Route path="login" element={<Login />} />
 				<Route path="*" element={<Page404 />} />
-				<Route path="test" element={<Test />} />
 				<Route path="signup" element={<SignUp />} />
 			</Routes>
 		</BrowserRouter>
