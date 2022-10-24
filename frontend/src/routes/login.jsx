@@ -6,6 +6,8 @@ import axios from 'axios';
 import * as yup from 'yup';
 import { Form, Button, Overlay } from 'react-bootstrap';
 import cn from 'classnames';
+import { ToastContainer, toast } from 'react-toastify';
+import { injectStyle } from "react-toastify/dist/inject-style";
 
 import i18 from '../asserts/i18';
 
@@ -13,6 +15,18 @@ import useAuth from '../hooks';
 import OverlayWrong from '../components/overlays/overlayWrong';
 
 import '../styles/login.css'
+
+if (typeof window !== "undefined") {
+  injectStyle();
+}
+
+const notify = (text) => {
+	toast.error(text, {
+		position: "top-right",
+		autoClose: 5000,
+		theme: "light",
+	});
+}
 
 const validationSchema = yup.object({
   username: yup
@@ -45,11 +59,15 @@ const Login = () => {
 				setStatus('authorized');
 			})
 			.catch((error) => {
-				const className = cn('form-control', 'is-invalid');
-				userNameRef.current.className = className;
-				passwordRef.current.className = className;
-				setShowErrorOverlay(!showErrorOverlay);
-				setStatus(null);
+				if (error.message === 'Network Error') {
+					notify(i18.t('ui.toasts.networkError'));
+				} else {
+					const className = cn('form-control', 'is-invalid');
+					userNameRef.current.className = className;
+					passwordRef.current.className = className;
+					setShowErrorOverlay(!showErrorOverlay);
+					setStatus(null);
+				}
 			});
     },
   });
@@ -142,6 +160,7 @@ const Login = () => {
 					</div>
 				</div>
 			</div>
+			<ToastContainer />
 		</>
 	)
 }
