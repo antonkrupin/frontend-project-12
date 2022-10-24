@@ -7,7 +7,6 @@ const ChannelName = () => {
 	const messages = useSelector((state) => state.messages.messages);
 
 	const channelMessages = messages.filter((message) => message.channelId === activeChannel.id);
-	console.log(channelMessages.length)
 	/*let messagesCounter;
 	
 	if (!channelMessages) {
