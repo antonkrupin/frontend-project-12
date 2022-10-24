@@ -26,43 +26,15 @@ const AddChannelModal = (props) => {
 
 	const addChannelHanlder = (e) => {
 		e.preventDefault();
-		dispatch(setChannelStatus('adding'));
 		if (!_.includes(channelsNames, name)) {
+			dispatch(setChannelStatus('adding'));
 			socket.emit('newChannel', { name });
-			//dispatch(addChannelModalShow())
 			setStatus('added');
 		} else {
 			setError(i18.t('errors.channels.createChannel'));
 		}
 	}
-	/*
-
-	const renameChannelHandler = (e) => {
-		e.preventDefault();
-		setStatus('renaming');
-		if (!_.includes(channelsNames, name)) {
-			socket.emit('renameChannel', { id: channelId, name });
-			setChannelName('');
-			setError('');
-			setStatus('renamed');
-			dispatch(renameChannelModalShow());
-			if (renameChannelStatus === 'renamed') {
-				dispatch(renameChannelModalShow());
-			}
-		} else {
-			renameChannelStatus('renamed');
-			setError(i18.t('errors.channels.renameChannel'));
-		}
-		
-	}
-
-	*/
-
-	const onKeyDown = (e) => {
-		console.log(e);
-	};
-
-
+	
 	let buttonAdd;
 	buttonAdd = (
 		<button className="btn btn-primary" onClick={addChannelHanlder}>Отправить</button>
