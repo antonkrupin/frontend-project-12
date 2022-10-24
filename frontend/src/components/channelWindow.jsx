@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import filter from 'leo-profanity';
+
 import { addMessage } from "../slices/messagesReducer";
 
 const ChannelWindow = (props) => {
@@ -16,7 +16,7 @@ const ChannelWindow = (props) => {
 	const [message, setMessage] = useState('');
 	
 	const messageHandler = (e) => {
-		setMessage(e.target.value);
+		setMessage(filter.clean(e.target.value));
 	};
 	
 	const addMessageToChannel = (e) => {
