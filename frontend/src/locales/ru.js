@@ -24,6 +24,14 @@ export default {
 				renameChannel: 'Имя канала должно быть уникальным',
 			}
 		},
+		messages: {
+      counter: {
+        count_one: '{{count}} сообщение',
+        count_few: '{{count}} сообщения',
+        count_many: '{{count}} сообщений',
+      },
+      reset: 'Сбросить',
+    },
 		ui: {
 			modals: {
 				
