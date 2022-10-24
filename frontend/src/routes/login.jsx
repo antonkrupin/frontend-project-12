@@ -1,13 +1,11 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
-import { Form, Button, Overlay } from 'react-bootstrap';
 import cn from 'classnames';
 import { ToastContainer, toast } from 'react-toastify';
-import { injectStyle } from "react-toastify/dist/inject-style";
+
 
 import i18 from '../asserts/i18';
 
@@ -15,10 +13,6 @@ import useAuth from '../hooks';
 import OverlayWrong from '../components/overlays/overlayWrong';
 
 import '../styles/login.css'
-
-if (typeof window !== "undefined") {
-  injectStyle();
-}
 
 const notify = (text) => {
 	toast.error(text, {
@@ -61,6 +55,7 @@ const Login = () => {
 			.catch((error) => {
 				if (error.message === 'Network Error') {
 					notify(i18.t('ui.toasts.networkError'));
+					setStatus('networkError');
 				} else {
 					const className = cn('form-control', 'is-invalid');
 					userNameRef.current.className = className;

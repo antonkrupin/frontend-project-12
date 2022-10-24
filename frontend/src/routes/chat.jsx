@@ -1,9 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import socketIO from 'socket.io-client';
 import { ToastContainer, toast } from 'react-toastify';
-import { injectStyle } from "react-toastify/dist/inject-style";
 
 import  i18n from '../asserts/i18';
 import ChannelsList from '../components/channelsList';
@@ -11,15 +8,14 @@ import ChannelName from '../components/channelName';
 import ChannelWindow from '../components/channelWindow';
 import ChannelMessages from '../components/channelMessages';
 import AddChannelModal from '../components/modals/AddChannelModal';
-import RenameChannelModal from '../components/modals/RenameChannelModal';
 
 import { fetchMessages, setUserName, addMessage } from '../slices/messagesReducer';
 import { setChannelStatus, fetchChannels, addChannel, setActiveChannel, renameChannel, deleteChannel } from '../slices/channelsReducer';
 import { addChannelModalShow, renameChannelModalShow, deleteChannelModalShow } from '../slices/modalsReducer';
 
-if (typeof window !== "undefined") {
+/*if (typeof window !== "undefined") {
   injectStyle();
-}
+}*/
 
 const Chat = (props) => {
 	const dispatch = useDispatch();
