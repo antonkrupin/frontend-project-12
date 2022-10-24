@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
 
 import IconSendMessage from '../components/svgIcons/IconSendMessage';
-import { addMessage } from "../slices/messagesReducer";
+
 
 const ChannelWindow = (props) => {
 	const socket = props.socket;
