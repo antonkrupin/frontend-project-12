@@ -13,9 +13,6 @@ import { fetchMessages, setUserName, addMessage } from '../slices/messagesReduce
 import { setChannelStatus, fetchChannels, addChannel, setActiveChannel, renameChannel, deleteChannel } from '../slices/channelsReducer';
 import { addChannelModalShow, renameChannelModalShow, deleteChannelModalShow } from '../slices/modalsReducer';
 
-/*if (typeof window !== "undefined") {
-  injectStyle();
-}*/
 
 const Chat = (props) => {
 	const dispatch = useDispatch();
