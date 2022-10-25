@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation  } from 'react-rout
 import { Button, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-
 import Login from './routes/login';
 import SignUp from './routes/signup';
 import Page404 from './routes/page404';

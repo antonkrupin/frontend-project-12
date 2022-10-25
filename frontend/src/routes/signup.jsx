@@ -1,17 +1,14 @@
 import { useState, useCallback, useRef } from 'react';
-import { Navigate, useNavigate, Link } from 'react-router-dom';
-import { Form } from 'react-bootstrap';
-//import i18next from 'i18next';
+import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
-import cn from 'classnames';
 
 import i18 from '../asserts/i18';
 import changeClassName from '../asserts/classNames';
-
 import useAuth from '../hooks';
 import ErrorOverlay from '../components/errors/ErrorOverlay';
+
 
 const validationSchema = yup.object({
   username: yup
