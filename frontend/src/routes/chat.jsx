@@ -33,7 +33,7 @@ const Chat = (props) => {
 
 	useEffect(() => {
 		const username = JSON.parse(localStorage.getItem('userId')).username;
-	
+		
 		dispatch(setUserName(username));
 		dispatch(fetchChannels());
 		dispatch(fetchMessages());
@@ -45,21 +45,21 @@ const Chat = (props) => {
 		socket.on('newChannel', (payload) => {
 			dispatch(setActiveChannel(payload));
 			dispatch(addChannel(payload));
-			dispatch(addChannelModalShow());
+			//dispatch(addChannelModalShow());
 			notify(i18n.t('ui.toasts.channelCreated'));
 			dispatch(setChannelStatus('added'));
 		});
 
 		socket.on('renameChannel', (payload) => {
 			dispatch(renameChannel(payload));
-			dispatch(renameChannelModalShow());
+			//dispatch(renameChannelModalShow());
 			notify(i18n.t('ui.toasts.channelRenamed'));
 			dispatch(setChannelStatus('renamed'));
 		});
 
 		socket.on('removeChannel', (payload) => {
 			dispatch(deleteChannel(payload));
-			dispatch(deleteChannelModalShow());
+			//dispatch(deleteChannelModalShow());
 			notify(i18n.t('ui.toasts.channelDeleted'));
 			dispatch(setChannelStatus('deleted'));
 		});
@@ -102,7 +102,7 @@ const Chat = (props) => {
 				</div>
 			</div>
 			<ToastContainer />
-			<AddChannelModal socket={socket}/></>}
+			{/*<AddChannelModal socket={socket}/>*/}</>}
 		</>
 	)
 }
