@@ -3,6 +3,7 @@ import cn from 'classnames';
 
 import DropDownMenu from './dropDownMenu';
 
+
 const Channel = (props) => {
 	const { channel, onClick } = props;
 

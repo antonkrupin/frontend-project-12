@@ -8,6 +8,7 @@ import i18 from '../../asserts/i18';
 import { renameChannelModalShow } from '../../slices/modalsReducer';
 import { renameChannelId, setChannelStatus } from '../../slices/channelsReducer';
 
+
 const RenameChannelModal = (props) => {
 	const dispatch = useDispatch();
 
