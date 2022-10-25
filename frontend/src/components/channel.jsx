@@ -30,6 +30,8 @@ const Channel = (props) => {
 	//changeClassName('btn-secondary', isActiveChannel, 'flex-grow-0 dropdown-toggle dropdown-toggle-split btn')
 
 	const dropDownId = `dropDown-${channel.id}`;
+	const dropDownClassName = changeClassName('btn-secondary', isActiveChannel, 'flex-grow-0 dropdown-toggle dropdown-toggle-split border-0 btn');
+	const channelClassName = changeClassName('btn-secondary', isActiveChannel, 'w-100 rounded-0 text-start text-truncate border-0 btn');
 	
 	let channelItem = (
 		<>
@@ -46,11 +48,10 @@ const Channel = (props) => {
 			<li className="nav-item w-100" >
 				<DropDownMenu 
 					onClick={onClick}
-					id={channel.id}
+					channel={channel}
 					dropDownId={dropDownId}
-					dropDownClass={changeClassName('btn-secondary', isActiveChannel, 'flex-grow-0 dropdown-toggle dropdown-toggle-split border-0 btn')}
-					channelNameClass={changeClassName('btn-secondary', isActiveChannel, 'w-100 rounded-0 text-start text-truncate border-0 btn')}
-					channelName={channel.name}
+					dropDownClassName={dropDownClassName}
+					channelClassName={channelClassName}
 				/>
 			</li>
 			</>
