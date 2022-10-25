@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Channel from './channel';
+import AddChannelModal from './modals/AddChannelModal';
 import RenameChannelModal from './modals/RenameChannelModal';
 import DeleteChannelModal from './modals/DeleteChannelModal';
 import IconAddChannel from '../components/svgIcons/IconAddChannel';
@@ -32,6 +33,7 @@ const ChannelsList = (props) => {
 		<ul className="nav flex-column nav-pills nav-fill px-2">
 			{ channels.map((channel) => <Channel key={channel.id} channel={channel} onClick={changeActiveChannel} />) }
 		</ul>
+		<AddChannelModal socket={props.socket}/>
 		<RenameChannelModal socket={props.socket} channels={channels}/>
 		<DeleteChannelModal socket={props.socket} channels={channels}/>
 		</>
