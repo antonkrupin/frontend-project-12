@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import App from './App';
 import store from './slices/index';
 import { injectStyle } from "react-toastify/dist/inject-style";
+import 'bootstrap/dist/js/bootstrap.js';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
