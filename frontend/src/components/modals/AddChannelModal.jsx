@@ -1,9 +1,11 @@
+import _ from 'lodash';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import _ from 'lodash';
 import { Form, InputGroup, Modal, Button } from 'react-bootstrap';
 
-import i18 from '../../asserts/i18';
+import i18n from '../../asserts/i18';
+
+import ModalButtons from '../buttons/ModalButtons';
 import { setChannelStatus } from '../../slices/channelsReducer';
 import { addChannelModalShow } from '../../slices/modalsReducer';
 
@@ -21,8 +23,6 @@ const AddChannelModal = (props) => {
 
 	const { channelStatus } = useSelector((state) => state.channels);
 
-	const [status, setStatus] = useState(null);
-
 	const [error, setError] = useState(null);
 
 	const addChannelHanlder = (e) => {
@@ -30,30 +30,29 @@ const AddChannelModal = (props) => {
 		if (!_.includes(channelsNames, name)) {
 			dispatch(setChannelStatus('adding'));
 			socket.emit('newChannel', { name });
-			setStatus('added');
 		} else {
-			setError(i18.t('errors.channels.createChannel'));
+			setError(i18n.t('errors.channels.createChannel'));
 		}
 	}
 	
-	let buttonAdd;
+	/*let buttonAdd;
 	buttonAdd = (
-		<button className="btn btn-primary" onClick={addChannelHanlder}>Отправить</button>
+		<button className="btn btn-primary" onClick={addChannelHanlder}>{i18n.t('ui.buttons.add')}</button>
 	)
 	if (channelStatus === 'adding') {
 		buttonAdd = (
 			<button type="submit" className="btn btn-primary disabled">
 				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
-				Создание
+				{i18n.t('ui.buttons.adding')}
 			</button>
 		)
-	}
+	}*/
 
 	return (
 		<>
 		<Modal show={isAddChannelModalShow} onHide={() => dispatch(addChannelModalShow())}>
 			<Modal.Header closeButton >
-				<Modal.Title>Добавить канал</Modal.Title>
+				<Modal.Title>{i18n.t('ui.modals.titles.addChannel')}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<Form className="is-invalid" >
@@ -65,12 +64,18 @@ const AddChannelModal = (props) => {
 			</Modal.Body>
 			<Modal.Footer className="border-top-0">
 				<Button variant="secondary" onClick={() => dispatch(addChannelModalShow())}>
-					Отменить
+					{i18n.t('ui.buttons.cancel')}
 				</Button>
 				{/*<Button variant="primary" onClick={addChannelHanlder}>
 					Отправить
 				</Button>*/}
-				{buttonAdd}
+				{/*buttonAdd*/}
+				<ModalButtons
+					buttonText={i18n.t('ui.buttons.add')}
+					buttonAdditionalText={i18n.t('ui.buttons.adding')}
+					buttonHandler={addChannelHanlder}
+					status={channelStatus}
+				/>
 			</Modal.Footer>
 		</Modal>
 		</>
