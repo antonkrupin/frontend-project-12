@@ -8,9 +8,10 @@ import axios from 'axios';
 import cn from 'classnames';
 
 import i18 from '../asserts/i18';
+import changeClassName from '../asserts/classNames';
 
 import useAuth from '../hooks';
-import OverlayWrong from '../components/overlays/overlayWrong';
+import ErrorOverlay from '../components/errors/ErrorOverlay';
 
 const validationSchema = yup.object({
   username: yup
@@ -62,9 +63,9 @@ const SignUp = () => {
 			if (password !== confirmPassword) {
 				setOverlayRef(confirmPasswordRef);
 				setOverlayText(i18.t('errors.authorization.confirmPassword'));
-				const className = cn('form-control', 'is-invalid');
-				passwordRef.current.className = className;
-				confirmPasswordRef.current.className = className;
+				//const className = cn('form-control', 'is-invalid');
+				passwordRef.current.className = changeClassName('form-control', 'is-invalid');
+				confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
 				setShowErrorOverlay(!showErrorOverlay);
 			} else {
 				setStatus('registration');
@@ -78,10 +79,10 @@ const SignUp = () => {
 				.catch((error) => {
 					setOverlayRef(confirmPasswordRef);
 					setOverlayText(i18.t('errors.authorization.userExist'));
-					const className = cn('form-control', 'is-invalid');
-					usernameRef.current.className = className;
-					passwordRef.current.className = className;
-					confirmPasswordRef.current.className = className;
+					//const className = cn('form-control', 'is-invalid');
+					usernameRef.current.className = changeClassName('form-control', 'is-invalid');
+					passwordRef.current.className = changeClassName('form-control', 'is-invalid');
+					confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
 					setShowErrorOverlay(!showErrorOverlay);
 					setStatus(null);
 				});
@@ -169,7 +170,7 @@ const SignUp = () => {
 								</div>
 								{/*<button type="submit" className="w-100 btn btn-outline-primary">Зарегистрироваться</button>*/}
 								{buttonEnter}
-								<OverlayWrong overlayRef={overlayRef} show={showErrorOverlay} overlayText={overlayText}/>
+								<ErrorOverlay overlayRef={overlayRef} show={showErrorOverlay} overlayText={overlayText}/>
 							</form>
 						</div>
 					</div>

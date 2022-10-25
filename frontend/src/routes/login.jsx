@@ -8,9 +8,10 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 import i18 from '../asserts/i18';
+import changeClassName from '../asserts/classNames';
 
 import useAuth from '../hooks';
-import OverlayWrong from '../components/overlays/overlayWrong';
+import ErrorOverlay from '../components/errors/ErrorOverlay';
 
 import '../styles/login.css'
 
@@ -57,9 +58,9 @@ const Login = () => {
 					notify(i18.t('ui.toasts.networkError'));
 					setStatus('networkError');
 				} else {
-					const className = cn('form-control', 'is-invalid');
-					userNameRef.current.className = className;
-					passwordRef.current.className = className;
+					//const className = cn('form-control', 'is-invalid');
+					userNameRef.current.className = changeClassName('form-control is-invalid');
+					passwordRef.current.className = changeClassName('form-control is-invalid');
 					setShowErrorOverlay(!showErrorOverlay);
 					setStatus(null);
 				}
@@ -144,7 +145,7 @@ const Login = () => {
 										</div>
 										{buttonEnter}
 									</form>
-									<OverlayWrong overlayRef={passwordRef} show={showErrorOverlay} overlayText={i18.t('errors.authorization.wrong')}/>
+									<ErrorOverlay overlayRef={passwordRef} show={showErrorOverlay} overlayText={i18.t('errors.authorization.wrong')}/>
 							</div>
 							<div className="card-footer p-4">
 								<div className="text-center">
