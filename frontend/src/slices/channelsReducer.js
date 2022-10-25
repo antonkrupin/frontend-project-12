@@ -1,14 +1,14 @@
 import axios from 'axios';
-import { createSlice, createAsyncThunk, current} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
 	channels: [],
 	fetchChannelsStatus: null,
 	error: null,
-	activeChannel: {},
 	channelStatus: null,
-	renameChannelId: '',
-	deleteChannelId: '',
+	activeChannel: {},
+	channelForRename: {},
+	channelForDelete: {},
 }
 
 export const fetchChannels = createAsyncThunk(
@@ -44,9 +44,9 @@ const channelsSlice = createSlice({
 			localStorage.setItem('channels', JSON.stringify(state.channels));
 			state.channelStatus = null;
 		},
-		renameChannelId: (state, action) => {
+		channelForRename: (state, action) => {
 			//state.channelStatus = null;
-			state.renameChannelId = action.payload;
+			state.channelForRename = action.payload;
 		},
 		renameChannel: (state, action) => {
 			const { id, name } = action.payload;
@@ -58,8 +58,8 @@ const channelsSlice = createSlice({
 			localStorage.setItem('channels', JSON.stringify(state.channels));
 			state.channelStatus = null;
 		},
-		deleteChannelId: (state, action) => {
-			state.deleteChannelId = action.payload;
+		channelForDelete: (state, action) => {
+			state.channelForDelete = action.payload;
 		},
 		deleteChannel: (state, action) => {
 			const { id } = action.payload;
@@ -92,9 +92,9 @@ export const {
 	setChannelStatus,
 	setActiveChannel,
 	addChannel,
-	renameChannelId,
+	channelForRename,
 	renameChannel,
-	deleteChannelId,
+	channelForDelete,
 	deleteChannel,
 } = channelsSlice.actions;
 
