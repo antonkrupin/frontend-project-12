@@ -51,6 +51,10 @@ export default {
 				login: 'Войти',
 				logout: 'Выйти',
 			},
+			dropDownMenu: {
+				rename: 'Переименовать',
+				delete: 'Удалить',
+			}
 		}
 	},
 };
