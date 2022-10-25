@@ -4,20 +4,28 @@ import { useDispatch } from 'react-redux';
 
 import i18n from '../asserts/i18';
 
-import { renameChannelId, deleteChannelId } from '../slices/channelsReducer';
+import { channelForRename, channelForDelete } from '../slices/channelsReducer';
 import { renameChannelModalShow, deleteChannelModalShow } from '../slices/modalsReducer';
 
 
 const DropDownMenu = (props) => {
+	const {
+		channel,
+		onClick,
+		dropDownId,
+		channelClassName,
+		dropDownClassName,
+	} = props;
+
 	const dispatch = useDispatch();
 
 	const renameChannelHandler = () => {
-		dispatch(renameChannelId(props.id));
+		dispatch(channelForRename(channel));
 		dispatch(renameChannelModalShow());
 	}
 
 	const deleteChannelHandler = () => {
-		dispatch(deleteChannelId(props.id));
+		dispatch(channelForDelete(channel));
 		dispatch(deleteChannelModalShow());
 	}
 
@@ -45,18 +53,19 @@ const DropDownMenu = (props) => {
 			</ul>
 		</div>
 	)*/}
+	
 	return (
 		<div className="d-flex border-0 btn-group">
 			<button 
-				onClick={props.onClick}
-				id={props.dropDownId}
-				className={props.channelNameClass}>
-				# {props.channelName}
+				onClick={onClick}
+				id={dropDownId}
+				className={channelClassName}>
+				# {channel.name}
 			</button>
 			<button 
 				type="button"
-				className={props.dropDownClass}
-				id={props.dropDownId}
+				className={dropDownClassName}
+				id={dropDownId}
 				data-bs-toggle="dropdown"
 				aria-expanded="false">
 				<span className="visually-hidden">Toggle Dropdown</span>
