@@ -7,7 +7,7 @@ import i18n from '../../asserts/i18';
 import ModalButtons from '../buttons/ModalButtons';
 import { deleteMessages } from '../../slices/messagesReducer'; 
 import { deleteChannelModalShow } from '../../slices/modalsReducer';
-import { setChannelStatus } from '../../slices/channelsReducer';
+import { setActiveChannel, setChannelStatus } from '../../slices/channelsReducer';
 
 
 const DeleteChannelModal = (props) => {
@@ -15,9 +15,11 @@ const DeleteChannelModal = (props) => {
 
 	const { socket } = props;
 	
+	const channels = useSelector((state) => state.channels.channels);
+
 	const channelsNames = useSelector((state) => state.channels.channels).map(({name}) => name);
 
-	const channelId = useSelector((state) => state.channels.deleteChannelId);
+	const channelId = useSelector((state) => state.channels.channelForDelete.id);
 
 	const deletedChannel = useSelector((state) => state.channels.channels).filter(({id}) => id === channelId);
 
@@ -32,7 +34,8 @@ const DeleteChannelModal = (props) => {
 		dispatch(setChannelStatus('deleting'));
 		socket.emit('removeChannel', { id: channelId });
 		dispatch(deleteMessages({ channelId }));
-		//dispatch(deleteChannelModalShow());
+		dispatch(setActiveChannel(channels[0]));
+		dispatch(deleteChannelModalShow());
 	}
 
 	/*let buttonDelete;
