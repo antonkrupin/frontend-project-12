@@ -20,7 +20,7 @@ const RenameChannelModal = (props) => {
 
 	const { socket } = props;
 	
-	const channelId = useSelector((state) => state.channels.renameChannelId);
+	const channel = useSelector((state) => state.channels.channelForRename);
 
 	const channelsNames = useSelector((state) => state.channels.channels).map(({name}) => name);
 	
@@ -38,9 +38,10 @@ const RenameChannelModal = (props) => {
 		e.preventDefault();
 		dispatch(setChannelStatus('renaming'));
 		if (!_.includes(channelsNames, name)) {
-			socket.emit('renameChannel', { id: channelId, name });
+			socket.emit('renameChannel', { id: channel.id, name });
 			setChannelName('');
 			setError('');
+			dispatch(renameChannelModalShow());
 		} else {
 			dispatch(setChannelStatus(null));
 			//const className = cn('form-control', 'is-invalid');
@@ -82,7 +83,7 @@ const RenameChannelModal = (props) => {
 						required
 						id="channelName"
 						className="form-control"
-						defaultValue={channelId}
+						defaultValue={channel.name}
 						ref={ref}
 					/>
 					<ErrorsDiv errorText={error}/>
