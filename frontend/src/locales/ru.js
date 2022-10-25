@@ -34,7 +34,11 @@ export default {
     },
 		ui: {
 			modals: {
-				
+				titles: {
+					addChannel: 'Добавить канал',
+					renameChannel: 'Переименовать канал',
+					deleteChannel: 'Удалить канал',
+				}
 			},
 			toasts: {
 				channelCreated: 'Канал создан',
@@ -43,13 +47,17 @@ export default {
 				networkError: 'Ошибка соединения',
 			},
 			buttons: {
-				cancle: 'Отменить',
+				cancel: 'Отменить',
 				delete: 'Удалить',
+				deleting: 'Удаление',
 				add: 'Отправить',
-				rename: 'Отправить',
 				adding: 'Создание',
+				rename: 'Отправить',
+				renaming: 'Переименование',
 				login: 'Войти',
 				logout: 'Выйти',
+				registration: 'Зарегистрироваться',
+				registrated: 'Регистрация',
 			},
 			dropDownMenu: {
 				rename: 'Переименовать',
