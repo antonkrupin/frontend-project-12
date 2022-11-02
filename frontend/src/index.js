@@ -13,7 +13,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('chat'));
 const socket = socketIO.connect('http://localhost:3000');
 
 if (typeof window !== "undefined") {
