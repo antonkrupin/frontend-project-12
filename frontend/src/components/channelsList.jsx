@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
+import i18n from '../asserts/i18';
+
 import Channel from './channel';
 import AddChannelModal from './modals/AddChannelModal';
 import RenameChannelModal from './modals/RenameChannelModal';
@@ -25,7 +27,7 @@ const ChannelsList = (props) => {
 	return (
 		<>
 		<div className="d-flex justify-content-between mb-2 ps-4 pe-2">
-			<span>Каналы</span>
+			<span>{i18n.t('ui.channels')}</span>
 			<button type="button" className="p-0 text-primary btn btn-group-vertical" onClick={() => dispatch(addChannelModalShow())}>
 				<IconAddChannel />
 			</button>
