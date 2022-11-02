@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
 
+import i18n from '../asserts/i18';
 import IconSendMessage from '../components/svgIcons/IconSendMessage';
 
 
@@ -33,19 +34,19 @@ const ChannelWindow = (props) => {
 
 	return (
 		<form className="py-1 border rounded-2">
-			<div className="input-group has-validation">
+			<div className="input-group">
 				<input 
 					name="body" 
 					aria-label="Новое сообщение" 
 					placeholder="Введите сообщение..." 
-					className="border-1 p-0 ps-2 form-control"
+					className="border-0 p-0 ps-2 form-control"
 					ref={target}
 					onChange={messageHandler}
 				/>
-				<button type="submit" className="btn btn-group-vertical" onClick={addMessageToChannel}>
+				<button type="submit" className="btn btn-group-vertical border-0" onClick={addMessageToChannel}>
 					<IconSendMessage />
 				</button>
-				<span className="visually-hidden">Отправить</span>
+				<span className="visually-hidden">{i18n.t('ui.span.sendMessage')}</span>
 			</div>
 		</form>
 	)
