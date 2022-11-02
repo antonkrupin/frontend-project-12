@@ -10,7 +10,7 @@ import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
 import ErrorOverlay from '../components/errors/ErrorOverlay';
 
-import '../styles/login.css'
+//import '../styles/login.css'
 
 
 const notify = (text) => {
@@ -87,20 +87,20 @@ const Login = () => {
 
 	let buttonEnter;
 	buttonEnter = (
-		<button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</button>
+		<button type="submit" className="w-100 mb-3 btn btn-outline-primary">{i18.t('ui.loginForm.button')}</button>
 	)
 	if (status === 'authorization') {
 		buttonEnter = (
 			<button type="submit" className="w-100 mb-3 btn btn-outline-primary disabled">
 				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
-				Вход
+				{i18.t('ui.loginForm.buttonClicked')}
 			</button>
 		)
 	}
 
 	return (
 		<>
-			<div className="container-fluid h-100">
+			<div className="container-fluid h-100 my-4 mt-4">
 				<div className="row justify-content-center align-content-center h-100">
 					<div className="col-12 col-md-8 col-xxl-6">
 						<div className="card shadow-sm">
@@ -109,20 +109,20 @@ const Login = () => {
 										<img src="/static/media/signup_img.jpg" alt="Логин"/>
 									</div>
 									<form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-										<h1 className="text-center mb-4">Войти</h1>
+										<h1 className="text-center mb-4">{i18.t('ui.loginForm.title')}</h1>
 										<div className="form-floating mb-3">
 											<input
 												onChange={(e) => setInputValue("username", e.target.value)}
 												name="username"
 												autoComplete="username"
 												required
-												placeholder="Ваш ник"
+												placeholder={i18.t('ui.loginForm.name')}
 												id="username"
 												className="form-control"
 												defaultValue=""
 												ref={userNameRef}
 											/>
-												<label htmlFor="username">Ваш ник</label>
+												<label htmlFor="username">{i18.t('ui.loginForm.name')}</label>
 												<small className="text-danger">{formik.touched.username && formik.errors.username}</small>
 										</div>
 										<div className="form-floating mb-4">
@@ -131,14 +131,14 @@ const Login = () => {
 												name="password"
 												autoComplete="current-password"
 												required
-												placeholder="Пароль"
+												placeholder={i18.t('ui.loginForm.password')}
 												type="password"
 												id="password"
 												className="form-control"
 												defaultValue=""
 												ref={passwordRef}
 											/>
-												<label className="form-label" htmlFor="password">Пароль</label>
+												<label className="form-label" htmlFor="password">{i18.t('ui.loginForm.password')}</label>
 												<small className="text-danger">{formik.touched.password && formik.errors.password}</small>
 										</div>
 										{buttonEnter}
@@ -147,7 +147,12 @@ const Login = () => {
 							</div>
 							<div className="card-footer p-4">
 								<div className="text-center">
-									<span >Нет аккаунта?</span> <Link to={status !== 'authorization' ? '/signup' : '#'} >Регистрация</Link>
+									<span>
+										{i18.t('ui.loginForm.newUser')}
+									</span>
+									<Link to={status !== 'authorization' ? '/signup' : '#'}>
+										{i18.t('ui.loginForm.registration')}
+									</Link>
 								</div>
 							</div>
 						</div>
