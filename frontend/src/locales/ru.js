@@ -40,6 +40,23 @@ export default {
 					deleteChannel: 'Удалить канал',
 				}
 			},
+			signupForm: {
+				title: 'Регистрация',
+				name: 'Имя пользователя',
+				password: 'Пароль',
+				confirmPassword: 'Подвердите пароль',
+				button: 'Зарегистрироваться',
+				buttonClicked: 'Регистрация'
+			},
+			loginForm: {
+				title: 'Войти',
+				name: 'Ваш ник',
+				password: 'Пароль',
+				button: 'Войти',
+				buttonClicked: 'Вход',
+				newUser: 'Нет аккаунта?',
+				registration: 'Регистрация',
+			},
 			toasts: {
 				channelCreated: 'Канал создан',
 				channelRenamed: 'Канал переименован',
@@ -58,11 +75,18 @@ export default {
 				logout: 'Выйти',
 				registration: 'Зарегистрироваться',
 				registrated: 'Регистрация',
+				sendMessage: 'Отправить',
+			},
+			span: {
+				sendMessage: 'Отправить',
+				channelManagement: 'Управление каналами',
 			},
 			dropDownMenu: {
 				rename: 'Переименовать',
 				delete: 'Удалить',
-			}
+			},
+			chatName: 'Hexlet Chat',
+			channels: 'Каналы',
 		}
 	},
 };
