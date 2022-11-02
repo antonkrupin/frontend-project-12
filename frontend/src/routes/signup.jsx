@@ -98,13 +98,13 @@ const SignUp = () => {
 
 	let buttonEnter;
 	buttonEnter = (
-		<button type="submit" className="w-100 mb-3 btn btn-outline-primary">Зарегистрироваться</button>
+		<button type="submit" className="w-100 mb-3 btn btn-outline-primary">{i18.t('ui.signupForm.button')}</button>
 	)
 	if (status === 'registration') {
 		buttonEnter = (
 			<button type="submit" className="w-100 mb-3 btn btn-outline-primary disabled">
 				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
-				Регистрация
+				{i18.t('ui.signupForm.buttonClicked')}
 			</button>
 		)
 	}
@@ -117,7 +117,7 @@ const SignUp = () => {
 						<div className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
 							<div><img src="static/media/registration_img.jpg" className="rounded-circle" alt="Регистрация" /></div>
 							<form onSubmit={formik.handleSubmit} className="w-50">
-								<h1 className="text-center mb-4">Регистрация</h1>
+								<h1 className="text-center mb-4">{i18.t('ui.signupForm.title')}</h1>
 								<div className="form-floating mb-3">
 									<input 
 										onChange={(e) => setInputValue("username", e.target.value)}
@@ -130,7 +130,7 @@ const SignUp = () => {
 										defaultValue=""
 										ref={usernameRef}
 									/>
-									<label className="form-label" htmlFor="username">Имя пользователя</label>
+									<label className="form-label" htmlFor="username">{i18.t('ui.signupForm.name')}</label>
 									<small className="text-danger">{formik.touched.username && formik.errors.username}</small>
 								</div>
 								<div className="form-floating mb-3">
@@ -147,7 +147,7 @@ const SignUp = () => {
 										defaultValue=""
 										ref={passwordRef}
 									/>
-									<label className="form-label" htmlFor="password">Пароль</label>
+									<label className="form-label" htmlFor="password">{i18.t('ui.signupForm.password')}</label>
 									<small className="text-danger">{formik.touched.password && formik.errors.password}</small>
 								</div>
 								<div className="form-floating mb-4">
@@ -163,7 +163,7 @@ const SignUp = () => {
 										defaultValue=""
 										ref={confirmPasswordRef}
 									/>
-									<label className="form-label" htmlFor="confirmPassword">Подтвердите пароль</label>
+									<label className="form-label" htmlFor="confirmPassword">{i18.t('ui.signupForm.confirmPassword')}</label>
 								</div>
 								{/*<button type="submit" className="w-100 btn btn-outline-primary">Зарегистрироваться</button>*/}
 								{buttonEnter}
