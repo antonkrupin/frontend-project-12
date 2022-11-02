@@ -68,6 +68,8 @@ const channelsSlice = createSlice({
 					state.channels.splice(index, 1);
 				}
 			});
+			//придумать что то с активным каналом
+			//state.activeChannel = state.channels[0];
 			localStorage.setItem('channels', JSON.stringify(state.channels));
 		},
 	},
