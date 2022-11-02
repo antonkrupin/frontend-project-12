@@ -1,5 +1,3 @@
-import { useRef } from 'react';
-import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 
 import i18n from '../asserts/i18';
@@ -68,7 +66,7 @@ const DropDownMenu = (props) => {
 				id={dropDownId}
 				data-bs-toggle="dropdown"
 				aria-expanded="false">
-				<span className="visually-hidden">Toggle Dropdown</span>
+				<span className="visually-hidden">{i18n.t('ui.span.channelManagement')}</span>
 			</button>
 			<ul className="dropdown-menu">
 				<li>
