@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import cn from 'classnames';
 
 import changeClassName from '../asserts/classNames';
 
@@ -12,22 +11,6 @@ const Channel = (props) => {
 	const channelId = useSelector((state) => state.channels.activeChannel.id);
 
 	const isActiveChannel = channelId === channel.id ? true : false;
-
-	/*const channelNameClass = cn('w-100 rounded-0 text-start btn', {
-		'btn-secondary': isActiveChannel,
-	});*/
-
-	//changeClassName1('btn-secondary', isActiveChannel, 'w-100 rounded-0 text-start btn');
-
-	/*const test = cn('w-100 rounded-0 text-start text-truncate', {
-		'btn-secondary': isActiveChannel,
-	})*/
-	//changeClassName('btn-secondary', isActiveChannel, 'w-100 rounded-0 text-start text-truncate');
-
-	/*const dropDownClass = cn('flex-grow-0 dropdown-toggle dropdown-toggle-split btn', {
-		'btn-secondary': isActiveChannel,
-	});*/
-	//changeClassName('btn-secondary', isActiveChannel, 'flex-grow-0 dropdown-toggle dropdown-toggle-split btn')
 
 	const dropDownId = `dropDown-${channel.id}`;
 	const dropDownClassName = changeClassName('btn-secondary', isActiveChannel, 'flex-grow-0 dropdown-toggle dropdown-toggle-split border-0 btn');
