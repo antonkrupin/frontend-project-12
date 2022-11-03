@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
 
@@ -13,10 +13,16 @@ const ChannelWindow = (props) => {
 
 	const username = useSelector((state) => state.messages.username);
 	
-	const target = useRef();
+	const target = useRef(null);
 
 	const [message, setMessage] = useState('');
-	
+
+	useEffect(() => {
+		if (target.current) {
+			target.current.focus();
+		}
+	});
+
 	const messageHandler = (e) => {
 		//filter.getDictionary('ru', 'en');
 		//filter.loadDictionary('ru', 'en');

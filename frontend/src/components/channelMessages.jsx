@@ -3,12 +3,6 @@ import { selectMessagesByChannel } from '../slices/selectors';
 
 
 const ChannelMessages = () => {
-	/*const channelId = useSelector((state) => state.channels.activeChannel.id);
-
-	const messages = useSelector((state) => state.messages.messages);
-
-	const channelMessages = messages.filter((message) => message.channelId === channelId);*/
-
 	const channelMessages = useSelector(selectMessagesByChannel);
 	
 	return (

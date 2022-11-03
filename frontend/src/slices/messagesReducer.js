@@ -27,9 +27,6 @@ const messagesSlice = createSlice({
 	name: 'messages',
 	initialState,
 	reducers: {
-		/*setMessages: (state, action) => {
-			state.messages = action.payload;
-		},*/
 		addMessage: (state, action) => {
 			state.messages.push(action.payload);
 			localStorage.setItem('messages', JSON.stringify(state.messages));
@@ -64,7 +61,6 @@ const messagesSlice = createSlice({
 });
 
 export const {
-	//setMessages, 
 	addMessage,
 	setUserName,
 	deleteMessages,
