@@ -6,6 +6,7 @@ import { Form, InputGroup, Modal, Button } from 'react-bootstrap';
 import i18n from '../../asserts/i18';
 
 import ModalButtons from '../buttons/ModalButtons';
+import CancelButton from '../buttons/CancelButton';
 import { setChannelStatus } from '../../slices/channelsReducer';
 import { addChannelModalShow } from '../../slices/modalsReducer';
 
@@ -36,24 +37,11 @@ const AddChannelModal = (props) => {
 		}
 	}
 	
-	/*let buttonAdd;
-	buttonAdd = (
-		<button className="btn btn-primary" onClick={addChannelHanlder}>{i18n.t('ui.buttons.add')}</button>
-	)
-	if (channelStatus === 'adding') {
-		buttonAdd = (
-			<button type="submit" className="btn btn-primary disabled">
-				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
-				{i18n.t('ui.buttons.adding')}
-			</button>
-		)
-	}*/
-
 	return (
 		<>
 		<Modal show={isAddChannelModalShow} onHide={() => dispatch(addChannelModalShow())}>
 			<Modal.Header closeButton >
-				<Modal.Title>{i18n.t('ui.modals.titles.addChannel')}</Modal.Title>
+				<Modal.Title>{i18n.t('ui.modals.add.title')}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<Form className="is-invalid" >
@@ -64,13 +52,10 @@ const AddChannelModal = (props) => {
 				</Form>
 			</Modal.Body>
 			<Modal.Footer className="border-top-0">
-				<Button variant="secondary" onClick={() => dispatch(addChannelModalShow())}>
-					{i18n.t('ui.buttons.cancel')}
-				</Button>
-				{/*<Button variant="primary" onClick={addChannelHanlder}>
-					Отправить
-				</Button>*/}
-				{/*buttonAdd*/}
+				<CancelButton
+					onClick={() => dispatch(addChannelModalShow())}
+					text={i18n.t('ui.buttons.cancel')}
+				/>
 				<ModalButtons
 					buttonText={i18n.t('ui.buttons.add')}
 					buttonAdditionalText={i18n.t('ui.buttons.adding')}

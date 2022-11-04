@@ -8,6 +8,7 @@ import i18n from '../../asserts/i18';
 import changeClassName from '../../asserts/classNames';
 
 import ModalButtons from '../buttons/ModalButtons';
+import CancelButton from '../buttons/CancelButton';
 import ErrorsDiv from '../errors/ErrorsDiv';
 import { renameChannelModalShow } from '../../slices/modalsReducer';
 import { renameChannelId, setChannelStatus } from '../../slices/channelsReducer';
@@ -57,24 +58,11 @@ const RenameChannelModal = (props) => {
 		dispatch(renameChannelModalShow());
 	}
 
-	/*let buttonSend;
-	buttonSend = (
-		<button className="btn btn-primary" onClick={renameChannelHandler}>{i18n.t('ui.buttons.rename')}</button>
-	)
-	if (channelStatus === 'renaming') {
-		buttonSend = (
-			<button type="submit" className="btn btn-primary disabled">
-				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
-				{i18n.t('ui.buttons.renaming')}
-			</button>
-		)
-	}*/
-
 	return (
 		<>
 		<Modal show={isRenameChannelModalShow} onHide={cancelRenameChannelHandler} >
 			<Modal.Header closeButton >
-				<Modal.Title>{i18n.t('ui.modals.titles.renameChannel')}</Modal.Title>
+				<Modal.Title>{i18n.t('ui.modals.rename.title')}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<form>
@@ -90,13 +78,10 @@ const RenameChannelModal = (props) => {
 				</form>
 			</Modal.Body>
 			<Modal.Footer className="border-top-0">
-				<Button variant="secondary" onClick={cancelRenameChannelHandler}>
-					Отменить
-				</Button>
-				{/*<Button variant="primary" onClick={renameChannelHandler}>
-					Отправить
-				</Button>*/}
-				{/*buttonSend*/}
+				<CancelButton 
+					onClick={cancelRenameChannelHandler}
+					text={i18n.t('ui.buttons.cancel')}
+				/>
 				<ModalButtons
 					buttonText={i18n.t('ui.buttons.rename')}
 					buttonAdditionalText={i18n.t('ui.buttons.renaming')}
