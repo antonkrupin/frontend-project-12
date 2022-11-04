@@ -70,7 +70,7 @@ const Chat = (props) => {
 			dispatch(deleteChannel(payload));
 			//dispatch(deleteChannelModalShow());
 			notify(i18n.t('ui.toasts.channelDeleted'));
-			dispatch(setChannelStatus('deleted'));
+			dispatch(setChannelStatus(null));
 		});
 	
 	}, []);

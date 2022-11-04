@@ -1,7 +1,4 @@
-import ButtonPimary from './ButtonPrimary';
-import ButtonDanger from './ButtonDanger';
-import ButtonPrimaryDisabled  from './ButtonPrimaryDisabled';
-import ButtonDangerDisabled from './ButtonDangerDisabled';
+import ModalButton from './ModalButton';
 
 
 const ModalButtons = (props) => {
@@ -14,62 +11,65 @@ const ModalButtons = (props) => {
 
 	switch(status) {
 		case null: {
-			/*button = (
-				<button className="btn btn-primary" onClick={buttonHandler}>{buttonText}</button>
-			)*/
-			return <ButtonPimary buttonHandler={buttonHandler} buttonText={buttonText}/>
-			//break;
-		}
-		case 'added': {
-			/*button = (
-				<button className="btn btn-primary" onClick={buttonHandler}>{buttonText}</button>
-			)*/
-			return <ButtonPimary buttonHandler={buttonHandler} buttonText={buttonText}/>
-			//break;
-		}
-		case 'renamed': {
-			/*button = (
-				<button className="btn btn-primary" onClick={buttonHandler}>{buttonText}</button>
-			)
-			break;*/
-			return <ButtonPimary buttonHandler={buttonHandler} buttonText={buttonText}/>
-		}
-		case 'deleted': {
-			/*button = (
-				<button className="btn btn-danger" onClick={buttonHandler}>{buttonText}</button>
-			)
-			break;*/
-			return <ButtonDanger buttonHandler={buttonHandler} buttonText={buttonText}/>
+			return <ModalButton
+							className="btn btn-primary"
+							buttonHandler={buttonHandler}
+							buttonText={buttonText}
+							loading={false}
+						/>
 		}
 		case 'adding': {
-			/*button = (
-				<button type="submit" className="btn btn-primary disabled">
-					<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
-					{buttonAdditionalText}
-				</button>
-			)
-			break;*/
-			return <ButtonPrimaryDisabled buttonText={buttonAdditionalText} />
+			return <ModalButton
+							className="btn btn-primary disabled"
+							buttonText={buttonAdditionalText}
+							loading={true}
+						/>
+		}
+		case 'added': {
+			return <ModalButton
+							className="btn btn-primary"
+							buttonHandler={buttonHandler}
+							buttonText={buttonText}
+							loading={false}
+						/>
 		}
 		case 'renaming': {
-			/*button = (
-				<button type="submit" className="btn btn-primary disabled">
-					<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
-					{buttonAdditionalText}
-				</button>
-			)
-			break;*/
-			return <ButtonPrimaryDisabled buttonText={buttonAdditionalText} />
+			return <ModalButton
+							className="btn btn-primary disabled"
+							buttonText={buttonAdditionalText}
+							loading={true}
+						/>
+		}
+		case 'renamed': {
+			return <ModalButton
+							className="btn btn-primary"
+							buttonHandler={buttonHandler}
+							buttonText={buttonText}
+							loading={false}
+						/>
+		}
+		case 'delete': {
+			return <ModalButton
+							className="btn btn-danger"
+							buttonHandler={buttonHandler}
+							buttonText={buttonText}
+							loading={false}
+						/>
 		}
 		case 'deleting': {
-			/*button = (
-				<button type="submit" className="btn btn-danger disabled">
-					<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
-					{buttonAdditionalText}
-				</button>
-			)
-			break;*/
-			return <ButtonDangerDisabled buttonText={buttonAdditionalText} />
+			return <ModalButton
+							className="btn btn-danger disabled"
+							buttonText={buttonAdditionalText}
+							loading={true}
+						/>
+		}
+		case 'deleted': {
+			return <ModalButton
+							className="btn btn-danger"
+							buttonHandler={buttonHandler}
+							buttonText={buttonText}
+							loading={false}
+						/>
 		}
 		default:
 			throw new Error('Unknow status');
