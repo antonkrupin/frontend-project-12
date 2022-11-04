@@ -13,7 +13,7 @@ import { addChannelModalShow } from '../../slices/modalsReducer';
 
 const AddChannelModal = (props) => {
 	const dispatch = useDispatch();
-
+	
 	const { socket } = props;
 
 	const channelsNames = useSelector((state) => state.channels.channels).map(({name}) => name);

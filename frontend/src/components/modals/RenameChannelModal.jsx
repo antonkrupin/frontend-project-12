@@ -25,8 +25,6 @@ const RenameChannelModal = (props) => {
 
 	const channelsNames = useSelector((state) => state.channels.channels).map(({name}) => name);
 	
-	//const renamedChannel = useSelector((state) => state.channels.channels).filter(({id}) => id === channelId);
-
 	const isRenameChannelModalShow = useSelector((state) => state.modals.isRenameChannelModalShow);
 	
 	const [name, setChannelName] = useState(null);
