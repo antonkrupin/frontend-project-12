@@ -34,10 +34,15 @@ export default {
     },
 		ui: {
 			modals: {
-				titles: {
-					addChannel: 'Добавить канал',
-					renameChannel: 'Переименовать канал',
-					deleteChannel: 'Удалить канал',
+				add: {
+					title: 'Добавить канал',
+				},
+				rename: {
+					title: 'Переименовать канал',
+				},
+				delete: {
+					title: 'Удалить канал',
+					text: 'Уверены ?',
 				}
 			},
 			signupForm: {
