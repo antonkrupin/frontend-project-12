@@ -1,7 +1,7 @@
 const ModalButton = (props) => {
 	const { modalType, buttonHandler, buttonText, className, loading } = props;
 
-	switch(modalType) {
+	/*switch(modalType) {
 		case 'add': {
 			const addChannelHanlder = (e) => {
 				e.preventDefault();
@@ -24,7 +24,7 @@ const ModalButton = (props) => {
 		default: {
 			throw new Error('Unexpected modal type. Modal buttons');
 		}
-	}
+	}*/
 	
 	return (
 		<button type="submit" onClick={buttonHandler} className={className}>
