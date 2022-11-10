@@ -49,7 +49,7 @@ export default {
 				title: 'Регистрация',
 				name: 'Имя пользователя',
 				password: 'Пароль',
-				confirmPassword: 'Подвердите пароль',
+				confirmPassword: 'Подтвердите пароль',
 				button: 'Зарегистрироваться',
 				buttonClicked: 'Регистрация'
 			},
