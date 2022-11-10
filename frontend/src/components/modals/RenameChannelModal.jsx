@@ -47,7 +47,6 @@ const RenameChannelModal = (props) => {
 			ref.current.className = changeClassName('form-control is-invalid');
 			setError(i18n.t('errors.channels.renameChannel'));
 		}
-		
 	}
 
 	const cancelRenameChannelHandler = () => {
@@ -76,10 +75,7 @@ const RenameChannelModal = (props) => {
 				</form>
 			</Modal.Body>
 			<Modal.Footer className="border-top-0">
-				<CancelButton 
-					onClick={cancelRenameChannelHandler}
-					text={i18n.t('ui.buttons.cancel')}
-				/>
+				<CancelButton />
 				<ModalButtons
 					buttonText={i18n.t('ui.buttons.rename')}
 					buttonAdditionalText={i18n.t('ui.buttons.renaming')}

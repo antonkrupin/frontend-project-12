@@ -8,7 +8,9 @@ import AddChannelModal from './modals/AddChannelModal';
 import RenameChannelModal from './modals/RenameChannelModal';
 import DeleteChannelModal from './modals/DeleteChannelModal';
 import IconAddChannel from '../components/svgIcons/IconAddChannel';
+import ModalWindow from './modals/ModalWindow';
 
+import { selectModal } from '../slices/selectors';
 import { setActiveChannel } from '../slices/channelsReducer';
 import { addChannelModalShow } from '../slices/modalsReducer';
 
@@ -17,6 +19,10 @@ const ChannelsList = (props) => {
 	const dispatch = useDispatch();
 
 	const channels = useSelector((state) => state.channels.channels);
+
+	const modalShow = useSelector(selectModal);
+
+	const modalType = useSelector((state) => state.modals.modalType);
 			
 	const changeActiveChannel = (e) => {
 		const channelName = e.target.textContent.slice(2);
@@ -38,6 +44,7 @@ const ChannelsList = (props) => {
 		<AddChannelModal socket={props.socket}/>
 		<RenameChannelModal socket={props.socket} channels={channels}/>
 		<DeleteChannelModal socket={props.socket} channels={channels}/>
+		<ModalWindow socket={props.socket} modalShow={modalShow} modalType={modalType}/>
 		</>
 	)
 }

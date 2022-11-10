@@ -43,10 +43,7 @@ const DeleteChannelModal = (props) => {
 				{i18n.t('ui.modals.delete.text')}
 			</Modal.Body>
 			<Modal.Footer className="border-top-0">
-				<CancelButton
-					onClick={() => dispatch(deleteChannelModalShow())}
-					text={i18n.t('ui.buttons.cancel')}
-				/>
+				<CancelButton />
 				<ModalButtons
 					buttonText={i18n.t('ui.buttons.delete')}
 					buttonAdditionalText={i18n.t('ui.buttons.deleting')}

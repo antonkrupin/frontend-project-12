@@ -52,10 +52,7 @@ const AddChannelModal = (props) => {
 				</Form>
 			</Modal.Body>
 			<Modal.Footer className="border-top-0">
-				<CancelButton
-					onClick={() => dispatch(addChannelModalShow())}
-					text={i18n.t('ui.buttons.cancel')}
-				/>
+				<CancelButton />
 				<ModalButtons
 					buttonText={i18n.t('ui.buttons.add')}
 					buttonAdditionalText={i18n.t('ui.buttons.adding')}

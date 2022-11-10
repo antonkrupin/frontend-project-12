@@ -1,6 +1,14 @@
+import { useSelector, useDispatch } from 'react-redux';
 import ModalButton from './ModalButton';
 
-
+/*
+<ModalButtons
+					buttonText={i18n.t('ui.buttons.add')}
+					buttonAdditionalText={i18n.t('ui.buttons.adding')}
+					buttonHandler={addChannelHanlder}
+					status={channelStatus}
+				/>
+*/
 const ModalButtons = (props) => {
 	const { 
 		buttonText,
