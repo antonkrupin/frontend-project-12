@@ -18,9 +18,9 @@ const validationSchema = yup.object({
     .required(i18.t('errors.username.required')),
   password: yup
     .string()
-    .min(6, i18.t('errors.password.length'))
-		.matches(/[0-9]/, i18.t('errors.password.number'))
-    .matches(/[a-z]/, i18.t('errors.password.lowerCaseLetter')),
+    .min(6, i18.t('errors.password.length')),
+		//.matches(/[0-9]/, i18.t('errors.password.number'))
+    //.matches(/[a-z]/, i18.t('errors.password.lowerCaseLetter')),
     /*.matches(/[A-Z]/, i18Instance.t('errors.password.upperCaseLetter'))
     .required(i18Instance.t('errors.password.required')),*/
 });
