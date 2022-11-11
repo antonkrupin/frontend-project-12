@@ -167,6 +167,7 @@ const SignUp = () => {
 										ref={confirmPasswordRef}
 									/>
 									<label className="form-label" htmlFor="confirmPassword">{i18.t('ui.signupForm.confirmPassword')}</label>
+									<small className="text-danger">{formik.touched.confirmPassword && formik.errors.confirmPassword}</small>
 								</div>
 								{/*<button type="submit" className="w-100 btn btn-outline-primary">Зарегистрироваться</button>*/}
 								{buttonEnter}
