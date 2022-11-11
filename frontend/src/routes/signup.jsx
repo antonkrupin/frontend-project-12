@@ -13,7 +13,7 @@ import ErrorOverlay from '../components/errors/ErrorOverlay';
 const validationSchema = yup.object({
   username: yup
     .string()
-    .min(5, i18.t('errors.username.length'))
+    .min(3, i18.t('errors.username.length'))
 		.max(20, i18.t('errors.username.maxLength'))
     .required(i18.t('errors.username.required')),
   password: yup
