@@ -87,14 +87,14 @@ const SignUp = () => {
     },
   });
 
-	const setInputValue = useCallback(
+	/*const setInputValue = useCallback(
     (key, value) =>
       formik.setValues({
         ...formik.values,
         [key]: value,
       }),
     [formik]
-  );
+  );*/
 
 	let buttonEnter;
 	buttonEnter = (
@@ -120,14 +120,15 @@ const SignUp = () => {
 								<h1 className="text-center mb-4">{i18.t('ui.signupForm.title')}</h1>
 								<div className="form-floating mb-3">
 									<input 
-										onChange={(e) => setInputValue("username", e.target.value)}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+										value={formik.values.username}
 										placeholder="От 3 до 20 символов"
 										name="username"
 										autoComplete="username"
 										required
 										id="username"
 										className="form-control"
-										defaultValue=""
 										ref={usernameRef}
 									/>
 									<label className="form-label" htmlFor="username">{i18.t('ui.signupForm.name')}</label>
@@ -135,7 +136,9 @@ const SignUp = () => {
 								</div>
 								<div className="form-floating mb-3">
 									<input
-										onChange={(e) => setInputValue("password", e.target.value)}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+										value={formik.values.password}
 										placeholder="Не менее 6 символов"
 										name="password"
 										aria-describedby="passwordHelpBlock"
@@ -144,7 +147,6 @@ const SignUp = () => {
 										type="password"
 										id="password"
 										className="form-control"
-										defaultValue=""
 										ref={passwordRef}
 									/>
 									<label className="form-label" htmlFor="password">{i18.t('ui.signupForm.password')}</label>
@@ -152,7 +154,9 @@ const SignUp = () => {
 								</div>
 								<div className="form-floating mb-4">
 									<input
-										onChange={(e) => setInputValue("confirmPassword", e.target.value)}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+										value={formik.values.confirmPassword}
 										placeholder="Пароли должны совпадать"
 										name="confirmPassword"
 										required
@@ -160,7 +164,6 @@ const SignUp = () => {
 										type="password"
 										id="confirmPassword"
 										className="form-control"
-										defaultValue=""
 										ref={confirmPasswordRef}
 									/>
 									<label className="form-label" htmlFor="confirmPassword">{i18.t('ui.signupForm.confirmPassword')}</label>
