@@ -23,10 +23,17 @@ const validationSchema = yup.object({
     //.matches(/[a-z]/, i18.t('errors.password.lowerCaseLetter')),
     /*.matches(/[A-Z]/, i18Instance.t('errors.password.upperCaseLetter'))
     .required(i18Instance.t('errors.password.required')),*/
-	confirmPassword: yup
-		.string()
-		.min(6, i18.t('errors.password.length')),
 });
+
+const validate = values => {
+	const errors = {};
+	if (values.password !== values.confirmPassword) {
+		errors.confirmPassword = i18.t('errors.authorization.confirmPassword');
+	} else {
+		errors.confirmPassword = '';
+	}
+	return errors;
+};
 
 const test = () => {
 	const validationSchema = yup.object({
@@ -42,9 +49,6 @@ const test = () => {
 			//.matches(/[a-z]/, i18.t('errors.password.lowerCaseLetter')),
 			/*.matches(/[A-Z]/, i18Instance.t('errors.password.upperCaseLetter'))
 			.required(i18Instance.t('errors.password.required')),*/
-		confirmPassword: yup
-			.string(),
-			//.oneOf(password),
 	});
 	return validationSchema;
 }
@@ -76,14 +80,16 @@ const SignUp = () => {
 			isEqual: false,
     },
     //validationSchema: test(password),
-		validationSchema: test,
+		validationSchema: validationSchema,
+		validate,
     onSubmit: async (values) => {
 			const { 
 				username,
 				password,
-				confirmPassword
+				confirmPassword,
 			} = values;
-			if (password !== confirmPassword) {
+			console.log('registartion')
+			/*if (password !== confirmPassword) {
 				setOverlayRef(confirmPasswordRef);
 				setOverlayText(i18.t('errors.authorization.confirmPassword'));
 				//const className = cn('form-control', 'is-invalid');
@@ -109,25 +115,49 @@ const SignUp = () => {
 					setShowErrorOverlay(!showErrorOverlay);
 					setStatus(null);
 				});
-			}
+			}*/
+			setStatus('registration');
+				await axios.post('/api/v1/signup', { username, password })
+				.then((data) => {
+					localStorage.setItem('userId', JSON.stringify(data.data));
+					logIn();
+					navigate('/');
+					setStatus('registred');
+				})
+				.catch((error) => {
+					setOverlayRef(confirmPasswordRef);
+					setOverlayText(i18.t('errors.authorization.userExist'));
+					//const className = cn('form-control', 'is-invalid');
+					usernameRef.current.className = changeClassName('form-control', 'is-invalid');
+					passwordRef.current.className = changeClassName('form-control', 'is-invalid');
+					confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
+					setShowErrorOverlay(!showErrorOverlay);
+					setStatus(null);
+				});
     },
   });
-	let test1;
+	/*let test1;
 
 	if (!formik.values.isEqual) {
 		test1 = (
 			<div>Пароли должны совпадать</div>
 		)
-	}
+	}*/
 
-	useEffect(() => {
-		console.log(formik.values);
+	/*useEffect(() => {
+		//console.log(formik.values);
+		console.log(confirmPasswordRef);
+		console.log(confirmPasswordRef.current);
+		console.log(confirmPasswordRef.current.onBlur);
+		confirmPasswordRef.current.onBlur = function() {
+			console.log('test');
+		}
 		if (formik.values.password !== formik.values.confirmPassword) {
 			formik.values.isEqual = false;
 		} else {
 			formik.values.isEqual = true;
 		}
-	}, [formik.values.confirmPassword]);
+	}, [formik.values.confirmPassword]);*/
 
 	/*const setInputValue = useCallback(
     (key, value) =>
@@ -214,7 +244,6 @@ const SignUp = () => {
 									/>
 									<label className="form-label" htmlFor="confirmPassword">{i18.t('ui.signupForm.confirmPassword')}</label>
 									<small className="text-danger">{formik.touched.confirmPassword && formik.errors.confirmPassword}</small>
-									{test1}
 								</div>
 								{/*<button type="submit" className="w-100 btn btn-outline-primary">Зарегистрироваться</button>*/}
 								{buttonEnter}
