@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -35,24 +35,6 @@ const validate = values => {
 	return errors;
 };
 
-const test = () => {
-	const validationSchema = yup.object({
-		username: yup
-			.string()
-			.min(3, i18.t('errors.username.length'))
-			.max(20, i18.t('errors.username.maxLength'))
-			.required(i18.t('errors.username.required')),
-		password: yup
-			.string()
-			.min(6, i18.t('errors.password.length')),
-			//.matches(/[0-9]/, i18.t('errors.password.number'))
-			//.matches(/[a-z]/, i18.t('errors.password.lowerCaseLetter')),
-			/*.matches(/[A-Z]/, i18Instance.t('errors.password.upperCaseLetter'))
-			.required(i18Instance.t('errors.password.required')),*/
-	});
-	return validationSchema;
-}
-
 const SignUp = () => {
 	const navigate = useNavigate();
 
@@ -80,8 +62,9 @@ const SignUp = () => {
 			isEqual: false,
     },
     //validationSchema: test(password),
-		validationSchema: validationSchema,
 		validate,
+		validationSchema: validationSchema,
+		//validate,
     onSubmit: async (values) => {
 			const { 
 				username,
@@ -89,7 +72,7 @@ const SignUp = () => {
 				confirmPassword,
 			} = values;
 			console.log('registartion')
-			/*if (password !== confirmPassword) {
+			if (password !== confirmPassword) {
 				setOverlayRef(confirmPasswordRef);
 				setOverlayText(i18.t('errors.authorization.confirmPassword'));
 				//const className = cn('form-control', 'is-invalid');
@@ -115,25 +98,25 @@ const SignUp = () => {
 					setShowErrorOverlay(!showErrorOverlay);
 					setStatus(null);
 				});
-			}*/
-			setStatus('registration');
-				await axios.post('/api/v1/signup', { username, password })
-				.then((data) => {
-					localStorage.setItem('userId', JSON.stringify(data.data));
-					logIn();
-					navigate('/');
-					setStatus('registred');
-				})
-				.catch((error) => {
-					setOverlayRef(confirmPasswordRef);
-					setOverlayText(i18.t('errors.authorization.userExist'));
-					//const className = cn('form-control', 'is-invalid');
-					usernameRef.current.className = changeClassName('form-control', 'is-invalid');
-					passwordRef.current.className = changeClassName('form-control', 'is-invalid');
-					confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
-					setShowErrorOverlay(!showErrorOverlay);
-					setStatus(null);
-				});
+			}
+			/*setStatus('registration');
+			await axios.post('/api/v1/signup', { username, password })
+			.then((data) => {
+				localStorage.setItem('userId', JSON.stringify(data.data));
+				logIn();
+				navigate('/');
+				setStatus('registred');
+			})
+			.catch((error) => {
+				setOverlayRef(confirmPasswordRef);
+				setOverlayText(i18.t('errors.authorization.userExist'));
+				//const className = cn('form-control', 'is-invalid');
+				usernameRef.current.className = changeClassName('form-control', 'is-invalid');
+				passwordRef.current.className = changeClassName('form-control', 'is-invalid');
+				confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
+				setShowErrorOverlay(!showErrorOverlay);
+				setStatus(null);
+			});*/
     },
   });
 	/*let test1;
