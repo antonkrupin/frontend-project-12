@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -23,7 +23,31 @@ const validationSchema = yup.object({
     //.matches(/[a-z]/, i18.t('errors.password.lowerCaseLetter')),
     /*.matches(/[A-Z]/, i18Instance.t('errors.password.upperCaseLetter'))
     .required(i18Instance.t('errors.password.required')),*/
+	confirmPassword: yup
+		.string()
+		.min(6, i18.t('errors.password.length')),
 });
+
+const test = () => {
+	const validationSchema = yup.object({
+		username: yup
+			.string()
+			.min(3, i18.t('errors.username.length'))
+			.max(20, i18.t('errors.username.maxLength'))
+			.required(i18.t('errors.username.required')),
+		password: yup
+			.string()
+			.min(6, i18.t('errors.password.length')),
+			//.matches(/[0-9]/, i18.t('errors.password.number'))
+			//.matches(/[a-z]/, i18.t('errors.password.lowerCaseLetter')),
+			/*.matches(/[A-Z]/, i18Instance.t('errors.password.upperCaseLetter'))
+			.required(i18Instance.t('errors.password.required')),*/
+		confirmPassword: yup
+			.string(),
+			//.oneOf(password),
+	});
+	return validationSchema;
+}
 
 const SignUp = () => {
 	const navigate = useNavigate();
@@ -49,8 +73,10 @@ const SignUp = () => {
       username: '',
       password: '',
 			confirmPassword: '',
+			isEqual: false,
     },
-    validationSchema: validationSchema,
+    //validationSchema: test(password),
+		validationSchema: test,
     onSubmit: async (values) => {
 			const { 
 				username,
@@ -86,6 +112,22 @@ const SignUp = () => {
 			}
     },
   });
+	let test1;
+
+	if (!formik.values.isEqual) {
+		test1 = (
+			<div>Пароли должны совпадать</div>
+		)
+	}
+
+	useEffect(() => {
+		console.log(formik.values);
+		if (formik.values.password !== formik.values.confirmPassword) {
+			formik.values.isEqual = false;
+		} else {
+			formik.values.isEqual = true;
+		}
+	}, [formik.values.confirmPassword]);
 
 	/*const setInputValue = useCallback(
     (key, value) =>
@@ -132,7 +174,9 @@ const SignUp = () => {
 										ref={usernameRef}
 									/>
 									<label className="form-label" htmlFor="username">{i18.t('ui.signupForm.name')}</label>
-									<small className="text-danger">{formik.touched.username && formik.errors.username}</small>
+									<div className="d-inline bg-danger rounded">
+										<small className="text-white">{formik.touched.username && formik.errors.username}</small>
+									</div>
 								</div>
 								<div className="form-floating mb-3">
 									<input
@@ -150,13 +194,15 @@ const SignUp = () => {
 										ref={passwordRef}
 									/>
 									<label className="form-label" htmlFor="password">{i18.t('ui.signupForm.password')}</label>
-									<small className="text-danger">{formik.touched.password && formik.errors.password}</small>
+									<div className="d-inline bg-danger rounded">
+										<small className="text-white">{formik.touched.password && formik.errors.password}</small>
+									</div>
 								</div>
 								<div className="form-floating mb-4">
 									<input
 										onChange={formik.handleChange}
 										onBlur={formik.handleBlur}
-										value={formik.values.confirmPassword}
+										defaultValue={formik.values.confirmPassword}
 										placeholder="Пароли должны совпадать"
 										name="confirmPassword"
 										required
@@ -168,6 +214,7 @@ const SignUp = () => {
 									/>
 									<label className="form-label" htmlFor="confirmPassword">{i18.t('ui.signupForm.confirmPassword')}</label>
 									<small className="text-danger">{formik.touched.confirmPassword && formik.errors.confirmPassword}</small>
+									{test1}
 								</div>
 								{/*<button type="submit" className="w-100 btn btn-outline-primary">Зарегистрироваться</button>*/}
 								{buttonEnter}
