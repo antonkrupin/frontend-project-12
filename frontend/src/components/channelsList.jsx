@@ -20,9 +20,9 @@ const ChannelsList = (props) => {
 
 	const channels = useSelector((state) => state.channels.channels);
 
-	const modalShow = useSelector(selectModal);
+	//const modalShow = useSelector(selectModal);
 
-	const modalType = useSelector((state) => state.modals.modalType);
+	//const modalType = useSelector((state) => state.modals.modalType);
 			
 	const changeActiveChannel = (e) => {
 		const channelName = e.target.textContent.slice(2);
@@ -44,9 +44,12 @@ const ChannelsList = (props) => {
 		<AddChannelModal socket={props.socket}/>
 		<RenameChannelModal socket={props.socket} channels={channels}/>
 		<DeleteChannelModal socket={props.socket} channels={channels}/>
-		<ModalWindow socket={props.socket} modalShow={modalShow} modalType={modalType}/>
 		</>
 	)
 }
 
 export default ChannelsList;
+
+/*
+<ModalWindow socket={props.socket} modalShow={modalShow} modalType={modalType}/>
+*/
