@@ -48,6 +48,7 @@ const ChannelWindow = (props) => {
 					className="border-0 p-0 ps-2 form-control"
 					ref={target}
 					onChange={messageHandler}
+					defaultValue={target.current.value}
 				/>
 				<button type="submit" className="btn btn-group-vertical border-0" onClick={addMessageToChannel}>
 					<IconSendMessage />
