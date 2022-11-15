@@ -11,7 +11,7 @@ const ChannelMessages = () => {
 				<div
 					key={message.id}
 					className="text-break mb-2">
-						<b>{message.username}: {message.body}</b>
+						<b>{message.username}</b>: {message.body}
 				</div>)
 			}
 		</>
