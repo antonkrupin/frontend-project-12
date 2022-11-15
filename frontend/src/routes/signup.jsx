@@ -23,17 +23,10 @@ const validationSchema = yup.object({
     //.matches(/[a-z]/, i18.t('errors.password.lowerCaseLetter')),
     /*.matches(/[A-Z]/, i18Instance.t('errors.password.upperCaseLetter'))
     .required(i18Instance.t('errors.password.required')),*/
+	confirmPassword: yup
+		.string()
+		.oneOf([yup.ref('password')], i18.t('errors.authorization.confirmPassword'))
 });
-
-const validate = values => {
-	const errors = {};
-	if (values.password !== values.confirmPassword) {
-		errors.confirmPassword = i18.t('errors.authorization.confirmPassword');
-	} else {
-		errors.confirmPassword = '';
-	}
-	return errors;
-};
 
 const SignUp = () => {
 	const navigate = useNavigate();
@@ -61,10 +54,7 @@ const SignUp = () => {
 			confirmPassword: '',
 			isEqual: false,
     },
-    //validationSchema: test(password),
-		validate,
 		validationSchema: validationSchema,
-		//validate,
     onSubmit: async (values) => {
 			const { 
 				username,
