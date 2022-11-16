@@ -6,3 +6,6 @@
 
 ### Project link
 https://obscure-brook-14511.herokuapp.com/
+
+### Railway deploy
+frontend-project-12-production-c67f.up.railway.app
