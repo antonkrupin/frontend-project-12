@@ -41,10 +41,10 @@ const ChannelWindow = (props) => {
 	return (
 		<form className="py-1 border rounded-2">
 			<div className="input-group">
-				<input 
-					name="body" 
-					aria-label="Новое сообщение" 
-					placeholder="Введите сообщение..." 
+				<input
+					name="body"
+					aria-label="Новое сообщение"
+					placeholder="Введите сообщение..."
 					className="border-0 p-0 ps-2 form-control"
 					ref={target}
 					onChange={messageHandler}
