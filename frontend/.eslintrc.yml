@@ -1,16 +1,13 @@
 env:
   browser: true
   es2021: true
-  node: true
 extends:
-  - airbnb
-  - plugin:react/recommended
-  - plugin:functional/recommended
-  - plugin:react-hooks/recommended
+  - 'eslint:recommended'
+  - 'plugin:react/recommended'
 parserOptions:
   ecmaFeatures:
     jsx: true
-  ecmaVersion: latest
+  ecmaVersion: 12
   sourceType: module
 plugins:
   - react
