@@ -26,10 +26,5 @@
     "@hexlet/chat-server": "^1.1.6",
     "axios": "^0.27.2",
     "classnames": "^2.3.2"
-  },
-  "devDependencies": {
-    "eslint": "^8.23.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-react": "^7.31.1"
   }
 }
