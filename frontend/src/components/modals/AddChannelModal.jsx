@@ -45,11 +45,26 @@ const AddChannelModal = (props) => {
 			</Modal.Header>
 			<Modal.Body>
 				<Form className="is-invalid" >
-					<InputGroup className="mb-3 is-invalid required" onChange={(e) => setChannelName(e.target.value)}>
+					<InputGroup
+						className="mb-3 is-invalid required"
+						name="channelName"
+						onChange={(e) => setChannelName(e.target.value)}>
 						<Form.Control aria-label="chartName" />
 					</InputGroup>
+					<label className="visually-hidden" htmlFor="channelName">Имя канала</label>
 					<div className="text-danger">{error}</div>
 				</Form>
+				{/*<form className="is-invalid">
+					<input
+						className="from-control w-100 mb-3 is-invalid required"
+						onChange={(e) => setChannelName(e.target.value)}
+						required
+						id="channelName"
+						name="channelName"
+					/>
+					<label className="visually-hidden" htmlFor="channelName">Имя канала</label>
+					<div className="text-danger">{error}</div>
+			</form>*/}
 			</Modal.Body>
 			<Modal.Footer className="border-top-0">
 				<CancelButton />
