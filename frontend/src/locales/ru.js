@@ -21,6 +21,7 @@ export default {
 			channels: {
 				createChannel: 'Имя канала должно быть уникальным',
 				renameChannel: 'Имя канала должно быть уникальным',
+				notNull: 'Введите имя канала',
 			}
 		},
 		messages: {
