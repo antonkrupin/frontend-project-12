@@ -31,7 +31,7 @@ const AddChannelModal = (props) => {
 
 	useEffect(() => {
 		if (target.current) {
-			target.current.children[0].focus();
+			target.current.focus();
 		}
 	});
 
@@ -69,17 +69,15 @@ const AddChannelModal = (props) => {
 				<Modal.Title>{i18n.t('ui.modals.add.title')}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<Form className="is-invalid">
-					<InputGroup
-						className="mb-3 is-invalid required"
+				<form>
+					<input
+						className="form-control"
 						name="channelName"
 						onChange={(e) => setChannelName(e.target.value)}
-						ref={target}>
-						{/*<Form.Control aria-label="chartName" />*/}
-					</InputGroup>
-					<label className="visually-hidden" htmlFor="channelName">Имя канала</label>
-					<div className="text-danger">{error}</div>
-				</Form>
+						ref={target} />
+						<label className="visually-hidden" htmlFor="channelName">Имя канала</label>
+						<div className="text-danger">{error}</div>
+				</form>
 			</Modal.Body>
 			<Modal.Footer className="border-top-0">
 				<CancelButton />
@@ -96,3 +94,19 @@ const AddChannelModal = (props) => {
 };
 
 export default AddChannelModal;
+
+/*
+
+<Form className="is-invalid">
+					<InputGroup
+						className="mb-3 is-invalid required"
+						name="channelName"
+						onChange={(e) => setChannelName(e.target.value)}
+						ref={target}>
+						<Form.Control aria-label="chartName" />
+					</InputGroup>
+					<label className="visually-hidden" htmlFor="channelName">Имя канала</label>
+					<div className="text-danger">{error}</div>
+				</Form>
+
+*/
