@@ -75,7 +75,7 @@ const AddChannelModal = (props) => {
 						name="channelName"
 						onChange={(e) => setChannelName(e.target.value)}
 						ref={target}>
-						<Form.Control aria-label="chartName" />
+						{/*<Form.Control aria-label="chartName" />*/}
 					</InputGroup>
 					<label className="visually-hidden" htmlFor="channelName">Имя канала</label>
 					<div className="text-danger">{error}</div>
