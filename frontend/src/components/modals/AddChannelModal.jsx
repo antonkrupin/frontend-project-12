@@ -59,11 +59,17 @@ const AddChannelModal = (props) => {
 		}
 	}
 
+	const closeModal = () => {
+		dispatch(addChannelModalShow());
+		setChannelName(null);
+		dispatch(setError(null));
+	}
+
 	return (
 		<>
 		<Modal
 			show={isAddChannelModalShow}
-			onHide={() => dispatch(addChannelModalShow())}
+			onHide={closeModal}
 			onKeyDown={(e) => onKeyDown(e)}	>
 			<Modal.Header closeButton >
 				<Modal.Title>{i18n.t('ui.modals.add.title')}</Modal.Title>
