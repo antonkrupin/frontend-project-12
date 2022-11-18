@@ -34,6 +34,7 @@ const ChannelsList = (props) => {
 			<span>{i18n.t('ui.channels')}</span>
 			<button type="button" className="p-0 text-primary btn btn-group-vertical" onClick={() => dispatch(addChannelModalShow())}>
 				<IconAddChannel />
+				<span className="visually-hidden">+</span>
 			</button>
 		</div>
 		<ul className="nav flex-column nav-pills nav-fill px-2">
