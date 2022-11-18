@@ -25,8 +25,8 @@ const modalsSlice = createSlice({
 		},
 		changeModalType: (state, action) => {
 			state.modalType = action.payload;
-		}
-	}
+		},
+	},
 });
 
 export const {
