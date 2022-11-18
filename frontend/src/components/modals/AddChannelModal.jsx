@@ -101,19 +101,3 @@ const AddChannelModal = (props) => {
 };
 
 export default AddChannelModal;
-
-/*
-
-<Form className="is-invalid">
-					<InputGroup
-						className="mb-3 is-invalid required"
-						name="channelName"
-						onChange={(e) => setChannelName(e.target.value)}
-						ref={target}>
-						<Form.Control aria-label="chartName" />
-					</InputGroup>
-					<label className="visually-hidden" htmlFor="channelName">Имя канала</label>
-					<div className="text-danger">{error}</div>
-				</Form>
-
-*/
