@@ -21,8 +21,6 @@ const AddChannelModal = (props) => {
 
 	const error = useSelector((state) => state.errors.error);
 
-	const modalType = useSelector((state) => state.modals.modalType);
-
 	const channelsNames = useSelector((state) => state.channels.channels).map(({name}) => name);
 
 	const isAddChannelModalShow = useSelector((state) => state.modals.isAddChannelModalShow);
