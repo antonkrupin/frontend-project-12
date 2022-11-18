@@ -35,7 +35,7 @@ const AddChannelModal = (props) => {
 		if (target.current) {
 			target.current.children[0].focus();
 		}
-	}, [modalType]);
+	});
 
 	const addChannelHanlder = (e) => {
 		e.preventDefault();
