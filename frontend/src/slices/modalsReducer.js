@@ -11,15 +11,15 @@ const modalsSlice = createSlice({
 	name: 'modals',
 	initialState,
 	reducers: {
-		addChannelModalShow: (state, action) => {
+		addChannelModalShow: (state) => {
 			state.modalType = 'add';
 			state.isAddChannelModalShow = !state.isAddChannelModalShow;
 		},
-		deleteChannelModalShow: (state, action) => {
+		deleteChannelModalShow: (state) => {
 			state.modalType = 'delete';
 			state.isDeleteChannelModalShow = !state.isDeleteChannelModalShow;
 		},
-		renameChannelModalShow: (state, action) => {
+		renameChannelModalShow: (state) => {
 			state.modalType = 'rename';
 			state.isRenameChannelModalShow = !state.isRenameChannelModalShow;
 		},
