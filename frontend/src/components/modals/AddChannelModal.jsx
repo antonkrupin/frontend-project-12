@@ -9,12 +9,15 @@ import ModalButtons from '../buttons/ModalButtons';
 import CancelButton from '../buttons/CancelButton';
 import { setChannelStatus } from '../../slices/channelsReducer';
 import { addChannelModalShow } from '../../slices/modalsReducer';
+import { setError } from '../../slices/errorsReducer';
 
 
 const AddChannelModal = (props) => {
 	const dispatch = useDispatch();
 	
 	const { socket } = props;
+
+	const error = useSelector((state) => state.errors.error);
 
 	const channelsNames = useSelector((state) => state.channels.channels).map(({name}) => name);
 
@@ -24,16 +27,19 @@ const AddChannelModal = (props) => {
 
 	const { channelStatus } = useSelector((state) => state.channels);
 
-	const [error, setError] = useState(null);
-
 	const addChannelHanlder = (e) => {
 		e.preventDefault();
-		if (!_.includes(channelsNames, name)) {
-			dispatch(setChannelStatus('adding'));
-			socket.emit('newChannel', { name });
-			dispatch(addChannelModalShow());
+		if (name !== null) {
+			if (!_.includes(channelsNames, name)) {
+				dispatch(setChannelStatus('adding'));
+				socket.emit('newChannel', { name });
+				dispatch(addChannelModalShow());
+				setChannelName(null);
+			} else {
+				dispatch(setError(i18n.t('errors.channels.createChannel')));
+			}
 		} else {
-			setError(i18n.t('errors.channels.createChannel'));
+			dispatch(setError(i18n.t('errors.channels.notNull')));
 		}
 	}
 
