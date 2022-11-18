@@ -43,6 +43,7 @@ const AddChannelModal = (props) => {
 				socket.emit('newChannel', { name });
 				dispatch(addChannelModalShow());
 				setChannelName(null);
+				dispatch(setError(null));
 			} else {
 				dispatch(setError(i18n.t('errors.channels.createChannel')));
 			}
