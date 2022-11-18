@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, InputGroup, Modal } from 'react-bootstrap';
 
@@ -13,6 +13,10 @@ import { addChannelModalShow } from '../../slices/modalsReducer';
 
 const AddChannelModal = (props) => {
 	const dispatch = useDispatch();
+
+	const ref = useRef();
+
+	const modalType = useSelector((state) => state.modals.modalType);
 	
 	const { socket } = props;
 
@@ -36,15 +40,23 @@ const AddChannelModal = (props) => {
 			setError(i18n.t('errors.channels.createChannel'));
 		}
 	}
-	
+
+	const onKeyDown = (e) => {
+		if (e.key === 'Enter') {
+			e.preventDefault();
+			e.stopPropagation();
+			addChannelHanlder(e);
+		}
+	}
+
 	return (
 		<>
-		<Modal show={isAddChannelModalShow} onHide={() => dispatch(addChannelModalShow())}>
+		<Modal show={isAddChannelModalShow} onHide={() => dispatch(addChannelModalShow())} onKeyDown={(e) => onKeyDown(e)}>
 			<Modal.Header closeButton >
 				<Modal.Title>{i18n.t('ui.modals.add.title')}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<Form className="is-invalid" >
+				<Form className="is-invalid">
 					<InputGroup
 						className="mb-3 is-invalid required"
 						name="channelName"
@@ -54,17 +66,6 @@ const AddChannelModal = (props) => {
 					<label className="visually-hidden" htmlFor="channelName">Имя канала</label>
 					<div className="text-danger">{error}</div>
 				</Form>
-				{/*<form className="is-invalid">
-					<input
-						className="from-control w-100 mb-3 is-invalid required"
-						onChange={(e) => setChannelName(e.target.value)}
-						required
-						id="channelName"
-						name="channelName"
-					/>
-					<label className="visually-hidden" htmlFor="channelName">Имя канала</label>
-					<div className="text-danger">{error}</div>
-			</form>*/}
 			</Modal.Body>
 			<Modal.Footer className="border-top-0">
 				<CancelButton />
