@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 
 import i18n from '../../asserts/i18';

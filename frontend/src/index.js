@@ -14,7 +14,7 @@ import './index.css';
 
 
 const root = ReactDOM.createRoot(document.getElementById('chat'));
-const socket = socketIO.connect('http://localhost:3000');
+const socket = socketIO.connect();
 
 if (typeof window !== "undefined") {
   injectStyle();

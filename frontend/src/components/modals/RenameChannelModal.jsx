@@ -1,8 +1,7 @@
 import { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
-import { Form, InputGroup, Modal, Button } from 'react-bootstrap';
-import cn from 'classnames';
+import { Modal } from 'react-bootstrap';
 
 import i18n from '../../asserts/i18';
 import changeClassName from '../../asserts/classNames';
@@ -11,7 +10,7 @@ import ModalButtons from '../buttons/ModalButtons';
 import CancelButton from '../buttons/CancelButton';
 import ErrorsDiv from '../errors/ErrorsDiv';
 import { renameChannelModalShow } from '../../slices/modalsReducer';
-import { renameChannelId, setChannelStatus } from '../../slices/channelsReducer';
+import { setChannelStatus } from '../../slices/channelsReducer';
 
 
 const RenameChannelModal = (props) => {

@@ -1,4 +1,4 @@
-import { Modal, Form, InputGroup } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 import ErrorsDiv from '../errors/ErrorsDiv';
 

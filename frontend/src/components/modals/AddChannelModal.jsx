@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, InputGroup, Modal, Button } from 'react-bootstrap';
+import { Form, InputGroup, Modal } from 'react-bootstrap';
 
 import i18n from '../../asserts/i18';
 

@@ -8,9 +8,7 @@ import AddChannelModal from './modals/AddChannelModal';
 import RenameChannelModal from './modals/RenameChannelModal';
 import DeleteChannelModal from './modals/DeleteChannelModal';
 import IconAddChannel from '../components/svgIcons/IconAddChannel';
-import ModalWindow from './modals/ModalWindow';
 
-import { selectModal } from '../slices/selectors';
 import { setActiveChannel } from '../slices/channelsReducer';
 import { addChannelModalShow } from '../slices/modalsReducer';
 
