@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, InputGroup, Modal } from 'react-bootstrap';
 
@@ -13,10 +13,6 @@ import { addChannelModalShow } from '../../slices/modalsReducer';
 
 const AddChannelModal = (props) => {
 	const dispatch = useDispatch();
-
-	const ref = useRef();
-
-	const modalType = useSelector((state) => state.modals.modalType);
 	
 	const { socket } = props;
 
@@ -51,7 +47,10 @@ const AddChannelModal = (props) => {
 
 	return (
 		<>
-		<Modal show={isAddChannelModalShow} onHide={() => dispatch(addChannelModalShow())} onKeyDown={(e) => onKeyDown(e)}>
+		<Modal
+			show={isAddChannelModalShow}
+			onHide={() => dispatch(addChannelModalShow())}
+			onKeyDown={(e) => onKeyDown(e)}	>
 			<Modal.Header closeButton >
 				<Modal.Title>{i18n.t('ui.modals.add.title')}</Modal.Title>
 			</Modal.Header>
