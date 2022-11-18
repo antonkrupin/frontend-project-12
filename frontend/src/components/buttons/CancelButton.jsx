@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 
 import i18n from '../../asserts/i18';
@@ -8,10 +8,10 @@ import {
   deleteChannelModalShow
 } from '../../slices/modalsReducer';
 
-const CancelButton = (props) => {
-   const dispatch = useDispatch();
+const CancelButton = () => {
+  const dispatch = useDispatch();
 
-  const { modalType } = props;
+	const modalType = useSelector((state) => state.modals.modalType);
 
   const buttonText = i18n.t('ui.buttons.cancel');
 
