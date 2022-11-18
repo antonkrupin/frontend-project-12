@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, InputGroup, Modal } from 'react-bootstrap';
 
@@ -14,10 +14,14 @@ import { setError } from '../../slices/errorsReducer';
 
 const AddChannelModal = (props) => {
 	const dispatch = useDispatch();
+
+	const target = useRef(null);
 	
 	const { socket } = props;
 
 	const error = useSelector((state) => state.errors.error);
+
+	const modalType = useSelector((state) => state.modals.modalType);
 
 	const channelsNames = useSelector((state) => state.channels.channels).map(({name}) => name);
 
@@ -26,6 +30,12 @@ const AddChannelModal = (props) => {
 	const [name, setChannelName] = useState(null);
 
 	const { channelStatus } = useSelector((state) => state.channels);
+
+	useEffect(() => {
+		if (target.current) {
+			target.current.children[0].focus();
+		}
+	}, [modalType]);
 
 	const addChannelHanlder = (e) => {
 		e.preventDefault();
@@ -65,7 +75,8 @@ const AddChannelModal = (props) => {
 					<InputGroup
 						className="mb-3 is-invalid required"
 						name="channelName"
-						onChange={(e) => setChannelName(e.target.value)}>
+						onChange={(e) => setChannelName(e.target.value)}
+						ref={target}>
 						<Form.Control aria-label="chartName" />
 					</InputGroup>
 					<label className="visually-hidden" htmlFor="channelName">Имя канала</label>
