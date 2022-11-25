@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
 import { Modal } from 'react-bootstrap';
@@ -9,48 +9,64 @@ import changeClassName from '../../asserts/classNames';
 import ModalButtons from '../buttons/ModalButtons';
 import CancelButton from '../buttons/CancelButton';
 import ErrorsDiv from '../errors/ErrorsDiv';
+
+import {
+	fetchError,
+	fetchChannelsNames,
+	fetchChannelStatus,
+	fetchChannelForRename
+} from '../../slices/selectors';
+
+import { setError } from '../../slices/errorsReducer';
 import { renameChannelModalShow } from '../../slices/modalsReducer';
 import { setChannelStatus } from '../../slices/channelsReducer';
 
 
 const RenameChannelModal = (props) => {
+	const { socket } = props;
+
 	const dispatch = useDispatch();
 
-	const ref = useRef();
-
-	const { socket } = props;
+	const inputRef = useRef();
 	
-	const channel = useSelector((state) => state.channels.channelForRename);
+	const channel = useSelector(fetchChannelForRename);
 
-	const channelsNames = useSelector((state) => state.channels.channels).map(({name}) => name);
+	const channelStatus = useSelector(fetchChannelStatus);
+
+	const channelsNames = useSelector(fetchChannelsNames);
 	
 	const isRenameChannelModalShow = useSelector((state) => state.modals.isRenameChannelModalShow);
+
+	useEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
+	});
 	
-	const [name, setChannelName] = useState(null);
-
-	const [error, setError] = useState('');
-
-	const { channelStatus } = useSelector((state) => state.channels);
-
 	const renameChannelHandler = (e) => {
 		e.preventDefault();
+		const name = inputRef.current.value;
 		dispatch(setChannelStatus('renaming'));
-		if (!_.includes(channelsNames, name)) {
-			socket.emit('renameChannel', { id: channel.id, name });
-			setChannelName('');
-			setError('');
-			dispatch(renameChannelModalShow());
+		if (name !== '') {
+			if (!_.includes(channelsNames, name)) {
+				socket.emit('renameChannel', { id: channel.id, name });
+				dispatch(setError(null));
+				dispatch(renameChannelModalShow());
+			} else {
+				dispatch(setChannelStatus(null));
+				inputRef.current.className = changeClassName('form-control is-invalid');
+				dispatch(setError(i18n.t('errors.channels.renameChannel')));
+			}
 		} else {
 			dispatch(setChannelStatus(null));
-			//const className = cn('form-control', 'is-invalid');
-			ref.current.className = changeClassName('form-control is-invalid');
-			setError(i18n.t('errors.channels.renameChannel'));
+			inputRef.current.className = changeClassName('form-control is-invalid');
+			dispatch(setError(i18n.t('errors.channels.notNull')));
 		}
 	}
 
 	const cancelRenameChannelHandler = () => {
-		setChannelName('');
-		setError('');
+		dispatch(setError(null));
+		dispatch(setChannelStatus(null));
 		dispatch(renameChannelModalShow());
 	}
 
@@ -63,14 +79,13 @@ const RenameChannelModal = (props) => {
 			<Modal.Body>
 				<form>
 					<input 
-						onChange={(e) => setChannelName(e.target.value)}
-						required
 						id="channelName"
 						className="form-control"
 						defaultValue={channel.name}
-						ref={ref}
+						ref={inputRef}
+						required
 					/>
-					<ErrorsDiv errorText={error}/>
+					<ErrorsDiv errorText={useSelector(fetchError)}/>
 				</form>
 			</Modal.Body>
 			<Modal.Footer className="border-top-0">

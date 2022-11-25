@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 
@@ -7,47 +7,54 @@ import i18n from '../../asserts/i18';
 
 import ModalButtons from '../buttons/ModalButtons';
 import CancelButton from '../buttons/CancelButton';
+import ErrorsDiv from '../errors/ErrorsDiv';
+import changeClassName from '../../asserts/classNames';
+
+import {
+	fetchError,
+	fetchChannelsNames,
+	fetchChannelStatus
+} from '../../slices/selectors';
+
 import { setChannelStatus } from '../../slices/channelsReducer';
 import { addChannelModalShow } from '../../slices/modalsReducer';
 import { setError } from '../../slices/errorsReducer';
 
 
 const AddChannelModal = (props) => {
-	const dispatch = useDispatch();
-
-	const target = useRef(null);
-	
 	const { socket } = props;
 
-	const error = useSelector((state) => state.errors.error);
+	const dispatch = useDispatch();
 
-	const channelsNames = useSelector((state) => state.channels.channels).map(({name}) => name);
+	const inputRef = useRef(null);
+	
+	const channelsNames = useSelector(fetchChannelsNames);
+
+	const channelStatus = useSelector(fetchChannelStatus);
 
 	const isAddChannelModalShow = useSelector((state) => state.modals.isAddChannelModalShow);
 
-	const [name, setChannelName] = useState(null);
-
-	const { channelStatus } = useSelector((state) => state.channels);
-
 	useEffect(() => {
-		if (target.current) {
-			target.current.focus();
+		if (inputRef.current) {
+			inputRef.current.focus();
 		}
 	});
 
 	const addChannelHanlder = (e) => {
 		e.preventDefault();
-		if (name !== null) {
+		const name = inputRef.current.value;
+		if (name !== '') {
 			if (!_.includes(channelsNames, name)) {
 				dispatch(setChannelStatus('adding'));
 				socket.emit('newChannel', { name });
 				dispatch(addChannelModalShow());
-				setChannelName(null);
 				dispatch(setError(null));
 			} else {
+				inputRef.current.className = changeClassName('form-control is-invalid');
 				dispatch(setError(i18n.t('errors.channels.createChannel')));
 			}
 		} else {
+			inputRef.current.className = changeClassName('form-control is-invalid');
 			dispatch(setError(i18n.t('errors.channels.notNull')));
 		}
 	}
@@ -62,7 +69,6 @@ const AddChannelModal = (props) => {
 
 	const closeModal = () => {
 		dispatch(addChannelModalShow());
-		setChannelName(null);
 		dispatch(setError(null));
 	}
 
@@ -80,10 +86,9 @@ const AddChannelModal = (props) => {
 					<input
 						className="form-control"
 						name="channelName"
-						onChange={(e) => setChannelName(e.target.value)}
-						ref={target} />
+						ref={inputRef} />
 						<label className="visually-hidden" htmlFor="channelName">Имя канала</label>
-						<div className="text-danger">{error}</div>
+						<ErrorsDiv errorText={useSelector(fetchError)}/>
 				</form>
 			</Modal.Body>
 			<Modal.Footer className="border-top-0">
