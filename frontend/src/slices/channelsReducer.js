@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
 	channels: [],
-	fetchChannelsStatus: null,
+	loadingChannelsStatus: null,
 	error: null,
 	channelStatus: null,
 	activeChannel: {},
@@ -75,16 +75,16 @@ const channelsSlice = createSlice({
 	},
 	extraReducers: {
 		[fetchChannels.pending]: (state) => {
-			state.fetchChannelsStatus = 'loading';
+			state.loadingChannelsStatus = 'loading';
 			state.error = null;
 		},
 		[fetchChannels.fulfilled]: (state, action) => {
-			state.fetchChannelsStatus = 'resolved';
+			state.loadingChannelsStatus = 'resolved';
 			state.channels = action.payload;
 			state.activeChannel = action.payload[0];
 		},
 		[fetchChannels.rejected]: (state, action) => {
-			state.fetchChannelsStatus = 'rejected';
+			state.loadingChannelsStatus = 'rejected';
 			state.error = action.payload;
 		},
 	},
