@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 
+import { loadingChannelsStatus, fetchMessagesStatus } from '../slices/selectors';
+
 import  i18n from '../asserts/i18';
 import ChannelsList from '../components/channelsList';
 import ChannelName from '../components/channelName';
@@ -28,9 +30,9 @@ const Chat = (props) => {
 
 	const socket = props.socket;
 
-	const { fetchChannelsStatus } = useSelector((state) => state.channels);
+	const channelsStatus = useSelector(loadingChannelsStatus);
 
-	const { fetchMessagesStatus } = useSelector((state) => state.messages);
+	const messagesStatus = useSelector(fetchMessagesStatus);
 	
 	const notify = (text) => {
 		toast.success(text, {
@@ -77,14 +79,14 @@ const Chat = (props) => {
 	
   return (
 		<>
-			{(fetchChannelsStatus === 'loading' || fetchMessagesStatus === 'loading') && 
+			{(channelsStatus === 'loading' || messagesStatus === 'loading') && 
 				<div className="d-flex flex-column justify-content-center align-items-center">
 					<div className="spinner-border text-primary" role="status">
 					</div>
 					<span className="sr-only text-primary">Загрузка...</span>
 				</div>
 			}
-			{(fetchChannelsStatus === 'resolved' && fetchMessagesStatus === 'resolved') && 
+			{(channelsStatus === 'resolved' && messagesStatus === 'resolved') && 
 			<>
 				<div className="container h-100 my-4 overflow-hidden rounded shadow">
 					<div className="row h-100 bg-white flex-md-row">
