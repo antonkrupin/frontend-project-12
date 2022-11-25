@@ -37,6 +37,12 @@ const Login = () => {
 
 	const [status, setStatus] = useState(null);
 
+	const [showErrorOverlay, setShowErrorOverlay] = useState(false);
+
+	const userNameRef = useRef();
+
+	const passwordRef = useRef();
+
   const formik = useFormik({
     initialValues: {
       userName: '',
@@ -65,12 +71,6 @@ const Login = () => {
 			});
     },
   });
-
-	const [showErrorOverlay, setShowErrorOverlay] = useState(false);
-
-	const userNameRef = useRef();
-
-	const passwordRef = useRef();
 	
 	useEffect(() => {
 		userNameRef.current.focus();
