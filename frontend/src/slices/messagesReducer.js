@@ -5,7 +5,7 @@ import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 const initialState ={
 	messages: [],
 	username: '',
-	fetchMessagesStatus: null,
+	messagesStatus: null,
 	error: null,
 }
 
@@ -49,14 +49,14 @@ const messagesSlice = createSlice({
 	},
 	extraReducers: {
 		[fetchMessages.pending]: (state) => {
-			state.fetchMessagesStatus = 'loading';
+			state.messagesStatus = 'loading';
 			state.error = null;
 		},
 		[fetchMessages.fulfilled]: (state, action) => {
-			state.fetchMessagesStatus = 'resolved';
+			state.messagesStatus = 'resolved';
 			state.messages = action.payload;
 		},
-		[fetchMessages.rejected]: (state, action) => {},
+		//[fetchMessages.rejected]: (state, action) => {},
 	},
 });
 
