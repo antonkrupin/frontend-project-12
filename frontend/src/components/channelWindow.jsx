@@ -3,23 +3,24 @@ import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
 
 import i18n from '../asserts/i18';
+import { fetchActiveChannelId, fetchUserName } from '../slices/selectors';
 import IconSendMessage from '../components/svgIcons/IconSendMessage';
 
 
 const ChannelWindow = (props) => {
 	const socket = props.socket;
 	
-	const channelId = useSelector((state) => state.channels.activeChannel.id);
+	const channelId = useSelector(fetchActiveChannelId);
 
-	const username = useSelector((state) => state.messages.username);
+	const username = useSelector(fetchUserName);
 	
-	const target = useRef(null);
+	const inputRef = useRef(null);
 
 	const [message, setMessage] = useState('');
 
 	useEffect(() => {
-		if (target.current) {
-			target.current.focus();
+		if (inputRef.current) {
+			inputRef.current.focus();
 		}
 	});
 
@@ -34,7 +35,7 @@ const ChannelWindow = (props) => {
 		if(message) {
 			socket.emit('newMessage', { body: message, channelId, username });
 		}
-		target.current.value = '';
+		inputRef.current.value = '';
 		setMessage('');
 	};
 
@@ -46,7 +47,7 @@ const ChannelWindow = (props) => {
 					aria-label="Новое сообщение"
 					placeholder="Введите сообщение..."
 					className="border-0 p-0 ps-2 form-control"
-					ref={target}
+					ref={inputRef}
 					onChange={messageHandler}
 					value={message}
 				/>

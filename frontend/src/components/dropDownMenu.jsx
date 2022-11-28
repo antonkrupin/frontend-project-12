@@ -2,8 +2,15 @@ import { useDispatch } from 'react-redux';
 
 import i18n from '../asserts/i18';
 
-import { setChannelStatus, channelForRename, channelForDelete } from '../slices/channelsReducer';
-import { renameChannelModalShow, deleteChannelModalShow } from '../slices/modalsReducer';
+import {
+	setChannelStatus,
+	channelForRename,
+	channelForDelete
+} from '../slices/channelsReducer';
+import {
+	renameChannelModalShow,
+	deleteChannelModalShow
+} from '../slices/modalsReducer';
 
 
 const DropDownMenu = (props) => {
@@ -34,7 +41,7 @@ const DropDownMenu = (props) => {
 				onClick={onClick}
 				id={dropDownId}
 				className={channelClassName}>
-				# {channel.name}
+				<span className="me-1"># </span>{channel.name}
 			</button>
 			<button 
 				type="button"
@@ -67,11 +74,3 @@ const DropDownMenu = (props) => {
 };
 
 export default DropDownMenu;
-
-/*
-
-<button type="button" className="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-    <span className="visually-hidden">Toggle Dropdown</span>
-  </button>
-
-*/

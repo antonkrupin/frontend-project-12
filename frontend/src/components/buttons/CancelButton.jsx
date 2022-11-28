@@ -8,11 +8,12 @@ import {
   deleteChannelModalShow
 } from '../../slices/modalsReducer';
 import { setError } from '../../slices/errorsReducer';
+import { fetchModalType } from '../../slices/selectors';
 
 const CancelButton = () => {
   const dispatch = useDispatch();
 
-	const modalType = useSelector((state) => state.modals.modalType);
+	const modalType = useSelector(fetchModalType);
 
   const buttonText = i18n.t('ui.buttons.cancel');
 

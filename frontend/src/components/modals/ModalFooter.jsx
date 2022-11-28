@@ -2,11 +2,9 @@ import { Modal } from "react-bootstrap";
 
 import CancelButton from '../buttons/CancelButton';
 import ModalButtons from '../buttons/ModalButtons';
-import ModalButton from '../buttons/ModalButton';
 
 const ModalFooter = (props) => {
   const {
-		modalType,
     buttonText,
     buttonAdditionalText,
     buttonHandler,
@@ -15,15 +13,13 @@ const ModalFooter = (props) => {
 
   return (
     <Modal.Footer className="border-top-0">
-      <CancelButton modalType={modalType}/>
+      <CancelButton />
       <ModalButtons
-				modalType={modalType}
         buttonText={buttonText}
         buttonAdditionalText={buttonAdditionalText}
         buttonHandler={buttonHandler}
         status={status}
       />
-			<ModalButton modalType={modalType}/>
     </Modal.Footer>
   )
 };

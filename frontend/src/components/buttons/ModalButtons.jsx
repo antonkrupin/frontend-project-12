@@ -1,4 +1,8 @@
+import { useSelector } from 'react-redux';
+
 import ModalButton from './ModalButton';
+
+import { fetchChannelStatus } from '../../slices/selectors';
 
 /*
 <ModalButtons
@@ -13,8 +17,9 @@ const ModalButtons = (props) => {
 		buttonText,
 		buttonAdditionalText,
 		buttonHandler,
-		status,
 	} = props;
+
+	const status = useSelector(fetchChannelStatus);
 
 	switch(status) {
 		case null: {

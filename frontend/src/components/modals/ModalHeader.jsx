@@ -1,9 +1,14 @@
+import { useSelector } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 
 import i18n from '../../asserts/i18';
 
-const ModalHeader = (props) => {
-  const { modalType } = props;
+import { fetchModalType } from '../../slices/selectors';
+
+const ModalHeader = () => {
+  //const { modalType } = props;
+
+  const modalType = useSelector(fetchModalType);
 
   let title;
 
