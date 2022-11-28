@@ -7,12 +7,12 @@ import {
   useLocation
 } from 'react-router-dom';
 
+import AuthContext from './contexts/index.jsx';
+import useAuth from './hooks/index.jsx';
 import Login from './routes/login';
 import SignUp from './routes/signup';
 import Page404 from './routes/page404';
 import Chat from './routes/chat';
-import AuthContext from './contexts/index.jsx';
-import useAuth from './hooks/index.jsx';
 import NavBar from './components/navBar';
 
 import './App.css';
