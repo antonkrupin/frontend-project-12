@@ -14,3 +14,4 @@ plugins:
 rules:
   react/prop-types: 0
   react/react-in-jsx-scope: 0
+  import/no-anonymous-default-export: 0
