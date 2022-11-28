@@ -4,11 +4,13 @@ import changeClassName from '../asserts/classNames';
 
 import DropDownMenu from './dropDownMenu';
 
+import { fetchActiveChannelId } from '../slices/selectors';
+
 
 const Channel = (props) => {
 	const { channel, onClick } = props;
 
-	const channelId = useSelector((state) => state.channels.activeChannel.id);
+	const channelId = useSelector(fetchActiveChannelId);
 
 	const isActiveChannel = channelId === channel.id ? true : false;
 
@@ -20,7 +22,7 @@ const Channel = (props) => {
 		<>
 			<li className="nav-item w-100" onClick={onClick}>
 				<button type="button" className={changeClassName('btn-secondary', isActiveChannel, 'w-100 rounded-0 text-start btn')}>
-					<span className="me-1">#</span> {channel.name}
+					<span className="me-1"># </span>{channel.name}
 				</button>
 			</li>
 		</>
