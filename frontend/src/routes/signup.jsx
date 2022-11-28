@@ -61,11 +61,9 @@ const SignUp = () => {
 				password,
 				confirmPassword,
 			} = values;
-			console.log('registartion')
 			if (password !== confirmPassword) {
 				setOverlayRef(confirmPasswordRef);
 				setOverlayText(i18.t('errors.authorization.confirmPassword'));
-				//const className = cn('form-control', 'is-invalid');
 				passwordRef.current.className = changeClassName('form-control', 'is-invalid');
 				confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
 				setShowErrorOverlay(!showErrorOverlay);
@@ -78,10 +76,9 @@ const SignUp = () => {
 					navigate('/');
 					setStatus('registred');
 				})
-				.catch((error) => {
+				.catch(() => {
 					setOverlayRef(confirmPasswordRef);
 					setOverlayText(i18.t('errors.authorization.userExist'));
-					//const className = cn('form-control', 'is-invalid');
 					usernameRef.current.className = changeClassName('form-control', 'is-invalid');
 					passwordRef.current.className = changeClassName('form-control', 'is-invalid');
 					confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
@@ -89,57 +86,8 @@ const SignUp = () => {
 					setStatus(null);
 				});
 			}
-			/*setStatus('registration');
-			await axios.post('/api/v1/signup', { username, password })
-			.then((data) => {
-				localStorage.setItem('userId', JSON.stringify(data.data));
-				logIn();
-				navigate('/');
-				setStatus('registred');
-			})
-			.catch((error) => {
-				setOverlayRef(confirmPasswordRef);
-				setOverlayText(i18.t('errors.authorization.userExist'));
-				//const className = cn('form-control', 'is-invalid');
-				usernameRef.current.className = changeClassName('form-control', 'is-invalid');
-				passwordRef.current.className = changeClassName('form-control', 'is-invalid');
-				confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
-				setShowErrorOverlay(!showErrorOverlay);
-				setStatus(null);
-			});*/
     },
   });
-	/*let test1;
-
-	if (!formik.values.isEqual) {
-		test1 = (
-			<div>Пароли должны совпадать</div>
-		)
-	}*/
-
-	/*useEffect(() => {
-		//console.log(formik.values);
-		console.log(confirmPasswordRef);
-		console.log(confirmPasswordRef.current);
-		console.log(confirmPasswordRef.current.onBlur);
-		confirmPasswordRef.current.onBlur = function() {
-			console.log('test');
-		}
-		if (formik.values.password !== formik.values.confirmPassword) {
-			formik.values.isEqual = false;
-		} else {
-			formik.values.isEqual = true;
-		}
-	}, [formik.values.confirmPassword]);*/
-
-	/*const setInputValue = useCallback(
-    (key, value) =>
-      formik.setValues({
-        ...formik.values,
-        [key]: value,
-      }),
-    [formik]
-  );*/
 
 	let buttonEnter;
 	buttonEnter = (
