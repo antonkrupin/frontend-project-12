@@ -10,8 +10,6 @@ import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
 import ErrorOverlay from '../components/errors/ErrorOverlay';
 
-//import '../styles/login.css'
-
 
 const notify = (text) => {
 	toast.error(text, {
@@ -62,7 +60,6 @@ const Login = () => {
 					notify(i18.t('ui.toasts.networkError'));
 					setStatus('networkError');
 				} else {
-					//const className = cn('form-control', 'is-invalid');
 					userNameRef.current.className = changeClassName('form-control is-invalid');
 					passwordRef.current.className = changeClassName('form-control is-invalid');
 					setShowErrorOverlay(!showErrorOverlay);
