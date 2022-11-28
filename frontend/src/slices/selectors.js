@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-export const channelId = state => state.channels.activeChannel.id;
+export const fetchActiveChannelId = state => state.channels.activeChannel.id;
 
 export const channelForDeleteId = state => state.channels.channelForDelete.id;
 
@@ -18,7 +18,9 @@ export const messages = state => state.messages.messages;
 
 export const fetchMessagesStatus = state => state.messages.messagesStatus;
 
-export const modalType = state => state.modals.modalType;
+export const fetchUserName = state => state.messages.username;
+
+export const fetchModalType = state => state.modals.modalType;
 
 export const fetchError = state => state.errors.error;
 
@@ -27,9 +29,9 @@ export const isRenameChannelModalShow = state => state.modals.isRenameChannelMod
 export const isDeleteChannelModalShow = state => state.modals.isDeleteChannelModalShow;*/
 
 export const selectModal = createSelector(
-  [modalType],
-  (modalType) => {
-    switch(modalType) {
+  [fetchModalType],
+  (fetchModalType) => {
+    switch(fetchModalType) {
       case 'add': {
         return state => state.modals.isAddChannelModalShow;
       }
@@ -47,6 +49,6 @@ export const selectModal = createSelector(
 )
 
 export const selectMessagesByChannel = createSelector(
-  [messages, channelId],
-  (messages, channelId) => messages.filter((message) => message.channelId === channelId),
+  [messages, fetchActiveChannelId],
+  (messages, fetchActiveChannelId) => messages.filter((message) => message.channelId === fetchActiveChannelId),
 );
