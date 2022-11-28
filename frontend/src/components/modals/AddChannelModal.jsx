@@ -86,7 +86,8 @@ const AddChannelModal = (props) => {
 					<input
 						className="form-control"
 						name="channelName"
-						ref={inputRef} />
+						ref={inputRef} 
+						placeholder="Имя канала"/>
 						<label htmlFor="channelName">Имя канала</label>
 						<ErrorsDiv errorText={useSelector(fetchError)}/>
 				</form>
