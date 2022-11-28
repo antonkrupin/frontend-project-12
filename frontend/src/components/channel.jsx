@@ -22,7 +22,7 @@ const Channel = (props) => {
 		<>
 			<li className="nav-item w-100" onClick={onClick}>
 				<button type="button" className={changeClassName('btn-secondary', isActiveChannel, 'w-100 rounded-0 text-start btn')}>
-					<span className="me-1"># </span>{channel.name}
+					<span className="me-1">#</span>{channel.name}
 				</button>
 			</li>
 		</>

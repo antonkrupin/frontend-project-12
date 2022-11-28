@@ -41,7 +41,7 @@ const DropDownMenu = (props) => {
 				onClick={onClick}
 				id={dropDownId}
 				className={channelClassName}>
-				<span className="me-1"># </span>{channel.name}
+				<span className="me-1">#</span>{channel.name}
 			</button>
 			<button 
 				type="button"
