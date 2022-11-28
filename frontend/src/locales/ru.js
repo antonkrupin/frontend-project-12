@@ -59,7 +59,7 @@ export default {
 				password: 'Пароль',
 				button: 'Войти',
 				buttonClicked: 'Вход',
-				newUser: 'Нет аккаунта?',
+				newUser: 'Нет аккаунта? ',
 				registration: 'Регистрация',
 			},
 			toasts: {
