@@ -85,6 +85,7 @@ const AddChannelModal = (props) => {
 				<form>
 					<label className="visually-hidden" htmlFor="channelName">Имя канала</label>
 					<input
+						id="channelName"
 						className="form-control"
 						name="channelName"
 						ref={inputRef} 
