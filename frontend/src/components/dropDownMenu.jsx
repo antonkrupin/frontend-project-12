@@ -39,7 +39,7 @@ const DropDownMenu = (props) => {
 		<div className="d-flex border-0 btn-group">
 			<button 
 				onClick={onClick}
-				id={dropDownId}
+				//id={dropDownId}
 				className={channelClassName}>
 				<span className="me-1">#</span>{channel.name}
 			</button>
