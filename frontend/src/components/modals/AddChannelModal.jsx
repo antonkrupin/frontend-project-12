@@ -35,9 +35,9 @@ const AddChannelModal = (props) => {
 	const isAddChannelModalShow = useSelector((state) => state.modals.isAddChannelModalShow);
 
 	useEffect(() => {
-		if (inputRef.current) {
+		/*if (inputRef.current) {
 			inputRef.current.focus();
-		}
+		}*/
 	});
 
 	const addChannelHanlder = (e) => {
