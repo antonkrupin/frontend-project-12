@@ -85,6 +85,7 @@ const RenameChannelModal = (props) => {
 						ref={inputRef}
 						required
 					/>
+					<label className="channelName" htmlFor="channelName">Имя канала</label>
 					<ErrorsDiv errorText={useSelector(fetchError)}/>
 				</form>
 			</Modal.Body>
