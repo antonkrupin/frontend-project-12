@@ -64,6 +64,14 @@ const RenameChannelModal = (props) => {
 		}
 	}
 
+	const onKeyDown = (e) => {
+		if (e.key === 'Enter') {
+			e.preventDefault();
+			e.stopPropagation();
+			renameChannelHandler(e);
+		}
+	}
+
 	const cancelRenameChannelHandler = () => {
 		dispatch(setError(null));
 		dispatch(setChannelStatus(null));
@@ -72,7 +80,10 @@ const RenameChannelModal = (props) => {
 
 	return (
 		<>
-		<Modal show={isRenameChannelModalShow} onHide={cancelRenameChannelHandler} >
+		<Modal
+			show={isRenameChannelModalShow}
+			onHide={cancelRenameChannelHandler}
+			onKeyDown={(e) => onKeyDown(e)}	>
 			<Modal.Header closeButton >
 				<Modal.Title>{i18n.t('ui.modals.rename.title')}</Modal.Title>
 			</Modal.Header>
