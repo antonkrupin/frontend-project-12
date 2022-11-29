@@ -49,7 +49,7 @@ const DropDownMenu = (props) => {
 				id={dropDownId}
 				data-bs-toggle="dropdown"
 				aria-expanded="false">
-				<label htmlFor={dropDownId} className="visually-hidden">{i18n.t('ui.span.channelManagement')}</label>
+				<span className="visually-hidden">{i18n.t('ui.span.channelManagement')}</span>
 			</button>
 			<ul className="dropdown-menu">
 				<li>
