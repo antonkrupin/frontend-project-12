@@ -46,12 +46,12 @@ const DropDownMenu = (props) => {
 			<button
 				type="button"
 				className={dropDownClassName}
-				//id={dropDownId}
+				id={dropDownId}
 				data-bs-toggle="dropdown"
 				aria-expanded="false">
+				<label htmlFor={dropDownId} className="visually-hidden">{i18n.t('ui.span.channelManagement')}</label>
 			</button>
-			<label htmlFor={dropDownId} className="visually-hidden">{i18n.t('ui.span.channelManagement')}</label>
-			<ul id={dropDownId} className="dropdown-menu">
+			<ul className="dropdown-menu">
 				<li>
 					<button
 						onClick={deleteChannelHandler}
