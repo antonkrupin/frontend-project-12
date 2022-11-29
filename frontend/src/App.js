@@ -4,7 +4,7 @@ import {
   Routes,
   Route,
   Navigate,
-  useLocation
+  useLocation,
 } from 'react-router-dom';
 
 import AuthContext from './contexts/index.jsx';
