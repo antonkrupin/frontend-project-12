@@ -65,7 +65,7 @@ export default {
 			toasts: {
 				channelCreated: 'Канал создан',
 				channelRenamed: 'Канал переименован',
-				channelDeleted: 'Канал удален',
+				channelDeleted: 'Канал удалён',
 				networkError: 'Ошибка соединения',
 			},
 			buttons: {
