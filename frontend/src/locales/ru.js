@@ -84,7 +84,7 @@ export default {
 			},
 			span: {
 				sendMessage: 'Отправить',
-				channelManagement: 'Управление каналами',
+				channelManagement: 'Управление каналом',
 			},
 			dropDownMenu: {
 				rename: 'Переименовать',
