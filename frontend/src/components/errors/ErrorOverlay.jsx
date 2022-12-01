@@ -1,14 +1,15 @@
 import React from 'react';
 import { Overlay } from 'react-bootstrap';
 
-const ErrorOverlay = (props) => {
-  const text = props.overlayText;
+const ErrorOverlay = (pr) => {
+  const { overlayText, overlayRef, show } = pr;
   return (
-    <Overlay target={props.overlayRef.current} show={props.show} placement="bottom">
+    <Overlay target={overlayRef.current} show={show} placement="bottom">
       {({
         placement, arrowProps, show: _show, popper, ...props
       }) => (
         <div
+          // eslint-disable-next-line react/jsx-props-no-spreading
           {...props}
           style={{
             position: 'relative',
@@ -19,7 +20,7 @@ const ErrorOverlay = (props) => {
             ...props.style,
           }}
         >
-          {text}
+          {overlayText}
         </div>
       )}
     </Overlay>
