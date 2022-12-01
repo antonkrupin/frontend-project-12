@@ -12,8 +12,9 @@ import i18 from '../asserts/i18';
 import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
 
-import { fetchStatus } from '../slices/selectors';
+import { fetchStatus, fetchError } from '../slices/selectors';
 import { setStatus } from '../slices/statusReducer';
+import { setError } from '../slices/errorsReducer';
 import ErrorOverlay from '../components/errors/ErrorOverlay';
 import EnterButton from '../components/buttons/EnterButton';
 
@@ -41,9 +42,6 @@ const Login = () => {
 
   const { logIn } = useAuth();
 
-  // const [status, setStatus] = useState(null);
-  // const status = useSelector(fetchStatus);
-
   const [showErrorOverlay, setShowErrorOverlay] = useState(false);
 
   const userNameRef = useRef();
@@ -62,6 +60,7 @@ const Login = () => {
         localStorage.setItem('userId', JSON.stringify(data.data));
         logIn();
         navigate('/');
+        dispatch(setError(null));
         dispatch(setStatus('authorized'));
       })
         .catch((error) => {
@@ -72,6 +71,7 @@ const Login = () => {
             userNameRef.current.className = changeClassName('form-control is-invalid');
             passwordRef.current.className = changeClassName('form-control is-invalid');
             setShowErrorOverlay(!showErrorOverlay);
+            dispatch(setError(i18.t('errors.authorization.wrong')));
             dispatch(setStatus(null));
           }
         });
@@ -89,20 +89,6 @@ const Login = () => {
     }),
     [formik],
   );
-
-  /* let buttonEnter;
-  buttonEnter = (
-    <button type="submit" className="w-100 mb-3 btn btn-outline-primary">
-    {i18.t('ui.loginForm.button')}</button>
-  );
-  if (status === 'authorization') {
-    buttonEnter = (
-      <button type="submit" className="w-100 mb-3 btn btn-outline-primary disabled">
-        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
-        {i18.t('ui.loginForm.buttonClicked')}
-      </button>
-    );
-  } */
 
   return (
     <>
@@ -149,7 +135,11 @@ const Login = () => {
                   </div>
                   <EnterButton />
                 </form>
-                <ErrorOverlay overlayRef={passwordRef} show={showErrorOverlay} overlayText={i18.t('errors.authorization.wrong')} />
+                <ErrorOverlay
+                  overlayRef={passwordRef}
+                  show={showErrorOverlay}
+                  overlayText={useSelector(fetchError)}
+                />
               </div>
               <div className="card-footer p-4">
                 <div className="text-center">

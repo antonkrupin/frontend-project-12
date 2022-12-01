@@ -3,7 +3,7 @@ import React from 'react';
 const Errors = (props) => {
   const { errorText } = props;
   return (
-    <div className="text-danger">
+    <div className="mb-4 text-danger">
       {errorText}
     </div>
   );

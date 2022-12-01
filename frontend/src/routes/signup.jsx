@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -9,7 +9,9 @@ import i18 from '../asserts/i18';
 import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
 
+import { fetchError } from '../slices/selectors';
 import { setStatus } from '../slices/statusReducer';
+import { setError } from '../slices/errorsReducer';
 import ErrorOverlay from '../components/errors/ErrorOverlay';
 import RegistrationButton from '../components/buttons/RegistrationButton';
 
@@ -44,7 +46,7 @@ const SignUp = () => {
 
   const [overlayRef, setOverlayRef] = useState(usernameRef);
 
-  const [overlayText, setOverlayText] = useState('');
+  // const [overlayText, setOverlayText] = useState('');
 
   const formik = useFormik({
     initialValues: {
@@ -62,7 +64,8 @@ const SignUp = () => {
       } = values;
       if (password !== confirmPassword) {
         setOverlayRef(confirmPasswordRef);
-        setOverlayText(i18.t('errors.authorization.confirmPassword'));
+        // setOverlayText(i18.t('errors.authorization.confirmPassword'));
+        dispatch(setError(i18.t('errors.authorization.confirmPassword')));
         passwordRef.current.className = changeClassName('form-control', 'is-invalid');
         confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
         setShowErrorOverlay(!showErrorOverlay);
@@ -73,11 +76,13 @@ const SignUp = () => {
             localStorage.setItem('userId', JSON.stringify(data.data));
             logIn();
             navigate('/');
+            dispatch(setError(null));
             dispatch(setStatus(null));
           })
           .catch(() => {
             setOverlayRef(confirmPasswordRef);
-            setOverlayText(i18.t('errors.authorization.userExist'));
+            // setOverlayText(i18.t('errors.authorization.userExist'));
+            dispatch(setError(i18.t('errors.authorization.userExist')));
             usernameRef.current.className = changeClassName('form-control', 'is-invalid');
             passwordRef.current.className = changeClassName('form-control', 'is-invalid');
             confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
@@ -87,20 +92,6 @@ const SignUp = () => {
       }
     },
   });
-
-  /* let buttonEnter;
-  buttonEnter = (
-    <button type="submit" className="w-100 mb-3 btn btn-outline-primary">
-    {i18.t('ui.signupForm.button')}</button>
-  );
-  if (status === 'registration') {
-    buttonEnter = (
-      <button type="submit" className="w-100 mb-3 btn btn-outline-primary disabled">
-        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
-        {i18.t('ui.signupForm.buttonClicked')}
-      </button>
-    );
-  } */
 
   return (
     <div className="container-fluid h-100">
@@ -125,9 +116,7 @@ const SignUp = () => {
                     ref={usernameRef}
                   />
                   <label className="form-label" htmlFor="username">{i18.t('ui.signupForm.name')}</label>
-                  <div className="d-inline bg-danger rounded">
-                    <small className="text-white">{formik.touched.username && formik.errors.username}</small>
-                  </div>
+                  <small className="text-danger">{formik.touched.username && formik.errors.username}</small>
                 </div>
                 <div className="form-floating mb-3">
                   <input
@@ -145,9 +134,7 @@ const SignUp = () => {
                     ref={passwordRef}
                   />
                   <label className="form-label" htmlFor="password">{i18.t('ui.signupForm.password')}</label>
-                  <div className="d-inline bg-danger rounded">
-                    <small className="text-white">{formik.touched.password && formik.errors.password}</small>
-                  </div>
+                  <small className="text-danger">{formik.touched.password && formik.errors.password}</small>
                 </div>
                 <div className="form-floating mb-4">
                   <input
@@ -170,7 +157,7 @@ const SignUp = () => {
                 <ErrorOverlay
                   overlayRef={overlayRef}
                   show={showErrorOverlay}
-                  overlayText={overlayText}
+                  overlayText={useSelector(fetchError)}
                 />
               </form>
             </div>
