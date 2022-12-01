@@ -43,7 +43,7 @@ const PrivateRoute = ({ children }) => {
   );
 };
 
-const App = (props) => (
+/* const App = (props) => (
   <AuthProvider>
     <BrowserRouter>
       <NavBar />
@@ -62,6 +62,30 @@ const App = (props) => (
       </Routes>
     </BrowserRouter>
   </AuthProvider>
-);
+); */
+
+const App = (props) => {
+  const { socket } = props;
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <NavBar />
+        <Routes>
+          <Route
+            path="/"
+            element={(
+              <PrivateRoute>
+                <Chat socket={socket} />
+              </PrivateRoute>
+          )}
+          />
+          <Route path="login" element={<Login />} />
+          <Route path="*" element={<Page404 />} />
+          <Route path="signup" element={<SignUp />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
+};
 
 export default App;
