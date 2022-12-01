@@ -1,3 +1,5 @@
+import React from 'react';
+
 const ModalButton = (props) => {
   const {
     buttonHandler, buttonText, className, loading,
