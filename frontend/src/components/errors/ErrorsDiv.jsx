@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Errors = (props) => {
   const { errorText } = props;
   return (
