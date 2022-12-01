@@ -4,8 +4,8 @@ import resources from '../locales/index';
 const i18Instance = i18next.createInstance();
 
 i18Instance.init({
-	lng: 'ru',
-	resources,
+  lng: 'ru',
+  resources,
 });
 
 export default i18Instance;

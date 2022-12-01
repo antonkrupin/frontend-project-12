@@ -17,14 +17,13 @@ import NavBar from './components/navBar';
 
 import './App.css';
 
-
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const logIn = () => setLoggedIn(true);
   const logOut = () => {
     localStorage.removeItem('userId');
-		localStorage.clear();
+    localStorage.clear();
     setLoggedIn(false);
   };
 
@@ -45,24 +44,24 @@ const PrivateRoute = ({ children }) => {
 };
 
 const App = (props) => (
-	<AuthProvider>
-		<BrowserRouter>
+  <AuthProvider>
+    <BrowserRouter>
       <NavBar />
-			<Routes>
-				<Route
-					path="/"
-					element={(
-						<PrivateRoute>
-							<Chat socket={props.socket}/>
-						</PrivateRoute>
-					)}
-				/>
-				<Route path="login" element={<Login />} />
-				<Route path="*" element={<Page404 />} />
-				<Route path="signup" element={<SignUp />} />
-			</Routes>
-		</BrowserRouter>
-	</AuthProvider>
+      <Routes>
+        <Route
+          path="/"
+          element={(
+            <PrivateRoute>
+              <Chat socket={props.socket} />
+            </PrivateRoute>
+          )}
+        />
+        <Route path="login" element={<Login />} />
+        <Route path="*" element={<Page404 />} />
+        <Route path="signup" element={<SignUp />} />
+      </Routes>
+    </BrowserRouter>
+  </AuthProvider>
 );
 
 export default App;

@@ -1,5 +1,3 @@
-const Page404 = () => {
-  return <h2>404 Page</h2>
-}
+const Page404 = () => <h2>404 Page</h2>;
 
 export default Page404;

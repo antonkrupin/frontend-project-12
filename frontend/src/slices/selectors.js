@@ -1,54 +1,54 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-export const fetchActiveChannelId = state => state.channels.activeChannel.id;
+export const fetchActiveChannelId = (state) => state.channels.activeChannel.id;
 
-export const channelForDeleteId = state => state.channels.channelForDelete.id;
+export const channelForDeleteId = (state) => state.channels.channelForDelete.id;
 
-export const fetchChannelForRename = state => state.channels.channelForRename;
+export const fetchChannelForRename = (state) => state.channels.channelForRename;
 
-export const loadingChannelsStatus = state => state.channels.loadingChannelsStatus;
+export const loadingChannelsStatus = (state) => state.channels.loadingChannelsStatus;
 
-export const fetchChannelStatus = state => state.channels.channelStatus;
+export const fetchChannelStatus = (state) => state.channels.channelStatus;
 
-export const fetchChannels = state => state.channels.channels;
+export const fetchChannels = (state) => state.channels.channels;
 
-export const fetchChannelsNames = state => state.channels.channels.map(({name}) => name);
+export const fetchChannelsNames = (state) => state.channels.channels.map(({ name }) => name);
 
-export const messages = state => state.messages.messages;
+export const fetchMessages = (state) => state.messages.messages;
 
-export const fetchMessagesStatus = state => state.messages.messagesStatus;
+export const fetchMessagesStatus = (state) => state.messages.messagesStatus;
 
-export const fetchUserName = state => state.messages.username;
+export const fetchUserName = (state) => state.messages.username;
 
-export const fetchModalType = state => state.modals.modalType;
+export const fetchModalType = (state) => state.modals.modalType;
 
-export const fetchError = state => state.errors.error;
+export const fetchError = (state) => state.errors.error;
 
-/*export const isAddChannelModalShow = state => state.modals.isAddChannelModalShow;
+/* export const isAddChannelModalShow = state => state.modals.isAddChannelModalShow;
 export const isRenameChannelModalShow = state => state.modals.isRenameChannelModalShow;
-export const isDeleteChannelModalShow = state => state.modals.isDeleteChannelModalShow;*/
+export const isDeleteChannelModalShow = state => state.modals.isDeleteChannelModalShow; */
 
 export const selectModal = createSelector(
   [fetchModalType],
-  (fetchModalType) => {
-    switch(fetchModalType) {
+  (modalType) => {
+    switch (modalType) {
       case 'add': {
-        return state => state.modals.isAddChannelModalShow;
+        return (state) => state.modals.isAddChannelModalShow;
       }
       case 'rename': {
-        return state => state.modals.isRenameChannelModalShow;
+        return (state) => state.modals.isRenameChannelModalShow;
       }
       case 'delete': {
-        return state => state.modals.isDeleteChannelModalShow;
+        return (state) => state.modals.isDeleteChannelModalShow;
       }
       default: {
         throw new Error('Unexpected modal type');
       }
     }
-  }
-)
+  },
+);
 
 export const selectMessagesByChannel = createSelector(
-  [messages, fetchActiveChannelId],
-  (messages, fetchActiveChannelId) => messages.filter((message) => message.channelId === fetchActiveChannelId),
+  [fetchMessages, fetchActiveChannelId],
+  (messages, channelId) => messages.filter((message) => message.channelId === channelId),
 );

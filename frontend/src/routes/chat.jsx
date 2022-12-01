@@ -24,11 +24,10 @@ import {
 	deleteChannel
 } from '../slices/channelsReducer';
 
-
 const Chat = (props) => {
 	const dispatch = useDispatch();
 
-	const socket = props.socket;
+	const { socket } = props;
 
 	const channelsStatus = useSelector(loadingChannelsStatus);
 
