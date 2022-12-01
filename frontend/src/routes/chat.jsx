@@ -73,7 +73,7 @@ const Chat = (props) => {
       notify(i18n.t('ui.toasts.channelDeleted'));
       dispatch(setChannelStatus(null));
     });
-  }, []);
+  }, [dispatch, socket]);
 
   return (
     <>
