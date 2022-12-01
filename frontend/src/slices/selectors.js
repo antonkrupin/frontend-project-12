@@ -24,6 +24,8 @@ export const fetchModalType = (state) => state.modals.modalType;
 
 export const fetchError = (state) => state.errors.error;
 
+export const fetchStatus = (state) => state.status.status;
+
 /* export const isAddChannelModalShow = state => state.modals.isAddChannelModalShow;
 export const isRenameChannelModalShow = state => state.modals.isRenameChannelModalShow;
 export const isDeleteChannelModalShow = state => state.modals.isDeleteChannelModalShow; */
