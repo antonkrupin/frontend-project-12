@@ -41,7 +41,13 @@ const ChannelsList = (props) => {
         </button>
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2">
-        {channels.map((channel) => <Channel key={channel.id} channel={channel} onClick={changeActiveChannel} />) }
+        {channels.map((channel) => (
+          <Channel
+            key={channel.id}
+            channel={channel}
+            onClick={changeActiveChannel}
+          />
+        ))}
       </ul>
       <AddChannelModal socket={socket} />
       <RenameChannelModal socket={socket} channels={channels} />

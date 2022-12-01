@@ -1,7 +1,7 @@
 import { Overlay } from 'react-bootstrap';
 
 const ErrorOverlay = (props) => {
-  const {overlayText} = props.overlayText;
+  const text = props.overlayText;
   return (
     <Overlay target={props.overlayRef.current} show={props.show} placement="bottom">
       {({
