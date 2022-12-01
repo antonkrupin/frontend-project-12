@@ -1,6 +1,7 @@
 import React, {
   useCallback, useState, useRef, useEffect,
 } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import axios from 'axios';
@@ -10,7 +11,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import i18 from '../asserts/i18';
 import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
+
+import { fetchStatus } from '../slices/selectors';
+import { setStatus } from '../slices/statusReducer';
 import ErrorOverlay from '../components/errors/ErrorOverlay';
+import EnterButton from '../components/buttons/EnterButton';
 
 const notify = (text) => {
   toast.error(text, {
@@ -30,11 +35,14 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const { logIn } = useAuth();
 
-  const [status, setStatus] = useState(null);
+  // const [status, setStatus] = useState(null);
+  // const status = useSelector(fetchStatus);
 
   const [showErrorOverlay, setShowErrorOverlay] = useState(false);
 
@@ -49,22 +57,22 @@ const Login = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      setStatus('authorization');
+      dispatch(setStatus('authorization'));
       await axios.post('/api/v1/login', { username: values.username, password: values.password }).then((data) => {
         localStorage.setItem('userId', JSON.stringify(data.data));
         logIn();
         navigate('/');
-        setStatus('authorized');
+        dispatch(setStatus('authorized'));
       })
         .catch((error) => {
           if (error.message === 'Network Error') {
             notify(i18.t('ui.toasts.networkError'));
-            setStatus('networkError');
+            dispatch(setStatus('networkError'));
           } else {
             userNameRef.current.className = changeClassName('form-control is-invalid');
             passwordRef.current.className = changeClassName('form-control is-invalid');
             setShowErrorOverlay(!showErrorOverlay);
-            setStatus(null);
+            dispatch(setStatus(null));
           }
         });
     },
@@ -82,9 +90,10 @@ const Login = () => {
     [formik],
   );
 
-  let buttonEnter;
+  /* let buttonEnter;
   buttonEnter = (
-    <button type="submit" className="w-100 mb-3 btn btn-outline-primary">{i18.t('ui.loginForm.button')}</button>
+    <button type="submit" className="w-100 mb-3 btn btn-outline-primary">
+    {i18.t('ui.loginForm.button')}</button>
   );
   if (status === 'authorization') {
     buttonEnter = (
@@ -93,7 +102,7 @@ const Login = () => {
         {i18.t('ui.loginForm.buttonClicked')}
       </button>
     );
-  }
+  } */
 
   return (
     <>
@@ -138,7 +147,7 @@ const Login = () => {
                     <label className="form-label" htmlFor="password">{i18.t('ui.loginForm.password')}</label>
                     <small className="text-danger">{formik.touched.password && formik.errors.password}</small>
                   </div>
-                  {buttonEnter}
+                  <EnterButton />
                 </form>
                 <ErrorOverlay overlayRef={passwordRef} show={showErrorOverlay} overlayText={i18.t('errors.authorization.wrong')} />
               </div>
@@ -147,7 +156,7 @@ const Login = () => {
                   <span>
                     {i18.t('ui.loginForm.newUser')}
                   </span>
-                  <Link to={status !== 'authorization' ? '/signup' : '#'}>
+                  <Link to={useSelector(fetchStatus) !== 'authorization' ? '/signup' : '#'}>
                     {i18.t('ui.loginForm.registration')}
                   </Link>
                 </div>

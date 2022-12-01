@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -7,7 +8,10 @@ import axios from 'axios';
 import i18 from '../asserts/i18';
 import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
+
+import { setStatus } from '../slices/statusReducer';
 import ErrorOverlay from '../components/errors/ErrorOverlay';
+import RegistrationButton from '../components/buttons/RegistrationButton';
 
 const validationSchema = yup.object({
   username: yup
@@ -18,10 +22,6 @@ const validationSchema = yup.object({
   password: yup
     .string()
     .min(6, i18.t('errors.password.length')),
-  // .matches(/[0-9]/, i18.t('errors.password.number'))
-  // .matches(/[a-z]/, i18.t('errors.password.lowerCaseLetter')),
-  /* .matches(/[A-Z]/, i18Instance.t('errors.password.upperCaseLetter'))
-    .required(i18Instance.t('errors.password.required')), */
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password')], i18.t('errors.authorization.confirmPassword')),
@@ -29,6 +29,8 @@ const validationSchema = yup.object({
 
 const SignUp = () => {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const { logIn } = useAuth();
 
@@ -43,8 +45,6 @@ const SignUp = () => {
   const [overlayRef, setOverlayRef] = useState(usernameRef);
 
   const [overlayText, setOverlayText] = useState('');
-
-  const [status, setStatus] = useState(null);
 
   const formik = useFormik({
     initialValues: {
@@ -67,13 +67,13 @@ const SignUp = () => {
         confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
         setShowErrorOverlay(!showErrorOverlay);
       } else {
-        setStatus('registration');
+        dispatch(setStatus('registration'));
         await axios.post('/api/v1/signup', { username, password })
           .then((data) => {
             localStorage.setItem('userId', JSON.stringify(data.data));
             logIn();
             navigate('/');
-            setStatus('registred');
+            dispatch(setStatus(null));
           })
           .catch(() => {
             setOverlayRef(confirmPasswordRef);
@@ -82,15 +82,16 @@ const SignUp = () => {
             passwordRef.current.className = changeClassName('form-control', 'is-invalid');
             confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
             setShowErrorOverlay(!showErrorOverlay);
-            setStatus(null);
+            dispatch(setStatus(null));
           });
       }
     },
   });
 
-  let buttonEnter;
+  /* let buttonEnter;
   buttonEnter = (
-    <button type="submit" className="w-100 mb-3 btn btn-outline-primary">{i18.t('ui.signupForm.button')}</button>
+    <button type="submit" className="w-100 mb-3 btn btn-outline-primary">
+    {i18.t('ui.signupForm.button')}</button>
   );
   if (status === 'registration') {
     buttonEnter = (
@@ -99,7 +100,7 @@ const SignUp = () => {
         {i18.t('ui.signupForm.buttonClicked')}
       </button>
     );
-  }
+  } */
 
   return (
     <div className="container-fluid h-100">
@@ -165,7 +166,7 @@ const SignUp = () => {
                   <label className="form-label" htmlFor="confirmPassword">{i18.t('ui.signupForm.confirmPassword')}</label>
                   <small className="text-danger">{formik.touched.confirmPassword && formik.errors.confirmPassword}</small>
                 </div>
-                {buttonEnter}
+                <RegistrationButton />
                 <ErrorOverlay
                   overlayRef={overlayRef}
                   show={showErrorOverlay}
