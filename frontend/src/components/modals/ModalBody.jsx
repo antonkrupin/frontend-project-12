@@ -12,12 +12,12 @@ const ModalBody = (props) => {
     bodyText = null,
   } = props;
 
-  switch(modalType) {
+  switch (modalType) {
     case 'Add': {
       return (
         <Modal.Body>
           <form>
-            <input 
+            <input
               onChange={onChange}
               required
               id="channelName"
@@ -25,16 +25,16 @@ const ModalBody = (props) => {
               defaultValue={channelName}
               ref={ref}
             />
-            <ErrorsDiv errorText={errorText}/>
+            <ErrorsDiv errorText={errorText} />
           </form>
         </Modal.Body>
-      )
+      );
     }
     case 'Rename': {
       return (
         <Modal.Body>
           <form>
-            <input 
+            <input
               onChange={onChange}
               required
               id="channelName"
@@ -42,17 +42,17 @@ const ModalBody = (props) => {
               defaultValue={channelName}
               ref={ref}
             />
-            <ErrorsDiv errorText={errorText}/>
+            <ErrorsDiv errorText={errorText} />
           </form>
         </Modal.Body>
-      )
+      );
     }
     case 'Delete': {
       return (
         <Modal.Body>
           {bodyText}
         </Modal.Body>
-      )
+      );
     }
     default: {
       throw new Error('Unexpected modal type');

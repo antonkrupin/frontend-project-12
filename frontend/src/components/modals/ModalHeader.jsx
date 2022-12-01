@@ -6,13 +6,12 @@ import i18n from '../../asserts/i18';
 import { fetchModalType } from '../../slices/selectors';
 
 const ModalHeader = () => {
-  //const { modalType } = props;
-
   const modalType = useSelector(fetchModalType);
 
+  // eslint-disable-next-line functional/no-let
   let title;
 
-  switch(modalType) {
+  switch (modalType) {
     case 'add': {
       title = i18n.t('ui.modals.add.title');
       break;
@@ -30,10 +29,10 @@ const ModalHeader = () => {
     }
   }
   return (
-    <Modal.Header closeButton >
+    <Modal.Header closeButton>
       <Modal.Title>{title}</Modal.Title>
     </Modal.Header>
-  )
+  );
 };
 
 export default ModalHeader;

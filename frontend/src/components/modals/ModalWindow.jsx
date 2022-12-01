@@ -1,4 +1,3 @@
-import { useState } from 'react';  
 import { useSelector } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 
@@ -18,7 +17,6 @@ const ModalWindow = (props) => {
   const {
     socket,
     modalType,
-    onShow,
     onHide,
     onChange,
     modalTitle,
@@ -31,25 +29,25 @@ const ModalWindow = (props) => {
     buttonAdditionalText,
     buttonHandler,
     status,
-    bodyText = null
+    bodyText = null,
   } = props;
 
-  const [name, setChannelName] = useState(null);
+  // const [name, setChannelName] = useState(null);
 
-  switch(props.modalType) {
+  switch (modalType) {
     case 'add': {
       return (
-        <Modal show={modalShow} onHide={onHide} >
-          <ModalHeader modalType={modalType}/>
-          <ModalBody modalType={modalType}/>
-          <ModalFooter modalType={modalType}/>
+        <Modal show={modalShow} onHide={onHide}>
+          <ModalHeader modalType={modalType} />
+          <ModalBody modalType={modalType} />
+          <ModalFooter modalType={modalType} />
         </Modal>
-      )
+      );
     }
     case 'rename': {
       return (
-        <Modal show={modalShow} onHide={onHide} >
-          <ModalHeader title={modalTitle}/>
+        <Modal show={modalShow} onHide={onHide}>
+          <ModalHeader title={modalTitle} />
           <ModalBody
             modalType={modalType}
             onChange={onChange}
@@ -68,12 +66,12 @@ const ModalWindow = (props) => {
             status={status}
           />
         </Modal>
-      )
+      );
     }
     case 'delete': {
       return (
-        <Modal show={modalShow} onHide={onHide} >
-          <ModalHeader title={modalTitle}/>
+        <Modal show={modalShow} onHide={onHide}>
+          <ModalHeader title={modalTitle} />
           <ModalBody
             modalType={modalType}
             onChange={onChange}
@@ -91,13 +89,13 @@ const ModalWindow = (props) => {
             status={status}
           />
         </Modal>
-      )
+      );
     }
     default:
       throw new Error('Unexpected modal type');
   }
 
-  return (
+  /* return (
     <Modal show={onShow} onHide={onHide} >
       <ModalHeader title={modalTitle}/>
       <ModalBody
@@ -117,48 +115,7 @@ const ModalWindow = (props) => {
         status={status}
       />
     </Modal>
-  )
+  ) */
 };
 
 export default ModalWindow;
-
-/*
-
- const {
-    onClick,
-    cancelButtonText,
-    buttonText,
-    buttonAdditionalText,
-    buttonHandler,
-    status
-  } = props;
-
-
-<Modal show={isAddChannelModalShow} onHide={() => dispatch(addChannelModalShow())}>
-			<Modal.Header closeButton >
-				<Modal.Title>{i18n.t('ui.modals.add.title')}</Modal.Title>
-			</Modal.Header>
-			<Modal.Body>
-				<Form className="is-invalid" >
-					<InputGroup className="mb-3 is-invalid required" onChange={(e) => setChannelName(e.target.value)}>
-						<Form.Control aria-label="chartName" />
-					</InputGroup>
-					<div className="text-danger">{error}</div>
-				</Form>
-			</Modal.Body>
-			<Modal.Footer className="border-top-0">
-				<CancelButton
-					onClick={() => dispatch(addChannelModalShow())}
-					text={i18n.t('ui.buttons.cancel')}
-				/>
-				<ModalButtons
-					buttonText={i18n.t('ui.buttons.add')}
-					buttonAdditionalText={i18n.t('ui.buttons.adding')}
-					buttonHandler={addChannelHanlder}
-					status={channelStatus}
-				/>
-			</Modal.Footer>
-		</Modal>
-
-
-*/

@@ -5,7 +5,7 @@ import i18n from '../../asserts/i18';
 import {
   addChannelModalShow,
   renameChannelModalShow,
-  deleteChannelModalShow
+  deleteChannelModalShow,
 } from '../../slices/modalsReducer';
 import { setError } from '../../slices/errorsReducer';
 import { fetchModalType } from '../../slices/selectors';
@@ -13,31 +13,32 @@ import { fetchModalType } from '../../slices/selectors';
 const CancelButton = () => {
   const dispatch = useDispatch();
 
-	const modalType = useSelector(fetchModalType);
+  const modalType = useSelector(fetchModalType);
 
   const buttonText = i18n.t('ui.buttons.cancel');
 
+  // eslint-disable-next-line functional/no-let
   let onClick;
 
-	const modalShow = (modalShow) => {
-		dispatch(modalShow);
-		dispatch(setError(null));
-	}
+  const modalShow = (showModalFunc) => {
+    dispatch(showModalFunc);
+    dispatch(setError(null));
+  };
 
-  switch(modalType) {
+  switch (modalType) {
     case 'add': {
-      //onClick = () => dispatch(addChannelModalShow());
-			onClick = () => modalShow(addChannelModalShow());
+      // onClick = () => dispatch(addChannelModalShow());
+      onClick = () => modalShow(addChannelModalShow());
       break;
     }
     case 'rename': {
-      //onClick = () => dispatch(renameChannelModalShow());
-			onClick = () => modalShow(renameChannelModalShow());
+      // onClick = () => dispatch(renameChannelModalShow());
+      onClick = () => modalShow(renameChannelModalShow());
       break;
     }
-    case 'delete' : {
-      //onClick = () => dispatch(deleteChannelModalShow());
-			onClick = () => modalShow(deleteChannelModalShow());
+    case 'delete': {
+      // onClick = () => dispatch(deleteChannelModalShow());
+      onClick = () => modalShow(deleteChannelModalShow());
       break;
     }
     default:
@@ -48,7 +49,7 @@ const CancelButton = () => {
     <Button variant="secondary" onClick={onClick}>
       { buttonText }
     </Button>
-  )
+  );
 };
 
 export default CancelButton;

@@ -6,48 +6,47 @@ import DropDownMenu from './dropDownMenu';
 
 import { fetchActiveChannelId } from '../slices/selectors';
 
-
 const Channel = (props) => {
-	const { channel, onClick } = props;
+  const { channel, onClick } = props;
 
-	const channelId = useSelector(fetchActiveChannelId);
+  const channelId = useSelector(fetchActiveChannelId);
 
-	const isActiveChannel = channelId === channel.id ? true : false;
+  const isActiveChannel = channelId === channel.id;
 
-	const dropDownId = `dropDown-${channel.id}`;
-	const dropDownClassName = changeClassName('btn-secondary', isActiveChannel, 'flex-grow-0 dropdown-toggle dropdown-toggle-split border-0 btn');
-	const channelClassName = changeClassName('btn-secondary', isActiveChannel, 'w-100 rounded-0 text-start text-truncate border-0 btn');
-	
-	let channelItem = (
-		<>
-			<li className="nav-item w-100" onClick={onClick}>
-				<button type="button" className={changeClassName('btn-secondary', isActiveChannel, 'w-100 rounded-0 text-start btn')}>
-					<span className="me-1">#</span>{channel.name}
-				</button>
-			</li>
-		</>
-	)
-	if (channel.removable) {
-		channelItem = (
-			<>
-			<li className="nav-item w-100" >
-				<DropDownMenu 
-					onClick={onClick}
-					channel={channel}
-					dropDownId={dropDownId}
-					dropDownClassName={dropDownClassName}
-					channelClassName={channelClassName}
-				/>
-			</li>
-			</>
-		)
-	}
+  const dropDownId = `dropDown-${channel.id}`;
+  const dropDownClassName = changeClassName('btn-secondary', isActiveChannel, 'flex-grow-0 dropdown-toggle dropdown-toggle-split border-0 btn');
+  const channelClassName = changeClassName('btn-secondary', isActiveChannel, 'w-100 rounded-0 text-start text-truncate border-0 btn');
 
-	return (
-		<>
-			{channelItem}
-		</>
-	)
+  // eslint-disable-next-line functional/no-let
+  let channelItem = (
+    <li className="nav-item w-100">
+      <button
+        type="button"
+        onClick={onClick}
+        className={changeClassName('btn-secondary', isActiveChannel, 'w-100 rounded-0 text-start btn')}
+      >
+        <span className="me-1">#</span>
+        {channel.name}
+      </button>
+    </li>
+  );
+  if (channel.removable) {
+    channelItem = (
+      <li className="nav-item w-100">
+        <DropDownMenu
+          onClick={onClick}
+          channel={channel}
+          dropDownId={dropDownId}
+          dropDownClassName={dropDownClassName}
+          channelClassName={channelClassName}
+        />
+      </li>
+    );
+  }
+
+  return (
+    channelItem
+  );
 };
 
 export default Channel;
