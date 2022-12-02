@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import _ from 'lodash';
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
