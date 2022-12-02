@@ -46,8 +46,6 @@ const SignUp = () => {
 
   const [overlayRef, setOverlayRef] = useState(usernameRef);
 
-  // const [overlayText, setOverlayText] = useState('');
-
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -64,7 +62,6 @@ const SignUp = () => {
       } = values;
       if (password !== confirmPassword) {
         setOverlayRef(confirmPasswordRef);
-        // setOverlayText(i18.t('errors.authorization.confirmPassword'));
         dispatch(setError(i18.t('errors.authorization.confirmPassword')));
         passwordRef.current.className = changeClassName('form-control', 'is-invalid');
         confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
@@ -81,7 +78,6 @@ const SignUp = () => {
           })
           .catch(() => {
             setOverlayRef(confirmPasswordRef);
-            // setOverlayText(i18.t('errors.authorization.userExist'));
             dispatch(setError(i18.t('errors.authorization.userExist')));
             usernameRef.current.className = changeClassName('form-control', 'is-invalid');
             passwordRef.current.className = changeClassName('form-control', 'is-invalid');

@@ -21,10 +21,6 @@ const ChannelsList = (props) => {
 
   const channels = useSelector(fetchChannels);
 
-  // const modalShow = useSelector(selectModal);
-
-  // const modalType = useSelector((state) => state.modals.modalType);
-
   const changeActiveChannel = (e) => {
     const channelName = e.target.textContent.slice(1);
     const activeChannel = channels.filter((channel) => channel.name === channelName ?? channel);

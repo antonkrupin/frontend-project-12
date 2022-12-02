@@ -57,7 +57,6 @@ const messagesSlice = createSlice({
       state.messagesStatus = 'resolved';
       state.messages = action.payload;
     },
-    // [fetchMessages.rejected]: (state, action) => {},
   },
 });
 

@@ -28,17 +28,14 @@ const CancelButton = () => {
 
   switch (modalType) {
     case 'add': {
-      // onClick = () => dispatch(addChannelModalShow());
       onClick = () => modalShow(addChannelModalShow());
       break;
     }
     case 'rename': {
-      // onClick = () => dispatch(renameChannelModalShow());
       onClick = () => modalShow(renameChannelModalShow());
       break;
     }
     case 'delete': {
-      // onClick = () => dispatch(deleteChannelModalShow());
       onClick = () => modalShow(deleteChannelModalShow());
       break;
     }
