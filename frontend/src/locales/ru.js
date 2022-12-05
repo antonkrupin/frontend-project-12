@@ -45,6 +45,9 @@ export default {
           text: 'Уверены ?',
         },
       },
+      text: {
+        loading: 'Загрузка...',
+      },
       signupForm: {
         title: 'Регистрация',
         name: 'Имя пользователя',

@@ -22,7 +22,9 @@ const ChannelsList = (props) => {
   const channels = useSelector(fetchChannels);
 
   const changeActiveChannel = (e) => {
-    const channelName = e.target.textContent.slice(1);
+    const { childNodes } = e.target;
+    // eslint-disable-next-line max-len
+    const channelName = childNodes.length === 1 ? childNodes[0].innerText.slice(2) : childNodes[1].textContent;
     const activeChannel = channels.filter((channel) => channel.name === channelName ?? channel);
     dispatch(setActiveChannel(activeChannel[0]));
   };
@@ -36,7 +38,7 @@ const ChannelsList = (props) => {
           <span className="visually-hidden">+</span>
         </button>
       </div>
-      <ul className="nav flex-column nav-pills nav-fill px-2">
+      <div className="nav flex-column nav-pills nav-fill px-2">
         {channels.map((channel) => (
           <Channel
             key={channel.id}
@@ -44,7 +46,7 @@ const ChannelsList = (props) => {
             onClick={changeActiveChannel}
           />
         ))}
-      </ul>
+      </div>
       <AddChannelModal socket={socket} />
       <RenameChannelModal socket={socket} channels={channels} />
       <DeleteChannelModal socket={socket} channels={channels} />

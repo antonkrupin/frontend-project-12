@@ -80,7 +80,7 @@ const Chat = (props) => {
       {(channelsStatus === 'loading' || messagesStatus === 'loading') && (
         <div className="d-flex flex-column justify-content-center align-items-center">
           <div className="spinner-border text-primary" role="status" />
-          <span className="sr-only text-primary">Загрузка...</span>
+          <span className="sr-only text-primary">{i18n.t('ui.text.loading')}</span>
         </div>
       )}
       {(channelsStatus === 'resolved' && messagesStatus === 'resolved') && (

@@ -12,7 +12,7 @@ const ChannelName = () => {
   return (
     <>
       <p className="m-0">
-        <b>
+        <b className="text-break">
           #
           {' '}
           {activeChannel.name}
