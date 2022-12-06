@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import i18n from '../asserts/i18';
+import { useSocket } from '../hooks';
 
 import Channel from './channel';
 import AddChannelModal from './modals/AddChannelModal';
@@ -10,14 +11,14 @@ import DeleteChannelModal from './modals/DeleteChannelModal';
 import IconAddChannel from './svgIcons/IconAddChannel';
 
 import { fetchChannels } from '../slices/selectors';
-
 import { setActiveChannel } from '../slices/channelsReducer';
 import { addChannelModalShow } from '../slices/modalsReducer';
 
-const ChannelsList = (props) => {
+const ChannelsList = () => {
   const dispatch = useDispatch();
 
-  const { socket } = props;
+  // const { socket } = props;
+  const socket = useSocket();
 
   const channels = useSelector(fetchChannels);
 

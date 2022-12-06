@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { selectMessagesByChannel } from '../slices/selectors';
 import i18 from '../asserts/i18';
+import { selectMessagesByChannel } from '../slices/selectors';
 
 const ChannelName = () => {
   const activeChannel = useSelector((state) => state.channels.activeChannel);

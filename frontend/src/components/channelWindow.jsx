@@ -3,11 +3,16 @@ import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
 
 import i18n from '../asserts/i18';
-import { fetchActiveChannelId, fetchUserName } from '../slices/selectors';
+import { useSocket } from '../hooks';
 import IconSendMessage from './svgIcons/IconSendMessage';
+import {
+  fetchActiveChannelId,
+  fetchUserName,
+} from '../slices/selectors';
 
-const ChannelWindow = (props) => {
-  const { socket } = props;
+const ChannelWindow = () => {
+  // const { socket } = props;
+  const socket = useSocket();
 
   const channelId = useSelector(fetchActiveChannelId);
 
