@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { Modal } from 'react-bootstrap';
 
 import i18n from '../../asserts/i18';
+import { useSocket } from '../../hooks';
 import changeClassName from '../../asserts/classNames';
 
 import ModalButtons from '../buttons/ModalButtons';
@@ -22,10 +23,11 @@ import { setError } from '../../slices/errorsReducer';
 import { renameChannelModalShow } from '../../slices/modalsReducer';
 import { setChannelStatus } from '../../slices/channelsReducer';
 
-const RenameChannelModal = (props) => {
-  const { socket } = props;
-
+const RenameChannelModal = () => {
   const dispatch = useDispatch();
+
+  // const { socket } = props;
+  const socket = useSocket();
 
   const inputRef = useRef();
 

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 
 import i18n from '../../asserts/i18';
+import { useSocket } from '../../hooks';
 
 import ModalButtons from '../buttons/ModalButtons';
 import CancelButton from '../buttons/CancelButton';
@@ -21,8 +22,9 @@ import { setChannelStatus } from '../../slices/channelsReducer';
 import { addChannelModalShow } from '../../slices/modalsReducer';
 import { setError } from '../../slices/errorsReducer';
 
-const AddChannelModal = (props) => {
-  const { socket } = props;
+const AddChannelModal = () => {
+  // const { socket } = props;
+  const socket = useSocket();
 
   const dispatch = useDispatch();
 

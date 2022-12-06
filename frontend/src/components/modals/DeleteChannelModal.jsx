@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 
 import i18n from '../../asserts/i18';
+import { useSocket } from '../../hooks';
 
 import ModalButtons from '../buttons/ModalButtons';
 import CancelButton from '../buttons/CancelButton';
@@ -17,10 +18,11 @@ import { deleteMessages } from '../../slices/messagesReducer';
 import { deleteChannelModalShow } from '../../slices/modalsReducer';
 import { setActiveChannel, setChannelStatus } from '../../slices/channelsReducer';
 
-const DeleteChannelModal = (props) => {
+const DeleteChannelModal = () => {
   const dispatch = useDispatch();
 
-  const { socket } = props;
+  // const { socket } = props;
+  const socket = useSocket();
 
   const channels = useSelector(fetchChannels);
 
