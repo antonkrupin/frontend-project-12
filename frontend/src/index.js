@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import socketIO from 'socket.io-client';
 import { injectStyle } from 'react-toastify/dist/inject-style';
 
+import SocketContext from './contexts/socketContext';
 import App from './App';
 import store from './slices/index';
 
@@ -18,7 +19,9 @@ if (typeof window !== 'undefined') {
 }
 
 root.render(
-  <Provider store={store}>
-    <App socket={socket} />
-  </Provider>,
+  <SocketContext.Provider value={socket}>
+    <Provider store={store}>
+      <App socket={socket} />
+    </Provider>
+  </SocketContext.Provider>,
 );
