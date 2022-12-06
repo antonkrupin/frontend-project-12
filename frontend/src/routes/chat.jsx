@@ -2,19 +2,23 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { loadingChannelsStatus, fetchMessagesStatus } from '../slices/selectors';
-
+import { useSocket } from '../hooks';
 import i18n from '../asserts/i18';
 import ChannelsList from '../components/channelsList';
 import ChannelName from '../components/channelName';
 import ChannelWindow from '../components/channelWindow';
 import ChannelMessages from '../components/channelMessages';
+import {
+  loadingChannelsStatus,
+  fetchMessagesStatus,
+} from '../slices/selectors';
 
 import {
   fetchMessages,
   setUserName,
   addMessage,
 } from '../slices/messagesReducer';
+
 import {
   setChannelStatus,
   fetchChannels,
@@ -24,10 +28,10 @@ import {
   deleteChannel,
 } from '../slices/channelsReducer';
 
-const Chat = (props) => {
+const Chat = () => {
   const dispatch = useDispatch();
 
-  const { socket } = props;
+  const socket = useSocket();
 
   const channelsStatus = useSelector(loadingChannelsStatus);
 
@@ -88,15 +92,15 @@ const Chat = (props) => {
         <div className="container h-100 my-4 overflow-hidden rounded shadow">
           <div className="row h-100 bg-white flex-md-row">
             <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
-              <ChannelsList socket={socket} />
+              <ChannelsList />
             </div>
             <div className="col p-0 h-100">
               <div className="d-flex flex-column h-100">
                 <div className="bg-light mb-4 p-3 shadow-sm small">
-                  <ChannelName socket={socket} />
+                  <ChannelName />
                 </div>
                 <div id="messages-box" className="chat-messages overflow-auto px-5">
-                  <ChannelMessages socket={socket} />
+                  <ChannelMessages />
                 </div>
                 <div className="mt-auto px-5 py-3">
                   <ChannelWindow socket={socket} />
