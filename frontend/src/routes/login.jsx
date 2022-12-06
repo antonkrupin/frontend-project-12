@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import i18 from '../asserts/i18';
 import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
+import { loginApiPath } from './routes';
 
 import { fetchStatus, fetchError } from '../slices/selectors';
 import { setStatus } from '../slices/statusReducer';
@@ -56,7 +57,8 @@ const Login = () => {
     validationSchema,
     onSubmit: async (values) => {
       dispatch(setStatus('authorization'));
-      await axios.post('/api/v1/login', { username: values.username, password: values.password }).then((data) => {
+      // eslint-disable-next-line max-len
+      await axios.post(loginApiPath, { username: values.username, password: values.password }).then((data) => {
         localStorage.setItem('userId', JSON.stringify(data.data));
         logIn();
         navigate('/');
