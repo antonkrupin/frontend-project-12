@@ -42,7 +42,11 @@ const DropDownMenu = (props) => {
         onClick={onClick}
         className={channelClassName}
       >
-        <span className="me-1 text-wrap text-break"># {channel.name}</span>
+        <span className="me-1 text-wrap text-break">
+          #
+          {' '}
+          {channel.name}
+        </span>
       </button>
       <button
         type="button"

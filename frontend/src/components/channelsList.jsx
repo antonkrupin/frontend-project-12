@@ -24,7 +24,7 @@ const ChannelsList = (props) => {
   const changeActiveChannel = (e) => {
     const { childNodes } = e.target;
     // eslint-disable-next-line max-len
-    const channelName = childNodes.length === 1 ? childNodes[0].innerText.slice(2) : childNodes[1].textContent;
+    const channelName = childNodes.length === 1 ? childNodes[0].innerText.slice(2) : childNodes[2].textContent;
     const activeChannel = channels.filter((channel) => channel.name === channelName ?? channel);
     dispatch(setActiveChannel(activeChannel[0]));
   };
