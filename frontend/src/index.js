@@ -21,7 +21,7 @@ if (typeof window !== 'undefined') {
 root.render(
   <SocketContext.Provider value={socket}>
     <Provider store={store}>
-      <App socket={socket} />
+      <App />
     </Provider>
   </SocketContext.Provider>,
 );
