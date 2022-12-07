@@ -7,11 +7,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 
-import {
-  loginPagePath,
-  signUpPagePath,
-  page404Path,
-} from './routes/routes';
+import routes from './routes/routes';
 
 import AuthContext from './contexts/index.jsx';
 import useAuth from './hooks/index.jsx';
@@ -65,9 +61,9 @@ const App = () => (
             </PrivateRoute>
           )}
         />
-        <Route path={loginPagePath} element={<Login />} />
-        <Route path={page404Path} element={<Page404 />} />
-        <Route path={signUpPagePath} element={<SignUp />} />
+        <Route path={routes.loginPagePath()} element={<Login />} />
+        <Route path={routes.page404Path()} element={<Page404 />} />
+        <Route path={routes.signUpPagePath()} element={<SignUp />} />
       </Routes>
     </BrowserRouter>
   </AuthProvider>

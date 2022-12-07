@@ -8,7 +8,7 @@ import axios from 'axios';
 import i18 from '../asserts/i18';
 import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
-import { signUpApiPath } from './routes';
+import routes from './routes';
 
 import { fetchError } from '../slices/selectors';
 import { setStatus } from '../slices/statusReducer';
@@ -69,7 +69,7 @@ const SignUp = () => {
         setShowErrorOverlay(!showErrorOverlay);
       } else {
         dispatch(setStatus('registration'));
-        await axios.post(signUpApiPath, { username, password })
+        await axios.post(routes.signUpPath(), { username, password })
           .then((data) => {
             // localStorage.setItem('userId', JSON.stringify(data.data));
             logIn(data.data);

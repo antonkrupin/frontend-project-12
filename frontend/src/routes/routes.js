@@ -1,15 +1,10 @@
-const loginApiPath = '/api/v1/login';
-const signUpApiPath = '/api/v1/signup';
-const messagesApiPath = '/api/v1/data';
-const loginPagePath = 'login';
-const signUpPagePath = 'signup';
-const page404Path = '*';
+const apiPath = '/api/v1';
 
-export {
-  loginApiPath,
-  signUpApiPath,
-  messagesApiPath,
-  loginPagePath,
-  signUpPagePath,
-  page404Path,
+export default {
+  loginPath: () => [apiPath, 'login'].join('/'),
+  signUpPath: () => [apiPath, 'signup'].join('/'),
+  messagesPath: () => [apiPath, 'data'].join('/'),
+  loginPagePath: () => '/login',
+  signUpPagePath: () => '/signup',
+  page404Path: () => '*',
 };

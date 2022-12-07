@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import i18 from '../asserts/i18';
 import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
-import { loginApiPath } from './routes';
+import routes from './routes';
 
 import { fetchStatus, fetchError } from '../slices/selectors';
 import { setStatus } from '../slices/statusReducer';
@@ -58,7 +58,7 @@ const Login = () => {
     onSubmit: async (values) => {
       dispatch(setStatus('authorization'));
       // eslint-disable-next-line max-len
-      await axios.post(loginApiPath, { username: values.username, password: values.password }).then((data) => {
+      await axios.post(routes.loginPath(), { username: values.username, password: values.password }).then((data) => {
         // localStorage.setItem('userId', JSON.stringify(data.data));
         logIn(data.data);
         navigate('/');
