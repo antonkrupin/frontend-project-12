@@ -22,8 +22,9 @@ import { setChannelStatus } from '../../slices/channelsReducer';
 import { addChannelModalShow } from '../../slices/modalsReducer';
 import { setError } from '../../slices/errorsReducer';
 
+import { showNotify } from '../notify';
+
 const AddChannelModal = () => {
-  // const { socket } = props;
   const socket = useSocket();
 
   const dispatch = useDispatch();
@@ -48,8 +49,11 @@ const AddChannelModal = () => {
     if (name !== '') {
       if (!_.includes(channelsNames, name)) {
         dispatch(setChannelStatus('adding'));
-        socket.emit('newChannel', { name });
-        dispatch(addChannelModalShow());
+        socket.emit(
+          'newChannel',
+          { name },
+          () => showNotify(i18n.t('ui.toasts.channelCreated'), dispatch(addChannelModalShow())),
+        );
         dispatch(setError(null));
       } else {
         inputRef.current.className = changeClassName('form-control is-invalid');

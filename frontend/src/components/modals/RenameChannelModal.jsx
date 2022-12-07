@@ -22,11 +22,11 @@ import {
 import { setError } from '../../slices/errorsReducer';
 import { renameChannelModalShow } from '../../slices/modalsReducer';
 import { setChannelStatus } from '../../slices/channelsReducer';
+import { showNotify } from '../notify';
 
 const RenameChannelModal = () => {
   const dispatch = useDispatch();
 
-  // const { socket } = props;
   const socket = useSocket();
 
   const inputRef = useRef();
@@ -51,9 +51,12 @@ const RenameChannelModal = () => {
     dispatch(setChannelStatus('renaming'));
     if (name !== '') {
       if (!_.includes(channelsNames, name)) {
-        socket.emit('renameChannel', { id: channel.id, name });
+        socket.emit(
+          'renameChannel',
+          { id: channel.id, name },
+          () => showNotify(i18n.t('ui.toasts.channelRenamed'), dispatch(renameChannelModalShow())),
+        );
         dispatch(setError(null));
-        dispatch(renameChannelModalShow());
       } else {
         dispatch(setChannelStatus(null));
         inputRef.current.className = changeClassName('form-control is-invalid');

@@ -17,11 +17,11 @@ import {
 import { deleteMessages } from '../../slices/messagesReducer';
 import { deleteChannelModalShow } from '../../slices/modalsReducer';
 import { setActiveChannel, setChannelStatus } from '../../slices/channelsReducer';
+import { showNotify } from '../notify';
 
 const DeleteChannelModal = () => {
   const dispatch = useDispatch();
 
-  // const { socket } = props;
   const socket = useSocket();
 
   const channels = useSelector(fetchChannels);
@@ -35,10 +35,13 @@ const DeleteChannelModal = () => {
   const deleteChannelHandler = (e) => {
     e.preventDefault();
     dispatch(setChannelStatus('deleting'));
-    socket.emit('removeChannel', { id: channelId });
+    socket.emit(
+      'removeChannel',
+      { id: channelId },
+      () => showNotify(i18n.t('ui.toasts.channelDeleted'), dispatch(deleteChannelModalShow())),
+    );
     dispatch(deleteMessages({ channelId }));
     dispatch(setActiveChannel(channels[0]));
-    dispatch(deleteChannelModalShow());
   };
 
   return (
