@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 import { useSocket } from '../hooks';
 import i18n from '../asserts/i18';
@@ -16,17 +16,9 @@ import {
 import {
   fetchMessages,
   setUserName,
-  addMessage,
 } from '../slices/messagesReducer';
 
-import {
-  setChannelStatus,
-  fetchChannels,
-  addChannel,
-  setActiveChannel,
-  renameChannel,
-  deleteChannel,
-} from '../slices/channelsReducer';
+import { fetchChannels } from '../slices/channelsReducer';
 
 const Chat = () => {
   const dispatch = useDispatch();
@@ -37,46 +29,12 @@ const Chat = () => {
 
   const messagesStatus = useSelector(fetchMessagesStatus);
 
-  const notify = (text) => {
-    toast.success(text, {
-      position: 'top-right',
-      autoClose: 5000,
-      theme: 'light',
-    });
-  };
-
   useEffect(() => {
     const { username } = JSON.parse(localStorage.getItem('userId'));
 
     dispatch(setUserName(username));
     dispatch(fetchChannels());
     dispatch(fetchMessages());
-
-    socket.on('newMessage', (payload) => {
-      dispatch(addMessage(payload));
-    });
-
-    socket.on('newChannel', (payload) => {
-      dispatch(setActiveChannel(payload));
-      dispatch(addChannel(payload));
-      // dispatch(addChannelModalShow());
-      notify(i18n.t('ui.toasts.channelCreated'));
-      dispatch(setChannelStatus('added'));
-    });
-
-    socket.on('renameChannel', (payload) => {
-      dispatch(renameChannel(payload));
-      // dispatch(renameChannelModalShow());
-      notify(i18n.t('ui.toasts.channelRenamed'));
-      dispatch(setChannelStatus('renamed'));
-    });
-
-    socket.on('removeChannel', (payload) => {
-      dispatch(deleteChannel(payload));
-      // dispatch(deleteChannelModalShow());
-      notify(i18n.t('ui.toasts.channelDeleted'));
-      dispatch(setChannelStatus(null));
-    });
   }, [dispatch, socket]);
 
   return (
