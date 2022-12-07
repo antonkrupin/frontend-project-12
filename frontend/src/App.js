@@ -26,7 +26,10 @@ import './App.css';
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const logIn = () => setLoggedIn(true);
+  const logIn = (token) => {
+    localStorage.setItem('userId', JSON.stringify(token));
+    setLoggedIn(true);
+  };
   const logOut = () => {
     localStorage.removeItem('userId');
     localStorage.clear();
