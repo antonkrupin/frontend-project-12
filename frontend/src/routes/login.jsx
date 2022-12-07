@@ -59,8 +59,8 @@ const Login = () => {
       dispatch(setStatus('authorization'));
       // eslint-disable-next-line max-len
       await axios.post(loginApiPath, { username: values.username, password: values.password }).then((data) => {
-        localStorage.setItem('userId', JSON.stringify(data.data));
-        logIn();
+        // localStorage.setItem('userId', JSON.stringify(data.data));
+        logIn(data.data);
         navigate('/');
         dispatch(setError(null));
         dispatch(setStatus('authorized'));

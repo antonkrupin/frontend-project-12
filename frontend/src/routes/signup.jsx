@@ -71,8 +71,8 @@ const SignUp = () => {
         dispatch(setStatus('registration'));
         await axios.post(signUpApiPath, { username, password })
           .then((data) => {
-            localStorage.setItem('userId', JSON.stringify(data.data));
-            logIn();
+            // localStorage.setItem('userId', JSON.stringify(data.data));
+            logIn(data.data);
             navigate('/');
             dispatch(setError(null));
             dispatch(setStatus(null));
