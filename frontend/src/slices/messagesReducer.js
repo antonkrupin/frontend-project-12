@@ -2,6 +2,7 @@
 import _ from 'lodash';
 import axios from 'axios';
 import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
+import { messagesApiPath } from '../routes/routes';
 
 const initialState = {
   messages: [],
@@ -16,7 +17,7 @@ export const fetchMessages = createAsyncThunk(
     const userId = JSON.parse(localStorage.getItem('userId'));
     const header = { Authorization: `Bearer ${userId.token}` };
 
-    const response = await axios.get('/api/v1/data', { headers: header });
+    const response = await axios.get(messagesApiPath, { headers: header });
 
     const { messages } = response.data;
 
