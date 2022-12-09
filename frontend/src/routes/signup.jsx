@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -10,9 +10,7 @@ import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
 import routes from './routes';
 
-import { fetchError } from '../slices/selectors';
 import { setStatus } from '../slices/statusReducer';
-import { setError } from '../slices/errorsReducer';
 import ErrorOverlay from '../components/errors/ErrorOverlay';
 import RegistrationButton from '../components/buttons/RegistrationButton';
 
@@ -47,6 +45,8 @@ const SignUp = () => {
 
   const [overlayRef, setOverlayRef] = useState(usernameRef);
 
+  const [error, setError] = useState(null);
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -63,7 +63,7 @@ const SignUp = () => {
       } = values;
       if (password !== confirmPassword) {
         setOverlayRef(confirmPasswordRef);
-        dispatch(setError(i18.t('errors.authorization.confirmPassword')));
+        setError(i18.t('errors.authorization.confirmPassword'));
         passwordRef.current.className = changeClassName('form-control', 'is-invalid');
         confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
         setShowErrorOverlay(!showErrorOverlay);
@@ -71,15 +71,14 @@ const SignUp = () => {
         dispatch(setStatus('registration'));
         await axios.post(routes.signUpPath(), { username, password })
           .then((data) => {
-            // localStorage.setItem('userId', JSON.stringify(data.data));
             logIn(data.data);
             navigate('/');
-            dispatch(setError(null));
+            setError(null);
             dispatch(setStatus(null));
           })
           .catch(() => {
             setOverlayRef(confirmPasswordRef);
-            dispatch(setError(i18.t('errors.authorization.userExist')));
+            setError(i18.t('errors.authorization.userExist'));
             usernameRef.current.className = changeClassName('form-control', 'is-invalid');
             passwordRef.current.className = changeClassName('form-control', 'is-invalid');
             confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
@@ -154,7 +153,7 @@ const SignUp = () => {
                 <ErrorOverlay
                   overlayRef={overlayRef}
                   show={showErrorOverlay}
-                  overlayText={useSelector(fetchError)}
+                  overlayText={error}
                 />
               </form>
             </div>

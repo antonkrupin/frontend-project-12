@@ -13,9 +13,8 @@ import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
 import routes from './routes';
 
-import { fetchStatus, fetchError } from '../slices/selectors';
+import { fetchStatus } from '../slices/selectors';
 import { setStatus } from '../slices/statusReducer';
-import { setError } from '../slices/errorsReducer';
 import ErrorOverlay from '../components/errors/ErrorOverlay';
 import EnterButton from '../components/buttons/EnterButton';
 
@@ -43,11 +42,13 @@ const Login = () => {
 
   const { logIn } = useAuth();
 
-  const [showErrorOverlay, setShowErrorOverlay] = useState(false);
-
   const userNameRef = useRef();
 
   const passwordRef = useRef();
+
+  const [showErrorOverlay, setShowErrorOverlay] = useState(false);
+
+  const [error, setError] = useState(null);
 
   const formik = useFormik({
     initialValues: {
@@ -59,21 +60,20 @@ const Login = () => {
       dispatch(setStatus('authorization'));
       // eslint-disable-next-line max-len
       await axios.post(routes.loginPath(), { username: values.username, password: values.password }).then((data) => {
-        // localStorage.setItem('userId', JSON.stringify(data.data));
         logIn(data.data);
         navigate('/');
-        dispatch(setError(null));
+        setError(null);
         dispatch(setStatus('authorized'));
       })
-        .catch((error) => {
-          if (error.message === 'Network Error') {
+        .catch((err) => {
+          if (err.message === 'Network Error') {
             notify(i18.t('ui.toasts.networkError'));
             dispatch(setStatus('networkError'));
           } else {
             userNameRef.current.className = changeClassName('form-control is-invalid');
             passwordRef.current.className = changeClassName('form-control is-invalid');
             setShowErrorOverlay(!showErrorOverlay);
-            dispatch(setError(i18.t('errors.authorization.wrong')));
+            setError(i18.t('errors.authorization.wrong'));
             dispatch(setStatus(null));
           }
         });
@@ -140,7 +140,7 @@ const Login = () => {
                 <ErrorOverlay
                   overlayRef={passwordRef}
                   show={showErrorOverlay}
-                  overlayText={useSelector(fetchError)}
+                  overlayText={error}
                 />
               </div>
               <div className="card-footer p-4">
