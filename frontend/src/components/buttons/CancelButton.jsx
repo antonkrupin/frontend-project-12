@@ -23,7 +23,7 @@ const CancelButton = () => {
 
   const modalShow = (showModalFunc) => {
     dispatch(showModalFunc);
-    dispatch(setError(null));
+    // dispatch(setError(null));
   };
 
   switch (modalType) {

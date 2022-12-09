@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
 import { Modal } from 'react-bootstrap';
@@ -13,13 +13,11 @@ import CancelButton from '../buttons/CancelButton';
 import ErrorsDiv from '../errors/ErrorsDiv';
 
 import {
-  fetchError,
   fetchChannelsNames,
   fetchChannelStatus,
   fetchChannelForRename,
 } from '../../slices/selectors';
 
-import { setError } from '../../slices/errorsReducer';
 import { renameChannelModalShow } from '../../slices/modalsReducer';
 import { setChannelStatus } from '../../slices/channelsReducer';
 import { showNotify } from '../notify';
@@ -39,6 +37,8 @@ const RenameChannelModal = () => {
 
   const isRenameChannelModalShow = useSelector((state) => state.modals.isRenameChannelModalShow);
 
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -56,16 +56,16 @@ const RenameChannelModal = () => {
           { id: channel.id, name },
           () => showNotify(i18n.t('ui.toasts.channelRenamed'), dispatch(renameChannelModalShow())),
         );
-        dispatch(setError(null));
+        setError(null);
       } else {
         dispatch(setChannelStatus(null));
         inputRef.current.className = changeClassName('form-control is-invalid');
-        dispatch(setError(i18n.t('errors.channels.renameChannel')));
+        setError(i18n.t('errors.channels.renameChannel'));
       }
     } else {
       dispatch(setChannelStatus(null));
       inputRef.current.className = changeClassName('form-control is-invalid');
-      dispatch(setError(i18n.t('errors.channels.notNull')));
+      setError(i18n.t('errors.channels.notNull'));
     }
   };
 
@@ -78,7 +78,7 @@ const RenameChannelModal = () => {
   };
 
   const cancelRenameChannelHandler = () => {
-    dispatch(setError(null));
+    setError(null);
     dispatch(setChannelStatus(null));
     dispatch(renameChannelModalShow());
   };
@@ -102,7 +102,7 @@ const RenameChannelModal = () => {
             required
           />
           <label className="visually-hidden" htmlFor="channelName">Имя канала</label>
-          <ErrorsDiv errorText={useSelector(fetchError)} />
+          <ErrorsDiv errorText={error} />
         </form>
       </Modal.Body>
       <Modal.Footer className="border-top-0">
