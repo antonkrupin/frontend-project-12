@@ -86,6 +86,9 @@ const AddChannelModal = () => {
       onHide={closeModal}
       onKeyDown={(e) => onKeyDown(e)}
     >
+      { /* <Modal.Header closeButton>
+        <Modal.Title>{i18n.t('ui.modals.add.title')}</Modal.Title>
+  </Modal.Header> */}
       <ModalHeader />
       <Modal.Body>
         <form>
