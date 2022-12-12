@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -10,9 +9,8 @@ import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
 import routes from './routes';
 
-import { setStatus } from '../slices/statusReducer';
 import ErrorOverlay from '../components/errors/ErrorOverlay';
-import RegistrationButton from '../components/buttons/RegistrationButton';
+import AuthButton from '../components/buttons/AuthButton';
 
 const validationSchema = yup.object({
   username: yup
@@ -31,8 +29,6 @@ const validationSchema = yup.object({
 const SignUp = () => {
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-
   const { logIn } = useAuth();
 
   const usernameRef = useRef();
@@ -42,6 +38,8 @@ const SignUp = () => {
   const confirmPasswordRef = useRef();
 
   const [showErrorOverlay, setShowErrorOverlay] = useState(false);
+
+  const [registration, setRegistration] = useState('nonRegistred');
 
   const [overlayRef, setOverlayRef] = useState(usernameRef);
 
@@ -68,13 +66,13 @@ const SignUp = () => {
         confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
         setShowErrorOverlay(!showErrorOverlay);
       } else {
-        dispatch(setStatus('registration'));
+        setRegistration('registration');
         await axios.post(routes.signUpPath(), { username, password })
           .then((data) => {
             logIn(data.data);
             navigate('/');
             setError(null);
-            dispatch(setStatus(null));
+            setRegistration('nonRegistred');
           })
           .catch(() => {
             setOverlayRef(confirmPasswordRef);
@@ -83,7 +81,7 @@ const SignUp = () => {
             passwordRef.current.className = changeClassName('form-control', 'is-invalid');
             confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
             setShowErrorOverlay(!showErrorOverlay);
-            dispatch(setStatus(null));
+            setRegistration('nonRegistred');
           });
       }
     },
@@ -149,7 +147,7 @@ const SignUp = () => {
                   <label className="form-label" htmlFor="confirmPassword">{i18.t('ui.signupForm.confirmPassword')}</label>
                   <small className="text-danger">{formik.touched.confirmPassword && formik.errors.confirmPassword}</small>
                 </div>
-                <RegistrationButton />
+                <AuthButton status={registration} />
                 <ErrorOverlay
                   overlayRef={overlayRef}
                   show={showErrorOverlay}

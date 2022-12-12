@@ -1,30 +1,20 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {
   useCallback, useState, useRef, useEffect,
 } from 'react';
 import axios from 'axios';
 import * as yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 import i18 from '../asserts/i18';
 import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
 import routes from './routes';
 
-import { fetchStatus } from '../slices/selectors';
-import { setStatus } from '../slices/statusReducer';
 import ErrorOverlay from '../components/errors/ErrorOverlay';
-import EnterButton from '../components/buttons/EnterButton';
-
-const notify = (text) => {
-  toast.error(text, {
-    position: 'top-right',
-    autoClose: 5000,
-    theme: 'light',
-  });
-};
+import AuthButton from '../components/buttons/AuthButton';
 
 const validationSchema = yup.object({
   username: yup
@@ -36,8 +26,6 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
-  const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   const { logIn } = useAuth();
@@ -48,6 +36,8 @@ const Login = () => {
 
   const [showErrorOverlay, setShowErrorOverlay] = useState(false);
 
+  const [authorization, setAuthorization] = useState('nonAuthorized');
+
   const [error, setError] = useState(null);
 
   const formik = useFormik({
@@ -57,25 +47,24 @@ const Login = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      dispatch(setStatus('authorization'));
-      // eslint-disable-next-line max-len
-      await axios.post(routes.loginPath(), { username: values.username, password: values.password }).then((data) => {
-        logIn(data.data);
-        navigate('/');
-        setError(null);
-        dispatch(setStatus('authorized'));
-      })
+      setAuthorization('authorization');
+      await axios.post(routes.loginPath(), { username: values.username, password: values.password })
+        .then((data) => {
+          logIn(data.data);
+          navigate('/');
+          setError(null);
+          setAuthorization('authorized');
+        })
         .catch((err) => {
-          if (err.message === 'Network Error') {
-            notify(i18.t('ui.toasts.networkError'));
-            dispatch(setStatus('networkError'));
-          } else {
+          if (err.isAxiosError && err.response.status === 401) {
             userNameRef.current.className = changeClassName('form-control is-invalid');
             passwordRef.current.className = changeClassName('form-control is-invalid');
             setShowErrorOverlay(!showErrorOverlay);
             setError(i18.t('errors.authorization.wrong'));
-            dispatch(setStatus(null));
+            setAuthorization('nonAuthorized');
+            return;
           }
+          throw err;
         });
     },
   });
@@ -135,7 +124,7 @@ const Login = () => {
                     <label className="form-label" htmlFor="password">{i18.t('ui.loginForm.password')}</label>
                     <small className="text-danger">{formik.touched.password && formik.errors.password}</small>
                   </div>
-                  <EnterButton />
+                  <AuthButton status={authorization} />
                 </form>
                 <ErrorOverlay
                   overlayRef={passwordRef}
@@ -148,7 +137,7 @@ const Login = () => {
                   <span>
                     {i18.t('ui.loginForm.newUser')}
                   </span>
-                  <Link to={useSelector(fetchStatus) !== 'authorization' ? '/signup' : '#'}>
+                  <Link to={authorization !== 'authorization' ? '/signup' : '#'}>
                     {i18.t('ui.loginForm.registration')}
                   </Link>
                 </div>
