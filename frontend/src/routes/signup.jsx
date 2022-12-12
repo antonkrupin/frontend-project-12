@@ -29,7 +29,7 @@ const validationSchema = yup.object({
 const SignUp = () => {
   const navigate = useNavigate();
 
-  const { logIn } = useAuth();
+  const { logIn, setStatus } = useAuth();
 
   const usernameRef = useRef();
 
@@ -38,8 +38,6 @@ const SignUp = () => {
   const confirmPasswordRef = useRef();
 
   const [showErrorOverlay, setShowErrorOverlay] = useState(false);
-
-  const [registration, setRegistration] = useState('nonRegistred');
 
   const [overlayRef, setOverlayRef] = useState(usernameRef);
 
@@ -66,13 +64,13 @@ const SignUp = () => {
         confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
         setShowErrorOverlay(!showErrorOverlay);
       } else {
-        setRegistration('registration');
+        setStatus('registration');
         await axios.post(routes.signUpPath(), { username, password })
           .then((data) => {
             logIn(data.data);
             navigate('/');
             setError(null);
-            setRegistration('nonRegistred');
+            setStatus('registred');
           })
           .catch(() => {
             setOverlayRef(confirmPasswordRef);
@@ -81,7 +79,7 @@ const SignUp = () => {
             passwordRef.current.className = changeClassName('form-control', 'is-invalid');
             confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
             setShowErrorOverlay(!showErrorOverlay);
-            setRegistration('nonRegistred');
+            setStatus('nonRegistred');
           });
       }
     },
@@ -147,7 +145,7 @@ const SignUp = () => {
                   <label className="form-label" htmlFor="confirmPassword">{i18.t('ui.signupForm.confirmPassword')}</label>
                   <small className="text-danger">{formik.touched.confirmPassword && formik.errors.confirmPassword}</small>
                 </div>
-                <AuthButton status={registration} />
+                <AuthButton />
                 <ErrorOverlay
                   overlayRef={overlayRef}
                   show={showErrorOverlay}

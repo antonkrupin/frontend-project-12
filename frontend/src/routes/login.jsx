@@ -28,15 +28,13 @@ const validationSchema = yup.object({
 const Login = () => {
   const navigate = useNavigate();
 
-  const { logIn } = useAuth();
+  const { logIn, setStatus } = useAuth();
 
   const userNameRef = useRef();
 
   const passwordRef = useRef();
 
   const [showErrorOverlay, setShowErrorOverlay] = useState(false);
-
-  const [authorization, setAuthorization] = useState('nonAuthorized');
 
   const [error, setError] = useState(null);
 
@@ -47,13 +45,13 @@ const Login = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      setAuthorization('authorization');
+      setStatus('authorization');
       await axios.post(routes.loginPath(), { username: values.username, password: values.password })
         .then((data) => {
           logIn(data.data);
           navigate('/');
           setError(null);
-          setAuthorization('authorized');
+          setStatus('authorized');
         })
         .catch((err) => {
           if (err.isAxiosError && err.response.status === 401) {
@@ -61,7 +59,7 @@ const Login = () => {
             passwordRef.current.className = changeClassName('form-control is-invalid');
             setShowErrorOverlay(!showErrorOverlay);
             setError(i18.t('errors.authorization.wrong'));
-            setAuthorization('nonAuthorized');
+            setStatus('nonAuthorized');
             return;
           }
           throw err;
@@ -124,7 +122,7 @@ const Login = () => {
                     <label className="form-label" htmlFor="password">{i18.t('ui.loginForm.password')}</label>
                     <small className="text-danger">{formik.touched.password && formik.errors.password}</small>
                   </div>
-                  <AuthButton status={authorization} />
+                  <AuthButton />
                 </form>
                 <ErrorOverlay
                   overlayRef={passwordRef}
@@ -137,7 +135,7 @@ const Login = () => {
                   <span>
                     {i18.t('ui.loginForm.newUser')}
                   </span>
-                  <Link to={authorization !== 'authorization' ? '/signup' : '#'}>
+                  <Link to={useAuth().status !== 'authorization' ? '/signup' : '#'}>
                     {i18.t('ui.loginForm.registration')}
                   </Link>
                 </div>
