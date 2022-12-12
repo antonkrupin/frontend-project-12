@@ -8,7 +8,7 @@ import {
   renameChannelModalShow,
   deleteChannelModalShow,
 } from '../../slices/modalsReducer';
-import { setError } from '../../slices/errorsReducer';
+
 import { fetchModalType } from '../../slices/selectors';
 
 const CancelButton = () => {
