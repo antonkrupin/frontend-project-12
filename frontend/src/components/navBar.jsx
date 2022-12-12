@@ -3,13 +3,13 @@ import { Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import i18n from '../asserts/i18';
-import AuthButton from './buttons/AuthButton';
+import LogOutButton from './buttons/LogOutButton';
 
 const NavBar = () => (
   <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
     <div className="container">
       <Navbar.Brand as={Link} to="/">{i18n.t('ui.chatName')}</Navbar.Brand>
-      <AuthButton />
+      <LogOutButton />
     </div>
   </nav>
 );
