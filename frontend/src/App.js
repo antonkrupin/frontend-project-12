@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -20,20 +20,28 @@ import NavBar from './components/navBar';
 import './App.css';
 
 const AuthProvider = ({ children }) => {
+  // initial value was changed from false to true;
   const [loggedIn, setLoggedIn] = useState(false);
+
+  const [status, setStatus] = useState('nonAuthorized');
 
   const logIn = (token) => {
     localStorage.setItem('userId', JSON.stringify(token));
     setLoggedIn(true);
   };
+
   const logOut = () => {
     localStorage.removeItem('userId');
     localStorage.clear();
     setLoggedIn(false);
   };
 
+  const authProviderValue = useMemo(() => ({
+    loggedIn, logIn, logOut, setStatus, status,
+  }));
+
   return (
-    <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>
+    <AuthContext.Provider value={authProviderValue}>
       {children}
     </AuthContext.Provider>
   );
