@@ -24,6 +24,8 @@ import { setError } from '../../slices/errorsReducer';
 
 import { showNotify } from '../notify';
 
+import ModalHeader from './ModalHeader';
+
 const AddChannelModal = () => {
   const socket = useSocket();
 
@@ -84,9 +86,7 @@ const AddChannelModal = () => {
       onHide={closeModal}
       onKeyDown={(e) => onKeyDown(e)}
     >
-      <Modal.Header closeButton>
-        <Modal.Title>{i18n.t('ui.modals.add.title')}</Modal.Title>
-      </Modal.Header>
+      <ModalHeader />
       <Modal.Body>
         <form>
           <label className="visually-hidden" htmlFor="channelName">Имя канала</label>
