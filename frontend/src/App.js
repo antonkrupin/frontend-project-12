@@ -20,7 +20,6 @@ import NavBar from './components/navBar';
 import './App.css';
 
 const AuthProvider = ({ children }) => {
-  // initial value was changed from false to true;
   const [loggedIn, setLoggedIn] = useState(false);
 
   const [status, setStatus] = useState('nonAuthorized');
