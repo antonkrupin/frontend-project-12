@@ -17,7 +17,6 @@ import { addChannelModalShow } from '../slices/modalsReducer';
 const ChannelsList = () => {
   const dispatch = useDispatch();
 
-  // const { socket } = props;
   const socket = useSocket();
 
   const channels = useSelector(fetchChannels);
