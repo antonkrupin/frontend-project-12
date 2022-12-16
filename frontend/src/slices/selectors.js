@@ -24,6 +24,8 @@ export const fetchModalType = (state) => state.modals.modalType;
 
 export const fetchError = (state) => state.errors.error;
 
+export const fetchChannelsError = (state) => state.channels.error;
+
 export const fetchStatus = (state) => state.status.status;
 
 export const selectModal = createSelector(
