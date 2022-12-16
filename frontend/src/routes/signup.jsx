@@ -29,7 +29,7 @@ const validationSchema = yup.object({
 const SignUp = () => {
   const navigate = useNavigate();
 
-  const { logIn, setStatus } = useAuth();
+  const { logIn, setStatus, status } = useAuth();
 
   const usernameRef = useRef();
 
@@ -96,6 +96,7 @@ const SignUp = () => {
                 <h1 className="text-center mb-4">{i18.t('ui.signupForm.title')}</h1>
                 <div className="form-floating mb-3">
                   <input
+                    disabled={status === 'registration'}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.username}
@@ -104,7 +105,7 @@ const SignUp = () => {
                     autoComplete="username"
                     required
                     id="username"
-                    className="form-control"
+                    className="form-control disabled"
                     ref={usernameRef}
                   />
                   <label className="form-label" htmlFor="username">{i18.t('ui.signupForm.name')}</label>
@@ -112,6 +113,7 @@ const SignUp = () => {
                 </div>
                 <div className="form-floating mb-3">
                   <input
+                    disabled={status === 'registration'}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
@@ -130,6 +132,7 @@ const SignUp = () => {
                 </div>
                 <div className="form-floating mb-4">
                   <input
+                    disabled={status === 'registration'}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     defaultValue={formik.values.confirmPassword}

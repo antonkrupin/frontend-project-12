@@ -28,7 +28,7 @@ const validationSchema = yup.object({
 const Login = () => {
   const navigate = useNavigate();
 
-  const { logIn, setStatus } = useAuth();
+  const { logIn, setStatus, status } = useAuth();
 
   const userNameRef = useRef();
 
@@ -60,10 +60,12 @@ const Login = () => {
           switch (err.code) {
             case 'ERR_BAD_REQUEST': {
               setError(i18.t('errors.authorization.wrong'));
+              setStatus('authorized');
               break;
             }
             case 'ERR_NETWORK': {
               setError(i18.t('errors.session.network'));
+              setStatus('nonAuthorized');
               break;
             }
             default: {
@@ -100,6 +102,7 @@ const Login = () => {
                   <h1 className="text-center mb-4">{i18.t('ui.loginForm.title')}</h1>
                   <div className="form-floating mb-3">
                     <input
+                      disabled={status === 'authorization'}
                       onChange={(e) => setInputValue('username', e.target.value)}
                       name="username"
                       autoComplete="username"
@@ -115,6 +118,7 @@ const Login = () => {
                   </div>
                   <div className="form-floating mb-4">
                     <input
+                      disabled={status === 'authorization'}
                       onChange={(e) => setInputValue('password', e.target.value)}
                       name="password"
                       autoComplete="current-password"
