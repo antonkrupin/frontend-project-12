@@ -11,6 +11,7 @@ import ChannelMessages from '../components/channelMessages';
 import {
   loadingChannelsStatus,
   fetchMessagesStatus,
+  fetchChannelsError,
 } from '../slices/selectors';
 
 import {
@@ -29,6 +30,8 @@ const Chat = () => {
 
   const messagesStatus = useSelector(fetchMessagesStatus);
 
+  const error = useSelector(fetchChannelsError);
+
   useEffect(() => {
     const { username } = JSON.parse(localStorage.getItem('userId'));
 
@@ -39,6 +42,12 @@ const Chat = () => {
 
   return (
     <>
+      {error === 401 && (
+      <div className="d-flex align-items-center align-content-center flex-column text-danger m-5">
+        <h4>{i18n.t('errors.session.expiredSession')}</h4>
+        <h4>{i18n.t('errors.session.relogin')}</h4>
+      </div>
+      )}
       {(channelsStatus === 'loading' || messagesStatus === 'loading') && (
         <div className="d-flex flex-column justify-content-center align-items-center">
           <div className="spinner-border text-primary" role="status" />

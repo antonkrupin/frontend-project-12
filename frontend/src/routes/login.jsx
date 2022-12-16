@@ -54,15 +54,22 @@ const Login = () => {
           setStatus('authorized');
         })
         .catch((err) => {
-          if (err.isAxiosError && err.response.status === 401) {
-            userNameRef.current.className = changeClassName('form-control is-invalid');
-            passwordRef.current.className = changeClassName('form-control is-invalid');
-            setShowErrorOverlay(!showErrorOverlay);
-            setError(i18.t('errors.authorization.wrong'));
-            setStatus('nonAuthorized');
-            return;
+          userNameRef.current.className = changeClassName('form-control is-invalid');
+          passwordRef.current.className = changeClassName('form-control is-invalid');
+          setShowErrorOverlay(!showErrorOverlay);
+          switch (err.code) {
+            case 'ERR_BAD_REQUEST': {
+              setError(i18.t('errors.authorization.wrong'));
+              break;
+            }
+            case 'ERR_NETWORK': {
+              setError(i18.t('errors.session.network'));
+              break;
+            }
+            default: {
+              throw new Error(err);
+            }
           }
-          throw err;
         });
     },
   });
