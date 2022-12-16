@@ -23,6 +23,11 @@ export default {
         renameChannel: 'Имя канала должно быть уникальным',
         notNull: 'Введите имя канала',
       },
+      session: {
+        expiredSession: 'Сессия устарела.',
+        relogin: 'Нажмите "Выйти" чтобы перелогиниться',
+        network: 'Проверьте интернет соединение',
+      },
     },
     messages: {
       counter: {
