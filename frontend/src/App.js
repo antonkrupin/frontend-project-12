@@ -17,8 +17,6 @@ import Page404 from './routes/page404';
 import Chat from './routes/chat';
 import NavBar from './components/navBar';
 
-import './App.css';
-
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
 

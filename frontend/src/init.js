@@ -22,6 +22,7 @@ import {
 
 import 'bootstrap/dist/js/bootstrap.js';
 import 'bootstrap/dist/css/bootstrap.css';
+import './styles/App.css';
 
 const root = ReactDOM.createRoot(document.getElementById('chat'));
 const socket = socketIO.connect();
