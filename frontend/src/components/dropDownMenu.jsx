@@ -9,8 +9,10 @@ import {
   channelForDelete,
 } from '../slices/channelsReducer';
 import {
-  renameChannelModalShow,
-  deleteChannelModalShow,
+  // renameChannelModalShow,
+  // deleteChannelModalShow,
+  setModalShow,
+  setModalType,
 } from '../slices/modalsReducer';
 
 const DropDownMenu = (props) => {
@@ -26,13 +28,15 @@ const DropDownMenu = (props) => {
 
   const renameChannelHandler = () => {
     dispatch(channelForRename(channel));
-    dispatch(renameChannelModalShow());
+    dispatch(setModalType('rename'));
+    dispatch(setModalShow());
   };
 
   const deleteChannelHandler = () => {
     dispatch(channelForDelete(channel));
     dispatch(setChannelStatus('delete'));
-    dispatch(deleteChannelModalShow());
+    dispatch(setModalType('delete'));
+    dispatch(setModalShow());
   };
 
   return (

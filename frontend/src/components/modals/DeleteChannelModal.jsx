@@ -12,10 +12,14 @@ import {
   channelForDeleteId,
   fetchChannels,
   fetchChannelStatus,
+  fetchModalType,
 } from '../../slices/selectors';
 
 import { deleteMessages } from '../../slices/messagesReducer';
-import { deleteChannelModalShow } from '../../slices/modalsReducer';
+import {
+  // deleteChannelModalShow,
+  setModalShow,
+} from '../../slices/modalsReducer';
 import { setActiveChannel, setChannelStatus } from '../../slices/channelsReducer';
 import { showNotify } from '../notify';
 
@@ -30,7 +34,9 @@ const DeleteChannelModal = () => {
 
   const channelStatus = useSelector(fetchChannelStatus);
 
-  const isDeleteChannelModalShow = useSelector((state) => state.modals.isDeleteChannelModalShow);
+  const isDeleteChannelModalShow = useSelector((state) => state.modals.isModalShow);
+
+  const modalType = useSelector(fetchModalType);
 
   const deleteChannelHandler = (e) => {
     e.preventDefault();
@@ -38,14 +44,14 @@ const DeleteChannelModal = () => {
     socket.emit(
       'removeChannel',
       { id: channelId },
-      () => showNotify(i18n.t('ui.toasts.channelDeleted'), dispatch(deleteChannelModalShow())),
+      () => showNotify(i18n.t('ui.toasts.channelDeleted'), dispatch(setModalShow())),
     );
     dispatch(deleteMessages({ channelId }));
     dispatch(setActiveChannel(channels[0]));
   };
 
-  return (
-    <Modal show={isDeleteChannelModalShow} onHide={() => dispatch(deleteChannelModalShow())}>
+  return modalType === 'delete' && (
+    <Modal show={isDeleteChannelModalShow} onHide={() => dispatch(setModalShow())}>
       <Modal.Header closeButton>
         <Modal.Title>{i18n.t('ui.modals.delete.title')}</Modal.Title>
       </Modal.Header>

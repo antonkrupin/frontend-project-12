@@ -12,7 +12,10 @@ import IconAddChannel from './svgIcons/IconAddChannel';
 
 import { fetchChannels } from '../slices/selectors';
 import { setActiveChannel } from '../slices/channelsReducer';
-import { addChannelModalShow } from '../slices/modalsReducer';
+import { // addChannelModalShow,
+  setModalShow,
+  setModalType,
+} from '../slices/modalsReducer';
 
 const ChannelsList = () => {
   const dispatch = useDispatch();
@@ -29,11 +32,16 @@ const ChannelsList = () => {
     dispatch(setActiveChannel(activeChannel[0]));
   };
 
+  const showModal = () => {
+    dispatch(setModalType('add'));
+    dispatch(setModalShow());
+  };
+
   return (
     <>
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
         <span>{i18n.t('ui.channels')}</span>
-        <button type="button" className="p-0 text-primary btn btn-group-vertical" onClick={() => dispatch(addChannelModalShow())}>
+        <button type="button" className="p-0 text-primary btn btn-group-vertical" onClick={showModal}>
           <IconAddChannel />
           <span className="visually-hidden">+</span>
         </button>

@@ -1,32 +1,33 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 
 import i18n from '../../asserts/i18';
 import {
-  addChannelModalShow,
-  renameChannelModalShow,
-  deleteChannelModalShow,
+  // addChannelModalShow,
+  // renameChannelModalShow,
+  // deleteChannelModalShow,
+  setModalShow,
 } from '../../slices/modalsReducer';
 
-import { fetchModalType } from '../../slices/selectors';
+// import { fetchModalType } from '../../slices/selectors';
 
 const CancelButton = () => {
   const dispatch = useDispatch();
 
-  const modalType = useSelector(fetchModalType);
+  // const modalType = useSelector(fetchModalType);
 
   const buttonText = i18n.t('ui.buttons.cancel');
 
   // eslint-disable-next-line functional/no-let
-  let onClick;
+  // let onClick;
 
-  const modalShow = (showModalFunc) => {
+  /* const modalShow = (showModalFunc) => {
     dispatch(showModalFunc);
     // dispatch(setError(null));
-  };
+  }; */
 
-  switch (modalType) {
+  /* switch (modalType) {
     case 'add': {
       onClick = () => modalShow(addChannelModalShow());
       break;
@@ -41,10 +42,10 @@ const CancelButton = () => {
     }
     default:
       throw new Error('Unexpected modal type. Cancel button.');
-  }
+  } */
 
   return (
-    <Button variant="secondary" onClick={onClick}>
+    <Button variant="secondary" onClick={() => dispatch(setModalShow())}>
       { buttonText }
     </Button>
   );

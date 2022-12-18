@@ -16,9 +16,13 @@ import {
   fetchChannelsNames,
   fetchChannelStatus,
   fetchChannelForRename,
+  fetchModalType,
 } from '../../slices/selectors';
 
-import { renameChannelModalShow } from '../../slices/modalsReducer';
+import {
+  // renameChannelModalShow,
+  setModalShow,
+} from '../../slices/modalsReducer';
 import { setChannelStatus } from '../../slices/channelsReducer';
 import { showNotify } from '../notify';
 
@@ -35,9 +39,11 @@ const RenameChannelModal = () => {
 
   const channelsNames = useSelector(fetchChannelsNames);
 
-  const isRenameChannelModalShow = useSelector((state) => state.modals.isRenameChannelModalShow);
+  const isRenameChannelModalShow = useSelector((state) => state.modals.isModalShow);
 
   const [error, setError] = useState(null);
+
+  const modalType = useSelector(fetchModalType);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -54,7 +60,7 @@ const RenameChannelModal = () => {
         socket.emit(
           'renameChannel',
           { id: channel.id, name },
-          () => showNotify(i18n.t('ui.toasts.channelRenamed'), dispatch(renameChannelModalShow())),
+          () => showNotify(i18n.t('ui.toasts.channelRenamed'), dispatch(setModalShow())),
         );
         setError(null);
       } else {
@@ -80,10 +86,10 @@ const RenameChannelModal = () => {
   const cancelRenameChannelHandler = () => {
     setError(null);
     dispatch(setChannelStatus(null));
-    dispatch(renameChannelModalShow());
+    dispatch(setModalShow());
   };
 
-  return (
+  return modalType === 'rename' && (
     <Modal
       show={isRenameChannelModalShow}
       onHide={cancelRenameChannelHandler}

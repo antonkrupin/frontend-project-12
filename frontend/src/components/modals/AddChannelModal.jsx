@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import _ from 'lodash';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 
@@ -13,14 +13,15 @@ import changeClassName from '../../asserts/classNames';
 import Button from '../buttons/Button';
 
 import {
-  fetchError,
+  // fetchError,
   fetchChannelsNames,
   fetchChannelStatus,
+  fetchModalType,
 } from '../../slices/selectors';
 
 import { setChannelStatus } from '../../slices/channelsReducer';
-import { addChannelModalShow } from '../../slices/modalsReducer';
-import { setError } from '../../slices/errorsReducer';
+import { setModalShow } from '../../slices/modalsReducer';
+// import { setError } from '../../slices/errorsReducer';
 
 import { showNotify } from '../notify';
 
@@ -35,7 +36,11 @@ const AddChannelModal = () => {
 
   const channelStatus = useSelector(fetchChannelStatus);
 
-  const isAddChannelModalShow = useSelector((state) => state.modals.isAddChannelModalShow);
+  const isAddChannelModalShow = useSelector((state) => state.modals.isModalShow);
+
+  const modalType = useSelector(fetchModalType);
+
+  const [error, setError] = useState();
 
   useEffect(() => {
     if (inputRef.current) {
@@ -52,16 +57,16 @@ const AddChannelModal = () => {
         socket.emit(
           'newChannel',
           { name },
-          () => showNotify(i18n.t('ui.toasts.channelCreated'), dispatch(addChannelModalShow())),
+          () => showNotify(i18n.t('ui.toasts.channelCreated'), dispatch(setModalShow())),
         );
-        dispatch(setError(null));
+        setError(null);
       } else {
         inputRef.current.className = changeClassName('form-control is-invalid');
-        dispatch(setError(i18n.t('errors.channels.createChannel')));
+        setError(i18n.t('errors.channels.createChannel'));
       }
     } else {
       inputRef.current.className = changeClassName('form-control is-invalid');
-      dispatch(setError(i18n.t('errors.channels.notNull')));
+      setError(i18n.t('errors.channels.notNull'));
     }
   };
 
@@ -74,11 +79,11 @@ const AddChannelModal = () => {
   };
 
   const closeModal = () => {
-    dispatch(addChannelModalShow());
-    dispatch(setError(null));
+    dispatch(setModalShow());
+    setError(null);
   };
 
-  return (
+  return modalType === 'add' && (
     <Modal
       show={isAddChannelModalShow}
       onHide={closeModal}
@@ -96,7 +101,7 @@ const AddChannelModal = () => {
             name="channelName"
             ref={inputRef}
           />
-          <ErrorsDiv errorText={useSelector(fetchError)} />
+          <ErrorsDiv errorText={error} />
         </form>
       </Modal.Body>
       <Modal.Footer className="border-top-0">
