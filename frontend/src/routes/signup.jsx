@@ -156,7 +156,7 @@ const SignUp = () => {
                 </div>
                 {/* <AuthButton /> */}
                 {status === 'registration'
-                  ? <Button text={i18.t('ui.signupForm.buttonClicked')} isSpinned wide outline />
+                  ? <Button text={i18.t('ui.signupForm.buttonClicked')} disabled wide outline />
                   : <Button text={i18.t('ui.signupForm.button')} wide outline />}
                 <ErrorOverlay
                   overlayRef={overlayRef}

@@ -137,7 +137,7 @@ const Login = () => {
                   </div>
                   { /* <AuthButton /> */}
                   {status === 'authorization'
-                    ? <Button text={i18.t('ui.loginForm.buttonClicked')} isSpinned wide outline />
+                    ? <Button text={i18.t('ui.loginForm.buttonClicked')} disabled wide outline />
                     : <Button text={i18.t('ui.loginForm.button')} wide outline />}
                 </form>
                 <ErrorOverlay

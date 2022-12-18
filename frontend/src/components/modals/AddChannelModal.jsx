@@ -109,7 +109,7 @@ const AddChannelModal = () => {
           status={channelStatus}
   /> */}
         {channelStatus === 'adding'
-          ? <Button text={i18n.t('ui.buttons.adding')} isSpinned outline />
+          ? <Button text={i18n.t('ui.buttons.adding')} disabled outline />
           : <Button text={i18n.t('ui.buttons.add')} handler={addChannelHanlder} outline />}
       </Modal.Footer>
     </Modal>

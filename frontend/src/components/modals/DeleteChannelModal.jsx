@@ -62,7 +62,7 @@ const DeleteChannelModal = () => {
           status={channelStatus}
   /> */}
         {channelStatus === 'deleting'
-          ? <Button text={i18n.t('ui.buttons.deleting')} isSpinned />
+          ? <Button text={i18n.t('ui.buttons.deleting')} disabled />
           : <Button text={i18n.t('ui.buttons.delete')} handler={deleteChannelHandler} />}
       </Modal.Footer>
     </Modal>

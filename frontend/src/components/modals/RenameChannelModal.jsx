@@ -115,7 +115,7 @@ const RenameChannelModal = () => {
           status={channelStatus}
   /> */}
         {channelStatus === 'renaming'
-          ? <Button text={i18n.t('ui.buttons.renaming')} isSpinned outline />
+          ? <Button text={i18n.t('ui.buttons.renaming')} disabled outline />
           : <Button text={i18n.t('ui.buttons.rename')} handler={renameChannelHandler} outline />}
       </Modal.Footer>
     </Modal>
