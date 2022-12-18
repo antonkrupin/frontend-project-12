@@ -28,26 +28,6 @@ export const fetchChannelsError = (state) => state.channels.error;
 
 export const fetchStatus = (state) => state.status.status;
 
-export const selectModal = createSelector(
-  [fetchModalType],
-  (modalType) => {
-    switch (modalType) {
-      case 'add': {
-        return (state) => state.modals.isAddChannelModalShow;
-      }
-      case 'rename': {
-        return (state) => state.modals.isRenameChannelModalShow;
-      }
-      case 'delete': {
-        return (state) => state.modals.isDeleteChannelModalShow;
-      }
-      default: {
-        throw new Error('Unexpected modal type');
-      }
-    }
-  },
-);
-
 export const selectMessagesByChannel = createSelector(
   [fetchMessages, fetchActiveChannelId],
   (messages, channelId) => messages.filter((message) => message.channelId === channelId),
