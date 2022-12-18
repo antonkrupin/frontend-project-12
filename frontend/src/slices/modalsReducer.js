@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   modalType: null,
+  isModalShow: false,
   isAddChannelModalShow: false,
   isDeleteChannelModalShow: false,
   isRenameChannelModalShow: false,
@@ -27,6 +28,12 @@ const modalsSlice = createSlice({
     changeModalType: (state, action) => {
       state.modalType = action.payload;
     },
+    setModalShow: (state) => {
+      state.isModalShow = !state.isModalShow;
+    },
+    setModalType: (state, action) => {
+      state.modalType = action.payload;
+    },
   },
 });
 
@@ -35,6 +42,8 @@ export const {
   deleteChannelModalShow,
   renameChannelModalShow,
   changeModalType,
+  setModalShow,
+  setModalType,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;
