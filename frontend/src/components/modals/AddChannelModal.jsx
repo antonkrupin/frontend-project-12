@@ -7,7 +7,6 @@ import { Modal } from 'react-bootstrap';
 import i18n from '../../asserts/i18';
 import { useSocket } from '../../hooks';
 
-// import ModalButtons from '../buttons/ModalButtons';
 import CancelButton from '../buttons/CancelButton';
 import ErrorsDiv from '../errors/ErrorsDiv';
 import changeClassName from '../../asserts/classNames';
@@ -102,12 +101,6 @@ const AddChannelModal = () => {
       </Modal.Body>
       <Modal.Footer className="border-top-0">
         <CancelButton />
-        {/* <ModalButtons
-          buttonText={i18n.t('ui.buttons.add')}
-          buttonAdditionalText={i18n.t('ui.buttons.adding')}
-          buttonHandler={addChannelHanlder}
-          status={channelStatus}
-  /> */}
         {channelStatus === 'adding'
           ? <Button text={i18n.t('ui.buttons.adding')} disabled outline />
           : <Button text={i18n.t('ui.buttons.add')} handler={addChannelHanlder} outline />}

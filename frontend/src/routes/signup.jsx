@@ -10,9 +10,7 @@ import useAuth from '../hooks';
 import routes from './routes';
 
 import ErrorOverlay from '../components/errors/ErrorOverlay';
-// import AuthButton from '../components/buttons/AuthButton';
 import Button from '../components/buttons/Button';
-// import SpinnerButton from '../components/buttons/SpinnerButton';
 
 const validationSchema = yup.object({
   username: yup
@@ -154,7 +152,6 @@ const SignUp = () => {
                   <label className="form-label" htmlFor="confirmPassword">{i18.t('ui.signupForm.confirmPassword')}</label>
                   <small className="text-danger">{formik.touched.confirmPassword && formik.errors.confirmPassword}</small>
                 </div>
-                {/* <AuthButton /> */}
                 {status === 'registration'
                   ? <Button text={i18.t('ui.signupForm.buttonClicked')} disabled wide outline />
                   : <Button text={i18.t('ui.signupForm.button')} wide outline />}
