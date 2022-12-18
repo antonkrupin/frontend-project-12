@@ -8,9 +8,10 @@ import i18n from '../../asserts/i18';
 import { useSocket } from '../../hooks';
 import changeClassName from '../../asserts/classNames';
 
-import ModalButtons from '../buttons/ModalButtons';
+// import ModalButtons from '../buttons/ModalButtons';
 import CancelButton from '../buttons/CancelButton';
 import ErrorsDiv from '../errors/ErrorsDiv';
+import Button from '../buttons/Button';
 
 import {
   fetchChannelsNames,
@@ -107,12 +108,15 @@ const RenameChannelModal = () => {
       </Modal.Body>
       <Modal.Footer className="border-top-0">
         <CancelButton />
-        <ModalButtons
+        {/* <ModalButtons
           buttonText={i18n.t('ui.buttons.rename')}
           buttonAdditionalText={i18n.t('ui.buttons.renaming')}
           buttonHandler={renameChannelHandler}
           status={channelStatus}
-        />
+  /> */}
+        {channelStatus === 'renaming'
+          ? <Button text={i18n.t('ui.buttons.renaming')} isSpinned outline />
+          : <Button text={i18n.t('ui.buttons.rename')} handler={renameChannelHandler} outline />}
       </Modal.Footer>
     </Modal>
   );

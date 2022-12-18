@@ -5,8 +5,9 @@ import { Modal } from 'react-bootstrap';
 import i18n from '../../asserts/i18';
 import { useSocket } from '../../hooks';
 
-import ModalButtons from '../buttons/ModalButtons';
+// import ModalButtons from '../buttons/ModalButtons';
 import CancelButton from '../buttons/CancelButton';
+import Button from '../buttons/Button';
 
 import {
   channelForDeleteId,
@@ -54,12 +55,15 @@ const DeleteChannelModal = () => {
       </Modal.Body>
       <Modal.Footer className="border-top-0">
         <CancelButton />
-        <ModalButtons
+        {/* <ModalButtons
           buttonText={i18n.t('ui.buttons.delete')}
           buttonAdditionalText={i18n.t('ui.buttons.deleting')}
           buttonHandler={deleteChannelHandler}
           status={channelStatus}
-        />
+  /> */}
+        {channelStatus === 'deleting'
+          ? <Button text={i18n.t('ui.buttons.deleting')} isSpinned />
+          : <Button text={i18n.t('ui.buttons.delete')} handler={deleteChannelHandler} />}
       </Modal.Footer>
     </Modal>
   );

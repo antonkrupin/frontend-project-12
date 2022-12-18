@@ -10,7 +10,9 @@ import useAuth from '../hooks';
 import routes from './routes';
 
 import ErrorOverlay from '../components/errors/ErrorOverlay';
-import AuthButton from '../components/buttons/AuthButton';
+// import AuthButton from '../components/buttons/AuthButton';
+import Button from '../components/buttons/Button';
+// import SpinnerButton from '../components/buttons/SpinnerButton';
 
 const validationSchema = yup.object({
   username: yup
@@ -62,7 +64,7 @@ const SignUp = () => {
         setError(i18.t('errors.authorization.confirmPassword'));
         passwordRef.current.className = changeClassName('form-control', 'is-invalid');
         confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
-        setShowErrorOverlay(!showErrorOverlay);
+        setShowErrorOverlay(true);
       } else {
         setStatus('registration');
         await axios.post(routes.signUpPath(), { username, password })
@@ -78,8 +80,12 @@ const SignUp = () => {
             usernameRef.current.className = changeClassName('form-control', 'is-invalid');
             passwordRef.current.className = changeClassName('form-control', 'is-invalid');
             confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
-            setShowErrorOverlay(!showErrorOverlay);
+            setShowErrorOverlay(true);
             setStatus('nonRegistred');
+            setTimeout(() => {
+              setError(null);
+              setShowErrorOverlay(false);
+            }, '3000');
           });
       }
     },
@@ -148,7 +154,10 @@ const SignUp = () => {
                   <label className="form-label" htmlFor="confirmPassword">{i18.t('ui.signupForm.confirmPassword')}</label>
                   <small className="text-danger">{formik.touched.confirmPassword && formik.errors.confirmPassword}</small>
                 </div>
-                <AuthButton />
+                {/* <AuthButton /> */}
+                {status === 'registration'
+                  ? <Button text={i18.t('ui.signupForm.buttonClicked')} isSpinned wide outline />
+                  : <Button text={i18.t('ui.signupForm.button')} wide outline />}
                 <ErrorOverlay
                   overlayRef={overlayRef}
                   show={showErrorOverlay}
