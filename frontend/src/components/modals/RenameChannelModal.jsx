@@ -19,10 +19,7 @@ import {
   fetchModalType,
 } from '../../slices/selectors';
 
-import {
-  // renameChannelModalShow,
-  setModalShow,
-} from '../../slices/modalsReducer';
+import { setModalShow } from '../../slices/modalsReducer';
 import { setChannelStatus } from '../../slices/channelsReducer';
 import { showNotify } from '../notify';
 

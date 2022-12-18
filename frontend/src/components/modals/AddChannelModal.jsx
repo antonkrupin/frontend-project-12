@@ -13,7 +13,6 @@ import changeClassName from '../../asserts/classNames';
 import Button from '../buttons/Button';
 
 import {
-  // fetchError,
   fetchChannelsNames,
   fetchChannelStatus,
   fetchModalType,
@@ -21,7 +20,6 @@ import {
 
 import { setChannelStatus } from '../../slices/channelsReducer';
 import { setModalShow } from '../../slices/modalsReducer';
-// import { setError } from '../../slices/errorsReducer';
 
 import { showNotify } from '../notify';
 

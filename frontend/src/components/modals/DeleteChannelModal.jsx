@@ -16,10 +16,7 @@ import {
 } from '../../slices/selectors';
 
 import { deleteMessages } from '../../slices/messagesReducer';
-import {
-  // deleteChannelModalShow,
-  setModalShow,
-} from '../../slices/modalsReducer';
+import { setModalShow } from '../../slices/modalsReducer';
 import { setActiveChannel, setChannelStatus } from '../../slices/channelsReducer';
 import { showNotify } from '../notify';
 
