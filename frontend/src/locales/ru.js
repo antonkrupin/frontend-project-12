@@ -82,7 +82,7 @@ export default {
         deleting: 'Удаление',
         add: 'Отправить',
         adding: 'Создание',
-        rename: 'Отправить',
+        rename: 'Переименовать',
         renaming: 'Переименование',
         login: 'Войти',
         logout: 'Выйти',
