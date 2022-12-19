@@ -52,27 +52,21 @@ const RenameChannelModal = () => {
     e.preventDefault();
     const name = inputRef.current.value;
     dispatch(setChannelStatus('renaming'));
-    if (name !== '') {
-      if (!_.includes(channelsNames, name)) {
-        socket.emit(
-          'renameChannel',
-          { id: channel.id, name },
-          () => {
-            showNotify(i18n.t('ui.toasts.channelRenamed'));
-            dispatch(setModalShow());
-            dispatch(setChannelStatus('renamed'));
-          },
-        );
-        setError(null);
-      } else {
-        dispatch(setChannelStatus(null));
-        inputRef.current.className = changeClassName('form-control is-invalid');
-        setError(i18n.t('errors.channels.renameChannel'));
-      }
+    if (name.trim() !== '' && !_.includes(channelsNames, name)) {
+      socket.emit(
+        'renameChannel',
+        { id: channel.id, name: name.trim() },
+        () => {
+          showNotify(i18n.t('ui.toasts.channelRenamed'));
+          dispatch(setModalShow());
+          dispatch(setChannelStatus('renamed'));
+        },
+      );
+      setError(null);
     } else {
       dispatch(setChannelStatus(null));
       inputRef.current.className = changeClassName('form-control is-invalid');
-      setError(i18n.t('errors.channels.notNull'));
+      setError(i18n.t('errors.channels.renameChannel'));
     }
   };
 
@@ -83,12 +77,6 @@ const RenameChannelModal = () => {
       renameChannelHandler(e);
     }
   };
-
-  /* const cancelRenameChannelHandler = () => {
-    setError(null);
-    dispatch(setChannelStatus(null));
-    dispatch(setModalShow());
-  }; */
 
   const cancelHandler = () => {
     dispatch(setModalShow());
