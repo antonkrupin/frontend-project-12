@@ -92,7 +92,7 @@ const AddChannelModal = () => {
       </Modal.Header>
       <Modal.Body>
         <form>
-          <label className="visually-hidden" htmlFor="channelName">Имя канала</label>
+          <label className="visually-hidden" htmlFor="channelName">{i18n.t('ui.label.channelName')}</label>
           <input
             id="channelName"
             className="form-control"

@@ -104,7 +104,7 @@ const RenameChannelModal = () => {
             ref={inputRef}
             required
           />
-          <label className="visually-hidden" htmlFor="channelName">Имя канала</label>
+          <label className="visually-hidden" htmlFor="channelName">{i18n.t('ui.label.channelName')}</label>
           <ErrorsDiv errorText={error} />
         </form>
       </Modal.Body>
