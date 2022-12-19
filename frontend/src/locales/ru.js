@@ -70,6 +70,9 @@ export default {
         newUser: 'Нет аккаунта? ',
         registration: 'Регистрация',
       },
+      label: {
+        channelName: 'Имя канала',
+      },
       toasts: {
         channelCreated: 'Канал создан',
         channelRenamed: 'Канал переименован',
