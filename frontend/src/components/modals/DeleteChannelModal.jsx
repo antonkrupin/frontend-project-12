@@ -51,6 +51,7 @@ const DeleteChannelModal = () => {
         if (channelId === activeChannelId) {
           dispatch(setActiveChannel(...channels));
         }
+        dispatch(setChannelStatus('deleted'));
         /* dispatch(setActiveChannel(...channels)); */
       },
     );
@@ -58,8 +59,13 @@ const DeleteChannelModal = () => {
     // dispatch(setActiveChannel(channels[0]));
   };
 
+  const cancelHandler = () => {
+    dispatch(setModalShow());
+    dispatch(setChannelStatus(null));
+  };
+
   return modalType === 'delete' && (
-    <Modal show={isDeleteChannelModalShow} onHide={() => dispatch(setModalShow())}>
+    <Modal show={isDeleteChannelModalShow} onHide={cancelHandler}>
       <Modal.Header closeButton>
         <Modal.Title>{i18n.t('ui.modals.delete.title')}</Modal.Title>
       </Modal.Header>
@@ -67,7 +73,7 @@ const DeleteChannelModal = () => {
         {i18n.t('ui.modals.delete.text')}
       </Modal.Body>
       <Modal.Footer className="border-top-0">
-        <CancelButton />
+        <CancelButton onClick={cancelHandler} />
         {channelStatus === 'deleting'
           ? <Button text={i18n.t('ui.buttons.deleting')} disabled />
           : <Button text={i18n.t('ui.buttons.delete')} handler={deleteChannelHandler} />}

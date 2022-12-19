@@ -57,7 +57,11 @@ const RenameChannelModal = () => {
         socket.emit(
           'renameChannel',
           { id: channel.id, name },
-          () => { showNotify(i18n.t('ui.toasts.channelRenamed')); dispatch(setModalShow()); },
+          () => {
+            showNotify(i18n.t('ui.toasts.channelRenamed'));
+            dispatch(setModalShow());
+            dispatch(setChannelStatus('renamed'));
+          },
         );
         setError(null);
       } else {
@@ -80,16 +84,22 @@ const RenameChannelModal = () => {
     }
   };
 
-  const cancelRenameChannelHandler = () => {
+  /* const cancelRenameChannelHandler = () => {
     setError(null);
     dispatch(setChannelStatus(null));
     dispatch(setModalShow());
+  }; */
+
+  const cancelHandler = () => {
+    dispatch(setModalShow());
+    dispatch(setChannelStatus(null));
+    setError(null);
   };
 
   return modalType === 'rename' && (
     <Modal
       show={isRenameChannelModalShow}
-      onHide={cancelRenameChannelHandler}
+      onHide={cancelHandler}
       onKeyDown={(e) => onKeyDown(e)}
     >
       <Modal.Header closeButton>
@@ -109,7 +119,7 @@ const RenameChannelModal = () => {
         </form>
       </Modal.Body>
       <Modal.Footer className="border-top-0">
-        <CancelButton />
+        <CancelButton onClick={cancelHandler} />
         {channelStatus === 'renaming'
           ? <Button text={i18n.t('ui.buttons.renaming')} disabled outline />
           : <Button text={i18n.t('ui.buttons.rename')} handler={renameChannelHandler} outline />}

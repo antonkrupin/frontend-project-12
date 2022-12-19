@@ -55,7 +55,12 @@ const AddChannelModal = () => {
         socket.emit(
           'newChannel',
           { name },
-          (data) => { dispatch(setActiveChannel(data.data)); dispatch(setModalShow()); showNotify(i18n.t('ui.toasts.channelCreated')); },
+          (data) => {
+            dispatch(setActiveChannel(data.data));
+            dispatch(setModalShow());
+            showNotify(i18n.t('ui.toasts.channelCreated'));
+            dispatch(setChannelStatus('added'));
+          },
         );
         setError(null);
       } else {
@@ -73,18 +78,20 @@ const AddChannelModal = () => {
       e.preventDefault();
       e.stopPropagation();
       addChannelHanlder(e);
+      setError(null);
     }
   };
 
-  const closeModal = () => {
+  const cancelHandler = () => {
     dispatch(setModalShow());
+    dispatch(setChannelStatus(null));
     setError(null);
   };
 
   return modalType === 'add' && (
     <Modal
       show={isAddChannelModalShow}
-      onHide={closeModal}
+      onHide={cancelHandler}
       onKeyDown={(e) => onKeyDown(e)}
     >
       <Modal.Header closeButton>
@@ -103,7 +110,7 @@ const AddChannelModal = () => {
         </form>
       </Modal.Body>
       <Modal.Footer className="border-top-0">
-        <CancelButton />
+        <CancelButton onClick={cancelHandler} />
         {channelStatus === 'adding'
           ? <Button text={i18n.t('ui.buttons.adding')} disabled outline />
           : <Button text={i18n.t('ui.buttons.add')} handler={addChannelHanlder} outline />}
