@@ -60,7 +60,7 @@ const Login = () => {
           switch (err.code) {
             case 'ERR_BAD_REQUEST': {
               setError(i18.t('errors.authorization.wrong'));
-              setStatus('authorized');
+              setStatus('nonAuthorized');
               break;
             }
             case 'ERR_NETWORK': {

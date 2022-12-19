@@ -72,14 +72,27 @@ const SignUp = () => {
             setError(null);
             setStatus('registred');
           })
-          .catch(() => {
+          .catch((err) => {
             setOverlayRef(confirmPasswordRef);
-            setError(i18.t('errors.authorization.userExist'));
+            setShowErrorOverlay(true);
             usernameRef.current.className = changeClassName('form-control', 'is-invalid');
             passwordRef.current.className = changeClassName('form-control', 'is-invalid');
             confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
-            setShowErrorOverlay(true);
-            setStatus('nonRegistred');
+            switch (err.code) {
+              case 'ERR_BAD_REQUEST': {
+                setError(i18.t('errors.authorization.userExist'));
+                setStatus('nonRegistred');
+                break;
+              }
+              case 'ERR_NETWORK': {
+                setError(i18.t('errors.session.network'));
+                setStatus('nonRegistred');
+                break;
+              }
+              default: {
+                throw new Error(err);
+              }
+            }
             setTimeout(() => {
               setError(null);
               setShowErrorOverlay(false);
