@@ -45,7 +45,7 @@ const AddChannelModal = () => {
       inputRef.current.focus();
     }
   });
-  // () => showNotify(i18n.t('ui.toasts.channelCreated'), dispatch(setModalShow()))
+
   const addChannelHanlder = (e) => {
     e.preventDefault();
     const name = inputRef.current.value;

@@ -13,6 +13,7 @@ import {
   fetchChannels,
   fetchChannelStatus,
   fetchModalType,
+  fetchActiveChannelId,
 } from '../../slices/selectors';
 
 import { deleteMessages } from '../../slices/messagesReducer';
@@ -29,6 +30,8 @@ const DeleteChannelModal = () => {
 
   const channelId = useSelector(channelForDeleteId);
 
+  const activeChannelId = useSelector(fetchActiveChannelId);
+
   const channelStatus = useSelector(fetchChannelStatus);
 
   const isDeleteChannelModalShow = useSelector((state) => state.modals.isModalShow);
@@ -41,7 +44,15 @@ const DeleteChannelModal = () => {
     socket.emit(
       'removeChannel',
       { id: channelId },
-      () => { dispatch(setModalShow()); showNotify(i18n.t('ui.toasts.channelCreated')); dispatch(deleteMessages({ channelId })); dispatch(setActiveChannel(...channels)); },
+      () => {
+        dispatch(setModalShow());
+        showNotify(i18n.t('ui.toasts.channelDeleted'));
+        dispatch(deleteMessages({ channelId }));
+        if (channelId === activeChannelId) {
+          dispatch(setActiveChannel(...channels));
+        }
+        /* dispatch(setActiveChannel(...channels)); */
+      },
     );
     // dispatch(deleteMessages({ channelId }));
     // dispatch(setActiveChannel(channels[0]));
