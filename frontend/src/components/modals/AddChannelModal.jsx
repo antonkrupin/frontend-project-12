@@ -18,7 +18,7 @@ import {
   fetchModalType,
 } from '../../slices/selectors';
 
-import { setChannelStatus } from '../../slices/channelsReducer';
+import { setChannelStatus, setActiveChannel } from '../../slices/channelsReducer';
 import { setModalShow } from '../../slices/modalsReducer';
 
 import { showNotify } from '../notify';
@@ -45,7 +45,7 @@ const AddChannelModal = () => {
       inputRef.current.focus();
     }
   });
-
+  // () => showNotify(i18n.t('ui.toasts.channelCreated'), dispatch(setModalShow()))
   const addChannelHanlder = (e) => {
     e.preventDefault();
     const name = inputRef.current.value;
@@ -55,7 +55,7 @@ const AddChannelModal = () => {
         socket.emit(
           'newChannel',
           { name },
-          () => showNotify(i18n.t('ui.toasts.channelCreated'), dispatch(setModalShow())),
+          (data) => { dispatch(setActiveChannel(data.data)); dispatch(setModalShow()); showNotify(i18n.t('ui.toasts.channelCreated')); },
         );
         setError(null);
       } else {

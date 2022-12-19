@@ -15,7 +15,6 @@ import {
 import {
   setChannelStatus,
   addChannel,
-  setActiveChannel,
   renameChannel,
   deleteChannel,
 } from './slices/channelsReducer';
@@ -39,7 +38,6 @@ const runApp = () => {
   });
 
   socket.on('newChannel', (payload) => {
-    dispatch(setActiveChannel(payload));
     dispatch(addChannel(payload));
     dispatch(setChannelStatus('added'));
   });

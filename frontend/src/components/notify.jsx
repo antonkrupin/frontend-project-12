@@ -8,9 +8,7 @@ const Notify = (text) => {
   });
 };
 
-export const showNotify = (message, closeModal) => {
-  // eslint-disable-next-line no-unused-expressions
-  closeModal;
+export const showNotify = (message) => {
   Notify(message);
 };
 

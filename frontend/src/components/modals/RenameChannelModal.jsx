@@ -57,7 +57,7 @@ const RenameChannelModal = () => {
         socket.emit(
           'renameChannel',
           { id: channel.id, name },
-          () => showNotify(i18n.t('ui.toasts.channelRenamed'), dispatch(setModalShow())),
+          () => { showNotify(i18n.t('ui.toasts.channelRenamed')); dispatch(setModalShow()); },
         );
         setError(null);
       } else {

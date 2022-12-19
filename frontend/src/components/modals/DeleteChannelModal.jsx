@@ -41,10 +41,10 @@ const DeleteChannelModal = () => {
     socket.emit(
       'removeChannel',
       { id: channelId },
-      () => showNotify(i18n.t('ui.toasts.channelDeleted'), dispatch(setModalShow())),
+      () => { dispatch(setModalShow()); showNotify(i18n.t('ui.toasts.channelCreated')); dispatch(deleteMessages({ channelId })); dispatch(setActiveChannel(...channels)); },
     );
-    dispatch(deleteMessages({ channelId }));
-    dispatch(setActiveChannel(channels[0]));
+    // dispatch(deleteMessages({ channelId }));
+    // dispatch(setActiveChannel(channels[0]));
   };
 
   return modalType === 'delete' && (
