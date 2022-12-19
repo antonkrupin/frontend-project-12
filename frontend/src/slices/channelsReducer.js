@@ -19,9 +19,6 @@ export const fetchChannels = createAsyncThunk(
       const userId = JSON.parse(localStorage.getItem('userId'));
       const header = { Authorization: `Bearer ${userId.token}` };
       const response = await axios.get('/api/v1/data', { headers: header });
-      /* if (response.status !== 200) {
-        throw new Error('Server Error!');
-      } */
       const { channels } = response.data;
       return channels;
     } catch (error) {

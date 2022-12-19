@@ -9,8 +9,6 @@ import {
   channelForDelete,
 } from '../slices/channelsReducer';
 import {
-  // renameChannelModalShow,
-  // deleteChannelModalShow,
   setModalShow,
   setModalType,
 } from '../slices/modalsReducer';

@@ -11,7 +11,6 @@ import {
 } from '../slices/selectors';
 
 const ChannelWindow = () => {
-  // const { socket } = props;
   const socket = useSocket();
 
   const channelId = useSelector(fetchActiveChannelId);

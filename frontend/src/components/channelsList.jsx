@@ -12,7 +12,7 @@ import IconAddChannel from './svgIcons/IconAddChannel';
 
 import { fetchChannels } from '../slices/selectors';
 import { setActiveChannel } from '../slices/channelsReducer';
-import { // addChannelModalShow,
+import {
   setModalShow,
   setModalType,
 } from '../slices/modalsReducer';
