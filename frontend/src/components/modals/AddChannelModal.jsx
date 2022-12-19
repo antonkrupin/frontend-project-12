@@ -49,11 +49,11 @@ const AddChannelModal = () => {
   const addChannelHanlder = (e) => {
     e.preventDefault();
     const name = inputRef.current.value;
-    if (name !== '' && !_.includes(channelsNames, name)) {
+    if (name.trim() !== '' && !_.includes(channelsNames, name)) {
       dispatch(setChannelStatus('adding'));
       socket.emit(
         'newChannel',
-        { name },
+        { name: name.trim() },
         (data) => {
           dispatch(setActiveChannel(data.data));
           dispatch(setModalShow());
