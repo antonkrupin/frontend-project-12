@@ -29,7 +29,7 @@ const ChannelsList = () => {
     // eslint-disable-next-line max-len
     const channelName = childNodes.length === 1 ? childNodes[0].innerText.slice(2) : childNodes[2].textContent;
     const activeChannel = channels.filter((channel) => channel.name === channelName ?? channel);
-    dispatch(setActiveChannel(activeChannel[0]));
+    dispatch(setActiveChannel(...activeChannel));
   };
 
   const showModal = () => {
