@@ -49,27 +49,22 @@ const AddChannelModal = () => {
   const addChannelHanlder = (e) => {
     e.preventDefault();
     const name = inputRef.current.value;
-    if (name !== '') {
-      if (!_.includes(channelsNames, name)) {
-        dispatch(setChannelStatus('adding'));
-        socket.emit(
-          'newChannel',
-          { name },
-          (data) => {
-            dispatch(setActiveChannel(data.data));
-            dispatch(setModalShow());
-            showNotify(i18n.t('ui.toasts.channelCreated'));
-            dispatch(setChannelStatus('added'));
-          },
-        );
-        setError(null);
-      } else {
-        inputRef.current.className = changeClassName('form-control is-invalid');
-        setError(i18n.t('errors.channels.createChannel'));
-      }
+    if (name !== '' && !_.includes(channelsNames, name)) {
+      dispatch(setChannelStatus('adding'));
+      socket.emit(
+        'newChannel',
+        { name },
+        (data) => {
+          dispatch(setActiveChannel(data.data));
+          dispatch(setModalShow());
+          showNotify(i18n.t('ui.toasts.channelCreated'));
+          dispatch(setChannelStatus('added'));
+        },
+      );
+      setError(null);
     } else {
       inputRef.current.className = changeClassName('form-control is-invalid');
-      setError(i18n.t('errors.channels.notNull'));
+      setError(i18n.t('errors.channels.createChannel'));
     }
   };
 
