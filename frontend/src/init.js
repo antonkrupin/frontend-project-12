@@ -49,7 +49,7 @@ const runApp = () => {
 
   socket.on('removeChannel', (payload) => {
     dispatch(deleteChannel(payload));
-    dispatch(setChannelStatus(null));
+    dispatch(setChannelStatus('deleted'));
   });
 
   root.render(
