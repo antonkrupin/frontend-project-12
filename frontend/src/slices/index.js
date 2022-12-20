@@ -4,7 +4,7 @@ import channelsReducer from './channelsReducer.js';
 import messagesReducer from './messagesReducer.js';
 import modalsReducer from './modalsReducer.js';
 // import errorsReducer from './errorsReducer.js';
-import statusReducer from './statusReducer.js';
+// import statusReducer from './statusReducer.js';
 
 export default configureStore({
   reducer: {
@@ -12,6 +12,6 @@ export default configureStore({
     messages: messagesReducer,
     modals: modalsReducer,
     // errors: errorsReducer,
-    status: statusReducer,
+    // status: statusReducer,
   },
 });
