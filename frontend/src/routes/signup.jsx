@@ -122,7 +122,7 @@ const SignUp = () => {
                     autoComplete="username"
                     required
                     id="username"
-                    className="form-control disabled"
+                    className="form-control"
                     ref={usernameRef}
                   />
                   <label className="form-label" htmlFor="username">{i18.t('ui.signupForm.name')}</label>
