@@ -22,11 +22,13 @@ export const fetchUserName = (state) => state.messages.username;
 
 export const fetchModalType = (state) => state.modals.modalType;
 
-export const fetchError = (state) => state.errors.error;
+export const fetchIsModalShow = (state) => state.modals.isModalShow;
+
+// export const fetchError = (state) => state.errors.error; errorsReducer
 
 export const fetchChannelsError = (state) => state.channels.error;
 
-export const fetchStatus = (state) => state.status.status;
+// export const fetchStatus = (state) => state.status.status; statusReducer
 
 export const selectMessagesByChannel = createSelector(
   [fetchMessages, fetchActiveChannelId],
