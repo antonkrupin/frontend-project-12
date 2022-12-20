@@ -25,9 +25,9 @@ import { setModalShow } from '../../slices/modalsReducer';
 import { showNotify } from '../notify';
 
 const AddChannelModal = () => {
-  const socket = useSocket();
-
   const dispatch = useDispatch();
+
+  const socket = useSocket();
 
   const inputRef = useRef(null);
 
@@ -71,7 +71,6 @@ const AddChannelModal = () => {
 
   const onKeyDown = (e) => {
     if (e.key === 'Enter') {
-      console.log(e.target);
       e.preventDefault();
       e.stopPropagation();
       addChannelHanlder(e);
@@ -96,13 +95,13 @@ const AddChannelModal = () => {
       </Modal.Header>
       <Modal.Body>
         <form>
-          <label className="visually-hidden" htmlFor="channelName">{i18n.t('ui.label.channelName')}</label>
           <input
             id="channelName"
             className="form-control"
             name="channelName"
             ref={inputRef}
           />
+          <label className="visually-hidden" htmlFor="channelName">{i18n.t('ui.label.channelName')}</label>
           <ErrorsDiv errorText={error} />
         </form>
       </Modal.Body>

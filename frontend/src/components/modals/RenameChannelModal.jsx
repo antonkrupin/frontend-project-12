@@ -39,9 +39,9 @@ const RenameChannelModal = () => {
 
   const isModalShow = useSelector(fetchIsModalShow);
 
-  const [error, setError] = useState(null);
-
   const modalType = useSelector(fetchModalType);
+
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (inputRef.current) {
