@@ -17,6 +17,7 @@ import {
   fetchChannelStatus,
   fetchChannelForRename,
   fetchModalType,
+  fetchIsModalShow,
 } from '../../slices/selectors';
 
 import { setModalShow } from '../../slices/modalsReducer';
@@ -36,7 +37,7 @@ const RenameChannelModal = () => {
 
   const channelsNames = useSelector(fetchChannelsNames);
 
-  const isRenameChannelModalShow = useSelector((state) => state.modals.isModalShow);
+  const isModalShow = useSelector(fetchIsModalShow);
 
   const [error, setError] = useState(null);
 
@@ -86,7 +87,7 @@ const RenameChannelModal = () => {
 
   return modalType === 'rename' && (
     <Modal
-      show={isRenameChannelModalShow}
+      show={isModalShow}
       onHide={cancelHandler}
       onKeyDown={(e) => onKeyDown(e)}
     >

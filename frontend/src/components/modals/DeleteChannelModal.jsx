@@ -14,6 +14,7 @@ import {
   fetchChannelStatus,
   fetchModalType,
   fetchActiveChannelId,
+  fetchIsModalShow,
 } from '../../slices/selectors';
 
 import { deleteMessages } from '../../slices/messagesReducer';
@@ -34,7 +35,7 @@ const DeleteChannelModal = () => {
 
   const channelStatus = useSelector(fetchChannelStatus);
 
-  const isDeleteChannelModalShow = useSelector((state) => state.modals.isModalShow);
+  const isModalShow = useSelector(fetchIsModalShow);
 
   const modalType = useSelector(fetchModalType);
 
@@ -65,7 +66,10 @@ const DeleteChannelModal = () => {
   };
 
   return modalType === 'delete' && (
-    <Modal show={isDeleteChannelModalShow} onHide={cancelHandler}>
+    <Modal
+      show={isModalShow}
+      onHide={cancelHandler}
+    >
       <Modal.Header closeButton>
         <Modal.Title>{i18n.t('ui.modals.delete.title')}</Modal.Title>
       </Modal.Header>

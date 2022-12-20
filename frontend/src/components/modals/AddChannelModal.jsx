@@ -16,6 +16,7 @@ import {
   fetchChannelsNames,
   fetchChannelStatus,
   fetchModalType,
+  fetchIsModalShow,
 } from '../../slices/selectors';
 
 import { setChannelStatus, setActiveChannel } from '../../slices/channelsReducer';
@@ -34,7 +35,7 @@ const AddChannelModal = () => {
 
   const channelStatus = useSelector(fetchChannelStatus);
 
-  const isAddChannelModalShow = useSelector((state) => state.modals.isModalShow);
+  const isModalShow = useSelector(fetchIsModalShow);
 
   const modalType = useSelector(fetchModalType);
 
@@ -70,6 +71,7 @@ const AddChannelModal = () => {
 
   const onKeyDown = (e) => {
     if (e.key === 'Enter') {
+      console.log(e.target);
       e.preventDefault();
       e.stopPropagation();
       addChannelHanlder(e);
@@ -85,7 +87,7 @@ const AddChannelModal = () => {
 
   return modalType === 'add' && (
     <Modal
-      show={isAddChannelModalShow}
+      show={isModalShow}
       onHide={cancelHandler}
       onKeyDown={(e) => onKeyDown(e)}
     >
