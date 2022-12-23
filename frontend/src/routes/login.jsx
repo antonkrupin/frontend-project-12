@@ -49,7 +49,8 @@ const Login = () => {
       await axios.post(routes.loginPath(), { username: values.username, password: values.password })
         .then((data) => {
           logIn(data.data);
-          navigate('/');
+          // navigate('/');
+          navigate(routes.mainPagePath());
           setError(null);
           setStatus('authorized');
         })
@@ -148,7 +149,7 @@ const Login = () => {
                   <span>
                     {i18.t('ui.loginForm.newUser')}
                   </span>
-                  <Link to={useAuth().status !== 'authorization' ? '/signup' : '#'}>
+                  <Link to={useAuth().status !== 'authorization' ? routes.signUpPagePath() : routes.emptyPath()}>
                     {i18.t('ui.loginForm.registration')}
                   </Link>
                 </div>
