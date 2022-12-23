@@ -13,6 +13,22 @@ import {
   setModalType,
 } from '../slices/modalsReducer';
 
+const DropDownElem = (props) => {
+  const { onClick, text } = props;
+  return (
+    <li>
+      <button
+        type="button"
+        onClick={onClick}
+        className="dropdown-item"
+        href="#"
+      >
+        {text}
+      </button>
+    </li>
+  );
+};
+
 const DropDownMenu = (props) => {
   const {
     channel,
@@ -60,7 +76,7 @@ const DropDownMenu = (props) => {
         <span className="visually-hidden">{i18n.t('ui.span.channelManagement')}</span>
       </button>
       <ul className="dropdown-menu">
-        <li>
+        {/* <li>
           <button
             type="button"
             onClick={deleteChannelHandler}
@@ -69,8 +85,10 @@ const DropDownMenu = (props) => {
           >
             {i18n.t('ui.dropDownMenu.delete')}
           </button>
-        </li>
-        <li>
+</li> */}
+        <DropDownElem onClick={() => deleteChannelHandler()} text={i18n.t('ui.dropDownMenu.delete')} />
+        <DropDownElem onClick={() => renameChannelHandler()} text={i18n.t('ui.dropDownMenu.rename')} />
+        {/* <li>
           <button
             type="button"
             onClick={renameChannelHandler}
@@ -79,7 +97,7 @@ const DropDownMenu = (props) => {
           >
             {i18n.t('ui.dropDownMenu.rename')}
           </button>
-        </li>
+</li> */}
       </ul>
     </div>
   );
