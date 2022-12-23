@@ -9,7 +9,6 @@ import { useSocket } from '../../hooks';
 
 import CancelButton from '../buttons/CancelButton';
 import ErrorsDiv from '../errors/ErrorsDiv';
-import changeClassName from '../../asserts/classNames';
 import Button from '../buttons/Button';
 
 import {
@@ -39,7 +38,7 @@ const AddChannelModal = () => {
 
   const modalType = useSelector(fetchModalType);
 
-  const [error, setError] = useState();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -64,7 +63,7 @@ const AddChannelModal = () => {
       );
       setError(null);
     } else {
-      inputRef.current.className = changeClassName('form-control is-invalid');
+      dispatch(setChannelStatus(null));
       setError(i18n.t('errors.channels.createChannel'));
     }
   };
@@ -97,7 +96,7 @@ const AddChannelModal = () => {
         <form>
           <input
             id="channelName"
-            className="form-control"
+            className={error ? 'form-control is-invalid' : 'form-control'}
             name="channelName"
             ref={inputRef}
           />

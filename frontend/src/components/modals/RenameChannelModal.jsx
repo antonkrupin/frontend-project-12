@@ -6,7 +6,6 @@ import { Modal } from 'react-bootstrap';
 
 import i18n from '../../asserts/i18';
 import { useSocket } from '../../hooks';
-import changeClassName from '../../asserts/classNames';
 
 import CancelButton from '../buttons/CancelButton';
 import ErrorsDiv from '../errors/ErrorsDiv';
@@ -66,7 +65,6 @@ const RenameChannelModal = () => {
       setError(null);
     } else {
       dispatch(setChannelStatus(null));
-      inputRef.current.className = changeClassName('form-control is-invalid');
       setError(i18n.t('errors.channels.renameChannel'));
     }
   };
@@ -98,7 +96,7 @@ const RenameChannelModal = () => {
         <form>
           <input
             id="channelName"
-            className="form-control"
+            className={error ? 'form-control is-invalid' : 'form-control'}
             defaultValue={channel.name}
             ref={inputRef}
             required
