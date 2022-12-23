@@ -50,7 +50,7 @@ const AddChannelModal = () => {
     e.preventDefault();
     const name = inputRef.current.value;
     if (name.trim() !== '' && !_.includes(channelsNames, name)) {
-      dispatch(setChannelStatus('adding'));
+      dispatch(setChannelStatus('processing'));
       socket.emit(
         'newChannel',
         { name: name.trim() },
@@ -58,7 +58,7 @@ const AddChannelModal = () => {
           dispatch(setActiveChannel(data.data));
           dispatch(setModalShow());
           showNotify(i18n.t('ui.toasts.channelCreated'));
-          dispatch(setChannelStatus('added'));
+          dispatch(setChannelStatus('processed'));
         },
       );
       setError(null);
@@ -106,7 +106,7 @@ const AddChannelModal = () => {
       </Modal.Body>
       <Modal.Footer className="border-top-0">
         <CancelButton onClick={cancelHandler} />
-        {channelStatus === 'adding'
+        {channelStatus === 'processing'
           ? <Button text={i18n.t('ui.buttons.adding')} disabled outline />
           : <Button text={i18n.t('ui.buttons.add')} handler={addChannelHanlder} outline />}
       </Modal.Footer>

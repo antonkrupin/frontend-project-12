@@ -51,7 +51,7 @@ const RenameChannelModal = () => {
   const renameChannelHandler = (e) => {
     e.preventDefault();
     const name = inputRef.current.value;
-    dispatch(setChannelStatus('renaming'));
+    dispatch(setChannelStatus('processing'));
     if (name.trim() !== '' && !_.includes(channelsNames, name)) {
       socket.emit(
         'renameChannel',
@@ -59,7 +59,7 @@ const RenameChannelModal = () => {
         () => {
           showNotify(i18n.t('ui.toasts.channelRenamed'));
           dispatch(setModalShow());
-          dispatch(setChannelStatus('renamed'));
+          dispatch(setChannelStatus('processed'));
         },
       );
       setError(null);
@@ -107,7 +107,7 @@ const RenameChannelModal = () => {
       </Modal.Body>
       <Modal.Footer className="border-top-0">
         <CancelButton onClick={cancelHandler} />
-        {channelStatus === 'renaming'
+        {channelStatus === 'processing'
           ? <Button text={i18n.t('ui.buttons.renaming')} disabled outline />
           : <Button text={i18n.t('ui.buttons.rename')} handler={renameChannelHandler} outline />}
       </Modal.Footer>

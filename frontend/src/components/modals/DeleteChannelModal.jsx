@@ -41,7 +41,7 @@ const DeleteChannelModal = () => {
 
   const deleteChannelHandler = (e) => {
     e.preventDefault();
-    dispatch(setChannelStatus('deleting'));
+    dispatch(setChannelStatus('processing'));
     socket.emit(
       'removeChannel',
       { id: channelId },
@@ -52,7 +52,7 @@ const DeleteChannelModal = () => {
         if (channelId === activeChannelId) {
           dispatch(setActiveChannel(...channels));
         }
-        dispatch(setChannelStatus('deleted'));
+        dispatch(setChannelStatus('processed'));
         /* dispatch(setActiveChannel(...channels)); */
       },
     );
@@ -78,7 +78,7 @@ const DeleteChannelModal = () => {
       </Modal.Body>
       <Modal.Footer className="border-top-0">
         <CancelButton onClick={cancelHandler} />
-        {channelStatus === 'deleting'
+        {channelStatus === 'processing'
           ? <Button text={i18n.t('ui.buttons.deleting')} disabled />
           : <Button text={i18n.t('ui.buttons.delete')} handler={deleteChannelHandler} />}
       </Modal.Footer>
