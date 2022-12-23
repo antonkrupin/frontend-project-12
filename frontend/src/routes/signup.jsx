@@ -48,7 +48,6 @@ const SignUp = () => {
       username: '',
       password: '',
       confirmPassword: '',
-      isEqual: false,
     },
     validationSchema,
     onSubmit: async (values) => {
