@@ -52,6 +52,7 @@ export default {
       },
       text: {
         loading: 'Загрузка...',
+        enterNewMessage: 'Введите сообщение...',
       },
       signupForm: {
         title: 'Регистрация',
