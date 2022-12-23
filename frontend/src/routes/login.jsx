@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {
-  useCallback, useState, useRef, useEffect,
+  useState, useRef, useEffect,
 } from 'react';
 import axios from 'axios';
 import * as yup from 'yup';
@@ -9,7 +9,7 @@ import { useFormik } from 'formik';
 import { ToastContainer } from 'react-toastify';
 
 import i18 from '../asserts/i18';
-import changeClassName from '../asserts/classNames';
+// import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
 import routes from './routes';
 
@@ -18,11 +18,11 @@ import Button from '../components/buttons/Button';
 
 const validationSchema = yup.object({
   username: yup
-    .string()
-    .required(i18.t('errors.username.required')),
+    .string(),
+  // .required(i18.t('errors.username.required')),
   password: yup
-    .string()
-    .required(i18.t('errors.password.required')),
+    .string(),
+  // .required(i18.t('errors.password.required')),
 });
 
 const Login = () => {
@@ -40,23 +40,26 @@ const Login = () => {
 
   const formik = useFormik({
     initialValues: {
-      userName: '',
+      username: '',
       password: '',
     },
     validationSchema,
     onSubmit: async (values) => {
+      const {
+        username,
+        password,
+      } = values;
       setStatus('authorization');
-      await axios.post(routes.loginPath(), { username: values.username, password: values.password })
+      await axios.post(routes.loginPath(), { username, password })
         .then((data) => {
           logIn(data.data);
-          // navigate('/');
           navigate(routes.mainPagePath());
           setError(null);
           setStatus('authorized');
         })
         .catch((err) => {
-          userNameRef.current.className = changeClassName('form-control is-invalid');
-          passwordRef.current.className = changeClassName('form-control is-invalid');
+          // userNameRef.current.className = changeClassName('form-control is-invalid');
+          // passwordRef.current.className = changeClassName('form-control is-invalid');
           setShowErrorOverlay(!showErrorOverlay);
           switch (err.code) {
             case 'ERR_BAD_REQUEST': {
@@ -81,14 +84,6 @@ const Login = () => {
     userNameRef.current.focus();
   }, []);
 
-  const setInputValue = useCallback(
-    (key, value) => formik.setValues({
-      ...formik.values,
-      [key]: value,
-    }),
-    [formik],
-  );
-
   return (
     <>
       <div className="container-fluid h-100 my-4 mt-4">
@@ -103,15 +98,16 @@ const Login = () => {
                   <h1 className="text-center mb-4">{i18.t('ui.loginForm.title')}</h1>
                   <div className="form-floating mb-3">
                     <input
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.username}
                       disabled={status === 'authorization'}
-                      onChange={(e) => setInputValue('username', e.target.value)}
+                      id="username"
+                      className={error ? 'form-control is-invalid' : 'form-control'}
                       name="username"
                       autoComplete="username"
                       required
                       placeholder={i18.t('ui.loginForm.name')}
-                      id="username"
-                      className="form-control"
-                      defaultValue=""
                       ref={userNameRef}
                     />
                     <label htmlFor="username">{i18.t('ui.loginForm.name')}</label>
@@ -119,16 +115,18 @@ const Login = () => {
                   </div>
                   <div className="form-floating mb-4">
                     <input
+                      // onChange={(e) => setInputValue('password', e.target.value)}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.password}
                       disabled={status === 'authorization'}
-                      onChange={(e) => setInputValue('password', e.target.value)}
+                      id="password"
+                      className={error ? 'form-control is-invalid' : 'form-control'}
                       name="password"
                       autoComplete="current-password"
                       required
                       placeholder={i18.t('ui.loginForm.password')}
                       type="password"
-                      id="password"
-                      className="form-control"
-                      defaultValue=""
                       ref={passwordRef}
                     />
                     <label className="form-label" htmlFor="password">{i18.t('ui.loginForm.password')}</label>

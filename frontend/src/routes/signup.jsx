@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import axios from 'axios';
 
 import i18 from '../asserts/i18';
-import changeClassName from '../asserts/classNames';
+// import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
 import routes from './routes';
 
@@ -20,7 +20,8 @@ const validationSchema = yup.object({
     .required(i18.t('errors.username.required')),
   password: yup
     .string()
-    .min(6, i18.t('errors.password.length')),
+    .min(6, i18.t('errors.password.length'))
+    .required(i18.t('errors.username.required')),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password')], i18.t('errors.authorization.confirmPassword')),
@@ -59,8 +60,8 @@ const SignUp = () => {
       if (password !== confirmPassword) {
         setOverlayRef(confirmPasswordRef);
         setError(i18.t('errors.authorization.confirmPassword'));
-        passwordRef.current.className = changeClassName('form-control', 'is-invalid');
-        confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
+        // passwordRef.current.className = changeClassName('form-control', 'is-invalid');
+        // confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
         setShowErrorOverlay(true);
       } else {
         setStatus('registration');
@@ -75,9 +76,9 @@ const SignUp = () => {
           .catch((err) => {
             setOverlayRef(confirmPasswordRef);
             setShowErrorOverlay(true);
-            usernameRef.current.className = changeClassName('form-control', 'is-invalid');
-            passwordRef.current.className = changeClassName('form-control', 'is-invalid');
-            confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
+            // usernameRef.current.className = changeClassName('form-control', 'is-invalid');
+            // passwordRef.current.className = changeClassName('form-control', 'is-invalid');
+            // confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
             switch (err.code) {
               case 'ERR_BAD_REQUEST': {
                 setError(i18.t('errors.authorization.userExist'));
@@ -113,16 +114,16 @@ const SignUp = () => {
                 <h1 className="text-center mb-4">{i18.t('ui.signupForm.title')}</h1>
                 <div className="form-floating mb-3">
                   <input
-                    disabled={status === 'registration'}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.username}
-                    placeholder={i18.t('ui.signupForm.name')}
+                    disabled={status === 'registration'}
+                    id="username"
+                    className={formik.touched.username && formik.errors.username ? 'form-control is-invalid' : 'form-control'}
                     name="username"
                     autoComplete="username"
                     required
-                    id="username"
-                    className="form-control"
+                    placeholder={i18.t('ui.signupForm.name')}
                     ref={usernameRef}
                   />
                   <label className="form-label" htmlFor="username">{i18.t('ui.signupForm.name')}</label>
@@ -130,18 +131,18 @@ const SignUp = () => {
                 </div>
                 <div className="form-floating mb-3">
                   <input
-                    disabled={status === 'registration'}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
-                    placeholder={i18.t('ui.signupForm.password')}
+                    disabled={status === 'registration'}
+                    id="password"
+                    className={formik.touched.password && formik.errors.password ? 'form-control is-invalid' : 'form-control'}
                     name="password"
                     aria-describedby="passwordHelpBlock"
                     required
                     autoComplete="new-password"
+                    placeholder={i18.t('ui.signupForm.password')}
                     type="password"
-                    id="password"
-                    className="form-control"
                     ref={passwordRef}
                   />
                   <label className="form-label" htmlFor="password">{i18.t('ui.signupForm.password')}</label>
@@ -149,17 +150,17 @@ const SignUp = () => {
                 </div>
                 <div className="form-floating mb-4">
                   <input
-                    disabled={status === 'registration'}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     defaultValue={formik.values.confirmPassword}
-                    placeholder={i18.t('ui.signupForm.confirmPassword')}
+                    disabled={status === 'registration'}
+                    id="confirmPassword"
+                    className={formik.touched.confirmPassword && formik.errors.confirmPassword ? 'form-control is-invalid' : 'form-control'}
                     name="confirmPassword"
                     required
                     autoComplete="new-password"
+                    placeholder={i18.t('ui.signupForm.confirmPassword')}
                     type="password"
-                    id="confirmPassword"
-                    className="form-control"
                     ref={confirmPasswordRef}
                   />
                   <label className="form-label" htmlFor="confirmPassword">{i18.t('ui.signupForm.confirmPassword')}</label>
