@@ -68,7 +68,8 @@ const SignUp = () => {
         await axios.post(routes.signUpPath(), { username, password })
           .then((data) => {
             logIn(data.data);
-            navigate('/');
+            // navigate('/');
+            navigate(routes.mainPagePath());
             setError(null);
             setStatus('registred');
           })
@@ -117,7 +118,7 @@ const SignUp = () => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.username}
-                    placeholder="От 3 до 20 символов"
+                    placeholder={i18.t('ui.signupForm.name')}
                     name="username"
                     autoComplete="username"
                     required
@@ -134,7 +135,7 @@ const SignUp = () => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
-                    placeholder="Не менее 6 символов"
+                    placeholder={i18.t('ui.signupForm.password')}
                     name="password"
                     aria-describedby="passwordHelpBlock"
                     required
@@ -153,7 +154,7 @@ const SignUp = () => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     defaultValue={formik.values.confirmPassword}
-                    placeholder="Пароли должны совпадать"
+                    placeholder={i18.t('ui.signupForm.confirmPassword')}
                     name="confirmPassword"
                     required
                     autoComplete="new-password"
