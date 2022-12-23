@@ -9,7 +9,6 @@ import { useFormik } from 'formik';
 import { ToastContainer } from 'react-toastify';
 
 import i18 from '../asserts/i18';
-// import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
 import routes from './routes';
 
@@ -19,10 +18,8 @@ import Button from '../components/buttons/Button';
 const validationSchema = yup.object({
   username: yup
     .string(),
-  // .required(i18.t('errors.username.required')),
   password: yup
     .string(),
-  // .required(i18.t('errors.password.required')),
 });
 
 const Login = () => {
@@ -58,8 +55,6 @@ const Login = () => {
           setStatus('authorized');
         })
         .catch((err) => {
-          // userNameRef.current.className = changeClassName('form-control is-invalid');
-          // passwordRef.current.className = changeClassName('form-control is-invalid');
           setShowErrorOverlay(!showErrorOverlay);
           switch (err.code) {
             case 'ERR_BAD_REQUEST': {
@@ -115,7 +110,6 @@ const Login = () => {
                   </div>
                   <div className="form-floating mb-4">
                     <input
-                      // onChange={(e) => setInputValue('password', e.target.value)}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       value={formik.values.password}

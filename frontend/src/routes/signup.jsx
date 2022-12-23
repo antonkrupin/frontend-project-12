@@ -5,7 +5,6 @@ import * as yup from 'yup';
 import axios from 'axios';
 
 import i18 from '../asserts/i18';
-// import changeClassName from '../asserts/classNames';
 import useAuth from '../hooks';
 import routes from './routes';
 
@@ -60,8 +59,6 @@ const SignUp = () => {
       if (password !== confirmPassword) {
         setOverlayRef(confirmPasswordRef);
         setError(i18.t('errors.authorization.confirmPassword'));
-        // passwordRef.current.className = changeClassName('form-control', 'is-invalid');
-        // confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
         setShowErrorOverlay(true);
       } else {
         setStatus('registration');
@@ -76,9 +73,6 @@ const SignUp = () => {
           .catch((err) => {
             setOverlayRef(confirmPasswordRef);
             setShowErrorOverlay(true);
-            // usernameRef.current.className = changeClassName('form-control', 'is-invalid');
-            // passwordRef.current.className = changeClassName('form-control', 'is-invalid');
-            // confirmPasswordRef.current.className = changeClassName('form-control', 'is-invalid');
             switch (err.code) {
               case 'ERR_BAD_REQUEST': {
                 setError(i18.t('errors.authorization.userExist'));
