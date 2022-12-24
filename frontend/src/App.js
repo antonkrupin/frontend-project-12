@@ -20,7 +20,7 @@ import NavBar from './components/navBar';
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const [status, setStatus] = useState('nonAuthorized');
+  const [status, setStatus] = useState(null);
 
   const logIn = (token) => {
     localStorage.setItem('userId', JSON.stringify(token));
@@ -30,6 +30,7 @@ const AuthProvider = ({ children }) => {
   const logOut = () => {
     localStorage.removeItem('userId');
     localStorage.clear();
+    setStatus('nonAuthorized');
     setLoggedIn(false);
   };
 

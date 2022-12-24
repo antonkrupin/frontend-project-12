@@ -81,10 +81,11 @@ const SignUp = () => {
               }
               case 'ERR_NETWORK': {
                 setError(i18.t('errors.session.network'));
-                setStatus('nonRegistred');
+                setStatus(null);
                 break;
               }
               default: {
+                setStatus(null);
                 throw new Error(err);
               }
             }

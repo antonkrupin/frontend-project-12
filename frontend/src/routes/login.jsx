@@ -25,7 +25,9 @@ const validationSchema = yup.object({
 const Login = () => {
   const navigate = useNavigate();
 
-  const { logIn, setStatus, status } = useAuth();
+  const {
+    logIn, setStatus, status, logOut,
+  } = useAuth();
 
   const userNameRef = useRef();
 
@@ -59,18 +61,25 @@ const Login = () => {
           switch (err.code) {
             case 'ERR_BAD_REQUEST': {
               setError(i18.t('errors.authorization.wrong'));
-              setStatus('nonAuthorized');
+              // setStatus('nonAuthorized');
+              logOut();
               break;
             }
             case 'ERR_NETWORK': {
               setError(i18.t('errors.session.network'));
-              setStatus('nonAuthorized');
+              setStatus(null);
+              // logOut();
               break;
             }
             default: {
+              setStatus(null);
               throw new Error(err);
             }
           }
+          setTimeout(() => {
+            setError(null);
+            setShowErrorOverlay(false);
+          }, '3000');
         });
     },
   });
