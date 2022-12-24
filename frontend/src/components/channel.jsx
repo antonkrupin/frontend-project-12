@@ -2,8 +2,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-// import changeClassName from '../asserts/classNames';
-
 import DropDownMenu from './dropDownMenu';
 
 import { fetchActiveChannelId } from '../slices/selectors';
@@ -16,8 +14,6 @@ const Channel = (props) => {
   const isActiveChannel = channelId === channel.id;
 
   const dropDownId = `dropDown-${channel.id}`;
-  // const dropDownClassName = changeClassName('btn-secondary', isActiveChannel, 'flex-grow-0 dropdown-toggle dropdown-toggle-split border-0 btn');
-  // const channelClassName = changeClassName('btn-secondary', isActiveChannel, 'w-100 rounded-0 text-start text-truncate border-0 btn');
 
   // eslint-disable-next-line functional/no-let
   let channelItem = (
@@ -25,7 +21,6 @@ const Channel = (props) => {
       <button
         type="button"
         onClick={onClick}
-        // className={changeClassName('btn-secondary', isActiveChannel, 'w-100 rounded-0 text-start btn')}
         className={isActiveChannel
           ? 'btn-secondary w-100 rounded-0 text-start btn'
           : 'w-100 rounded-0 text-start btn'}
