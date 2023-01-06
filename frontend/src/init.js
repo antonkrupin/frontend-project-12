@@ -19,19 +19,27 @@ import {
   deleteChannel,
 } from './slices/channelsReducer';
 
-import 'bootstrap/dist/js/bootstrap.js';
+/* import 'bootstrap/dist/js/bootstrap.js';
 import 'bootstrap/dist/css/bootstrap.css';
-import './styles/App.css';
+import './styles/App.css'; */
 
-const root = ReactDOM.createRoot(document.getElementById('chat'));
+/* const root = ReactDOM.createRoot(document.getElementById('chat'));
 const socket = socketIO.connect();
 
 if (typeof window !== 'undefined') {
   injectStyle();
-}
+} */
 
 const runApp = () => {
   const { dispatch } = store;
+
+  const root = ReactDOM.createRoot(document.getElementById('chat'));
+
+  const socket = socketIO.connect();
+
+  if (typeof window !== 'undefined') {
+    injectStyle();
+  }
 
   socket.on('newMessage', (payload) => {
     dispatch(addMessage(payload));
