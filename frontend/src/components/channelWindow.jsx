@@ -28,8 +28,6 @@ const ChannelWindow = () => {
   });
 
   const messageHandler = (e) => {
-    // filter.getDictionary('ru', 'en');
-    // filter.loadDictionary('ru', 'en');
     setMessage(filter.clean(e.target.value));
   };
 

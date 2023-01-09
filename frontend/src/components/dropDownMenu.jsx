@@ -76,28 +76,8 @@ const DropDownMenu = (props) => {
         <span className="visually-hidden">{i18n.t('ui.span.channelManagement')}</span>
       </button>
       <ul className="dropdown-menu">
-        {/* <li>
-          <button
-            type="button"
-            onClick={deleteChannelHandler}
-            className="dropdown-item"
-            href="#"
-          >
-            {i18n.t('ui.dropDownMenu.delete')}
-          </button>
-</li> */}
         <DropDownElem onClick={() => deleteChannelHandler()} text={i18n.t('ui.dropDownMenu.delete')} />
         <DropDownElem onClick={() => renameChannelHandler()} text={i18n.t('ui.dropDownMenu.rename')} />
-        {/* <li>
-          <button
-            type="button"
-            onClick={renameChannelHandler}
-            className="dropdown-item"
-            href="#"
-          >
-            {i18n.t('ui.dropDownMenu.rename')}
-          </button>
-</li> */}
       </ul>
     </div>
   );
