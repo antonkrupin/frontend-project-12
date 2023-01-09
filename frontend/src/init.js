@@ -17,6 +17,7 @@ import {
   addChannel,
   renameChannel,
   deleteChannel,
+  setActiveChannel,
 } from './slices/channelsReducer';
 
 const runApp = () => {
@@ -46,6 +47,7 @@ const runApp = () => {
 
   socket.on('removeChannel', (payload) => {
     dispatch(deleteChannel(payload));
+    dispatch(setActiveChannel(payload));
     dispatch(setChannelStatus('deleted'));
   });
 
