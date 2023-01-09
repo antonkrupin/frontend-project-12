@@ -35,7 +35,12 @@ const channelsSlice = createSlice({
       state.channelStatus = action.payload;
     },
     setActiveChannel: (state, action) => {
-      state.activeChannel = action.payload;
+      const { name, id } = action.payload;
+      const activeId = state.activeChannel.id;
+      if (name) {
+        state.activeChannel = action.payload;
+      } else if (id === activeId) [state.activeChannel] = [...state.channels];
+      // state.activeChannel = action.payload;
     },
     addChannel: (state, action) => {
       state.channels.push(action.payload);
