@@ -10,16 +10,19 @@ import Button from '../buttons/Button';
 
 import {
   channelForDeleteId,
-  fetchChannels,
+  // fetchChannels,
   fetchChannelStatus,
   fetchModalType,
-  fetchActiveChannelId,
+  // fetchActiveChannelId,
   fetchIsModalShow,
 } from '../../slices/selectors';
 
 import { deleteMessages } from '../../slices/messagesReducer';
 import { setModalShow } from '../../slices/modalsReducer';
-import { setActiveChannel, setChannelStatus } from '../../slices/channelsReducer';
+import {
+  // setActiveChannel,
+  setChannelStatus,
+} from '../../slices/channelsReducer';
 import { showNotify } from '../notify';
 
 const DeleteChannelModal = () => {
@@ -27,11 +30,11 @@ const DeleteChannelModal = () => {
 
   const socket = useSocket();
 
-  const channels = useSelector(fetchChannels);
+  // const channels = useSelector(fetchChannels);
 
   const channelId = useSelector(channelForDeleteId);
 
-  const activeChannelId = useSelector(fetchActiveChannelId);
+  // const activeChannelId = useSelector(fetchActiveChannelId);
 
   const channelStatus = useSelector(fetchChannelStatus);
 
@@ -49,9 +52,10 @@ const DeleteChannelModal = () => {
         dispatch(setModalShow());
         showNotify(i18n.t('ui.toasts.channelDeleted'));
         dispatch(deleteMessages({ channelId }));
-        if (channelId === activeChannelId) {
+        /* if (channelId === activeChannelId) {
           dispatch(setActiveChannel(...channels));
-        }
+        } */
+        // dispatch(setActiveChannel(...channels));
         dispatch(setChannelStatus('processed'));
         /* dispatch(setActiveChannel(...channels)); */
       },
